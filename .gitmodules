@@ -1,0 +1,6 @@
+[submodule "site-lisp/themes/emacs-color-theme-solarized"]
+	path = site-lisp/themes/emacs-color-theme-solarized
+	url = https://github.com/sellout/emacs-color-theme-solarized.git
+[submodule "site-lisp/eclim"]
+	path = site-lisp/eclim
+	url = https://github.com/senny/emacs-eclim.git
