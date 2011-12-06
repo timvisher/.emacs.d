@@ -42,6 +42,7 @@ The Info Directory
 * Speedbar: (speedbar). File/Tag summarizing utility.
 * Flymake: (flymake).   An on-the-fly syntax checker for Emacs.
 * GNU Coding Standards: (standards).
+* Magit: (magit). The One True Editor's interface to git.
 
 ### Programming Languages ###
 

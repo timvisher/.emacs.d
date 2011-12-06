@@ -2,3 +2,12 @@
 .DS_Store
 starter-kit-2.*
 *.tar
+*.places
+*backups
+%*
+##*
+.smex-items
+places
+tramp
+tutorial/
+url/
