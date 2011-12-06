@@ -1,4 +1,4 @@
-(require 'package)
+b(require 'package)
 (add-to-list 'package-archives
              '("marmalade" . "http://marmalade-repo.org/packages/") t)
 (package-initialize)
@@ -274,7 +274,7 @@
 
 (setq redisplay-dont-pause t)
 
-(maximize-frame)
+;; (maximize-frame)
 
 (setq sentence-end-double-space nil)
 
@@ -298,7 +298,7 @@
  '(ansi-color-names-vector ["#2d3743" "#ff4242" "#74af68" "#dbdb95" "#34cae2" "#008b8b" "#00ede1" "#e1e1e0"])
  '(css-indent-offset 3)
  '(custom-enabled-themes (quote (solarized-light)))
- '(custom-safe-themes (quote ("5600dc0bb4a2b72a613175da54edb4ad770105aa" "0174d99a8f1fdc506fa54403317072982656f127" default)))
+ '(custom-safe-themes (quote ("62b81fe9b7d13eef0539d6a0f5c0c37170c9e248" "5600dc0bb4a2b72a613175da54edb4ad770105aa" "0174d99a8f1fdc506fa54403317072982656f127" default)))
  '(custom-theme-directory "~/.emacs.d/site-lisp/themes")
  '(deft-directory "")
  '(deft-extension "md")
@@ -326,4 +326,4 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(magit-item-highlight ((t (:inherit hl-line))))
- '(widget-field-face ((t (:inherit hl-line :background "dim gray" :box (:line-width 1 :color "#52676f")))) t))
+ '(widget-field ((t (:inherit hl-line :background "dim gray" :box (:line-width 1 :color "#52676f"))))))
