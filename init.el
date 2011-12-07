@@ -319,7 +319,8 @@
  '(marmalade-token "3RChoHxcXN1NRWDVJGPQ0JA6dR8+E8VvQZOuwWWQgtQ=")
  '(marmalade-username "timvisher")
  '(transient-mark-mode nil)
- '(user-mail-address "tim.visher@gmail.com"))
+ '(user-mail-address "tim.visher@gmail.com")
+ '(vimgolf-key "da83e81eff86621ca95f8af89c387d19"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
