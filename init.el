@@ -274,7 +274,7 @@
 
 (setq redisplay-dont-pause t)
 
-;; (maximize-frame)
+(maximize-frame)
 
 (setq sentence-end-double-space nil)
 
@@ -313,6 +313,7 @@
  '(erc-user-full-name "Tim Visher")
  '(find-ls-option (quote ("-print0 | xargs -0 ls -ld" . "-ld")))
  '(global-hl-line-mode nil)
+ '(grep-find-template "find . <X> -type f <F> -exec grep <C> -nH <R> {} ;")
  '(inferior-lisp-program "lein repl")
  '(js-indent-level 2)
  '(marmalade-server "http://marmalade-repo.org")
@@ -327,4 +328,4 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(magit-item-highlight ((t (:inherit hl-line))))
- '(widget-field ((t (:inherit hl-line :background "dim gray" :box (:line-width 1 :color "#52676f"))))))
+ '(widget-field ((t (:inherit hl-line :box (:line-width 1 :color "#52676f"))))))
