@@ -283,9 +283,12 @@
 (setq backup-directory-alist `(("." . ,(concat (getenv "HOME") "/.emacs.d/" system-name "backups"))))
 (setq eshell-history-file-name (concat (getenv "HOME") "/.emacs.d/eshell/" system-name "-history"))
 
-(shell)
-
 (put 'narrow-to-region 'disabled nil)
+
+;;; If you get the dreaded ~/.emacs.d/server is not safe error on
+;;; Windows. ~/.emacs.d/server -> Properties -> Security -> Advanced
+;;; -> Owner and then set it to you.
+(server-start)
 
 (fset 'vimgolf-harvest
       (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([134217788 25 67108896 134217790 23 134217788 67108896 5 134217847 1 19 115 116 97 114 116 32 102 105 108 101 1 16 134217848 97 112 45 116 45 102 13 118 105 109 9 21 24 113 32 25 46 112 114 101 115 101 110 116 97 116 105 111 110 46 109 100 13 14 14 14 19 101 110 100 32 102 105 108 101 1 134217848 97 112 45 116 45 102 13 118 105 109 9 21 24 113 9 134217832 134217832 115 116 97 114 116 46 21 24 113 13 134217848 97 112 45 116 45 102 13 118 105 109 9 21 24 113 9 119 111 114 107 46 21 24 113 13 14 14 67108896 134217790 134217848 97 112 45 116 45 102 13 118 105 109 9 21 24 113 9 101 110 100 46 21 24 113 13 134217788 82 101 115 101 97 114 99 104 32 86 105 109 71 111 108 102 32 105 110 32 69 109 97 99 115 32 48 21 24 113 32 5 32 35 64 119 101 98 32 64 104 111 109 101 32 104 116 116 112 58 47 47 118 105 109 103 111 108 102 134217826 106 46 109 112 47 5 48 21 24 113 1 11 11 25 25 25 16 16 134217828 82 101 99 111 114 100 14 1 134217828 80 117 98 108 105 115 104 134217788 67108896 14 14 14 134217848 97 112 45 116 45 98 13 118 105 109 103 9 13] 0 "%d")) arg)))
@@ -303,6 +306,7 @@
  '(deft-directory "")
  '(deft-extension "md")
  '(deft-text-mode (quote markdown-mode))
+ '(dired-dwim-target t)
  '(erc-autojoin-channels-alist (quote (("freenode.net" "#clojure"))))
  '(erc-autojoin-delay 30)
  '(erc-autojoin-mode t)
@@ -314,11 +318,16 @@
  '(find-ls-option (quote ("-print0 | xargs -0 ls -ld" . "-ld")))
  '(global-hl-line-mode nil)
  '(grep-find-template "find . <X> -type f <F> -exec grep <C> -nH <R> {} ;")
+ '(indent-tabs-mode nil)
  '(inferior-lisp-program "lein repl")
+ '(inhibit-startup-screen nil)
  '(js-indent-level 2)
  '(marmalade-server "http://marmalade-repo.org")
  '(marmalade-token "3RChoHxcXN1NRWDVJGPQ0JA6dR8+E8VvQZOuwWWQgtQ=")
  '(marmalade-username "timvisher")
+ '(mouse-avoidance-mode (quote banish) nil (avoid))
+ '(tab-width 2)
+ '(text-mode-hook (quote (whitespace-mode text-mode-hook-identify)))
  '(transient-mark-mode nil)
  '(user-mail-address "tim.visher@gmail.com")
  '(vimgolf-key "da83e81eff86621ca95f8af89c387d19"))

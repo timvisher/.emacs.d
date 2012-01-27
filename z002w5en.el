@@ -46,5 +46,3 @@
 (set-register ?c '(file . "d:/view_store/z002w5en_view"))
 
 (eval-after-load 'textmate '(add-to-list '*textmate-project-roots* ".project"))
-
-(shell)

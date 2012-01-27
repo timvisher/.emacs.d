@@ -56,5 +56,3 @@
 (defun cradle-deploy ()
   (interactive)
   (cradle-run "deploy"))
-
-(server-start)
