@@ -209,7 +209,7 @@
 (eval-after-load 'paredit '(define-key paredit-mode-map (kbd "M-h") 'paredit-backward-kill-word))
 (eval-after-load 'markdown-mode '(define-key markdown-mode-map (kbd "M-v") 'yank))
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
-(eval-after-load 'slime 'fix-paredit-repl)
+(eval-after-load 'slime '(fix-paredit-repl))
 
 (global-set-key (kbd "<f1> r") 'info-emacs-manual)
 
