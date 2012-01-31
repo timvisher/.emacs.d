@@ -223,7 +223,7 @@
 (eval-after-load 'paredit '(define-key paredit-mode-map (kbd "C-h") 'paredit-backward-delete))
 (eval-after-load 'paredit '(define-key paredit-mode-map (kbd "M-h") 'paredit-backward-kill-word))
 (eval-after-load 'markdown-mode '(define-key markdown-mode-map (kbd "M-v") 'yank))
-(eval-after-load 'markdown-mode '(add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode)))
+(add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
 (eval-after-load 'slime 'fix-paredit-repl)
 
 ;; (require 'markdown-mode)
