@@ -65,21 +65,6 @@
 (global-set-key (kbd "<M-S-down>") 'drag-down)
 (global-set-key (kbd "<M-S-up>") 'drag-up)
 
-(defun lein-swank ()
-  (interactive)
-  (let ((root (locate-dominating-file default-directory "project.clj")))
-    (when (not root)
-      (error "Not in a Leiningen project."))
-    ;; you can customize slime-port using .dir-locals.el
-    (shell-command (format "cd %s && lein swank &" root)
-                   "*lein-swank*")
-    (set-process-filter (get-buffer-process "*lein-swank*")
-                        (lambda (process output)
-                          (when (string-match "Connection opened on" output)
-                            (slime-connect "localhost" slime-port)
-                            (set-process-filter process nil))))
-    (message "Starting swank server...")))
-
 ;; Yegge
 (defun swap-windows ()
   "If you have 2 windows, it swaps them."
