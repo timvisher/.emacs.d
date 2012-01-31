@@ -226,8 +226,6 @@
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
 (eval-after-load 'slime 'fix-paredit-repl)
 
-;; (require 'markdown-mode)
-
 (global-set-key (kbd "<f1> r") 'info-emacs-manual)
 
 (put 'set-goal-column 'disabled nil)
@@ -266,32 +264,23 @@
 
 (require 'elein)
 
-;; (locate-dominating-file (buffer-file-name) ".git")
-
-(setq transient-mark-mode nil)
-
-(setq ido-ubiquitous-enabled nil)
-
-(setq redisplay-dont-pause t)
-
-(maximize-frame)
-
-(setq sentence-end-double-space nil)
-
-;;; Make system and user specific emacs temp files
-(setq save-place-file (concat (getenv "HOME") "/.emacs.d/" system-name ".places"))
-(setq backup-directory-alist `(("." . ,(concat (getenv "HOME") "/.emacs.d/" system-name "backups"))))
-(setq eshell-history-file-name (concat (getenv "HOME") "/.emacs.d/eshell/" system-name "-history"))
-
-(put 'narrow-to-region 'disabled nil)
+(fset 'vimgolf-harvest
+      (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([134217788 25 67108896 134217790 23 134217788 67108896 5 134217847 1 19 115 116 97 114 116 32 102 105 108 101 1 16 134217848 97 112 45 116 45 102 13 118 105 109 9 21 24 113 32 25 46 112 114 101 115 101 110 116 97 116 105 111 110 46 109 100 13 14 14 14 19 101 110 100 32 102 105 108 101 1 134217848 97 112 45 116 45 102 13 118 105 109 9 21 24 113 9 134217832 134217832 115 116 97 114 116 46 21 24 113 13 134217848 97 112 45 116 45 102 13 118 105 109 9 21 24 113 9 119 111 114 107 46 21 24 113 13 14 14 67108896 134217790 134217848 97 112 45 116 45 102 13 118 105 109 9 21 24 113 9 101 110 100 46 21 24 113 13 134217788 82 101 115 101 97 114 99 104 32 86 105 109 71 111 108 102 32 105 110 32 69 109 97 99 115 32 48 21 24 113 32 5 32 35 64 119 101 98 32 64 104 111 109 101 32 104 116 116 112 58 47 47 118 105 109 103 111 108 102 134217826 106 46 109 112 47 5 48 21 24 113 1 11 11 25 25 25 16 16 134217828 82 101 99 111 114 100 14 1 134217828 80 117 98 108 105 115 104 134217788 67108896 14 14 14 134217848 97 112 45 116 45 98 13 118 105 109 103 9 13] 0 "%d")) arg)))
 
 ;;; If you get the dreaded ~/.emacs.d/server is not safe error on
 ;;; Windows. ~/.emacs.d/server -> Properties -> Security -> Advanced
 ;;; -> Owner and then set it to you.
 (server-start)
 
-(fset 'vimgolf-harvest
-      (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([134217788 25 67108896 134217790 23 134217788 67108896 5 134217847 1 19 115 116 97 114 116 32 102 105 108 101 1 16 134217848 97 112 45 116 45 102 13 118 105 109 9 21 24 113 32 25 46 112 114 101 115 101 110 116 97 116 105 111 110 46 109 100 13 14 14 14 19 101 110 100 32 102 105 108 101 1 134217848 97 112 45 116 45 102 13 118 105 109 9 21 24 113 9 134217832 134217832 115 116 97 114 116 46 21 24 113 13 134217848 97 112 45 116 45 102 13 118 105 109 9 21 24 113 9 119 111 114 107 46 21 24 113 13 14 14 67108896 134217790 134217848 97 112 45 116 45 102 13 118 105 109 9 21 24 113 9 101 110 100 46 21 24 113 13 134217788 82 101 115 101 97 114 99 104 32 86 105 109 71 111 108 102 32 105 110 32 69 109 97 99 115 32 48 21 24 113 32 5 32 35 64 119 101 98 32 64 104 111 109 101 32 104 116 116 112 58 47 47 118 105 109 103 111 108 102 134217826 106 46 109 112 47 5 48 21 24 113 1 11 11 25 25 25 16 16 134217828 82 101 99 111 114 100 14 1 134217828 80 117 98 108 105 115 104 134217788 67108896 14 14 14 134217848 97 112 45 116 45 98 13 118 105 109 103 9 13] 0 "%d")) arg)))
+(maximize-frame)
+
+;;; Customizations
+
+;;; Make system and user specific emacs temp files
+(setq eshell-history-file-name (concat (getenv "HOME") "/.emacs.d/eshell/" system-name "-history"))
+
+(setq redisplay-dont-pause t)
+(put 'narrow-to-region 'disabled nil)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -299,6 +288,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector ["#2d3743" "#ff4242" "#74af68" "#dbdb95" "#34cae2" "#008b8b" "#00ede1" "#e1e1e0"])
+ '(backup-directory-alist (\` (("." \, (concat (getenv "HOME") "/.emacs.d/" system-name "-backups")))))
  '(css-indent-offset 3)
  '(custom-enabled-themes (quote (solarized-light)))
  '(custom-safe-themes (quote ("62b81fe9b7d13eef0539d6a0f5c0c37170c9e248" "5600dc0bb4a2b72a613175da54edb4ad770105aa" "0174d99a8f1fdc506fa54403317072982656f127" default)))
@@ -318,6 +308,7 @@
  '(find-ls-option (quote ("-print0 | xargs -0 ls -ld" . "-ld")))
  '(global-hl-line-mode nil)
  '(grep-find-template "find . <X> -type f <F> -exec grep <C> -nH <R> {} ;")
+ '(ido-ubiquitous-mode t)
  '(indent-tabs-mode nil)
  '(inferior-lisp-program "lein repl")
  '(inhibit-startup-screen nil)
@@ -326,6 +317,8 @@
  '(marmalade-token "3RChoHxcXN1NRWDVJGPQ0JA6dR8+E8VvQZOuwWWQgtQ=")
  '(marmalade-username "timvisher")
  '(mouse-avoidance-mode (quote banish) nil (avoid))
+ '(save-place-file (concat (getenv "HOME") "/.emacs.d/" system-name ".places"))
+ '(sentence-end-double-space t)
  '(tab-width 2)
  '(text-mode-hook (quote (whitespace-mode text-mode-hook-identify)))
  '(transient-mark-mode nil)
