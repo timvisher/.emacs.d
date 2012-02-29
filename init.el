@@ -17,7 +17,6 @@
                       deft
                       elein
                       elisp-slime-nav
-                      erc-nick-notify
                       furl
                       idle-highlight-mode
                       ido-ubiquitous
@@ -25,9 +24,10 @@
                       markdown-mode
                       marmalade
                       maxframe
-                      notify
                       slime
                       smex
+                      find-file-in-project
+                      paredit
                       starter-kit
                       starter-kit-bindings
                       starter-kit-eshell
@@ -39,14 +39,9 @@
   (when (not (package-installed-p p))
     (package-install p)))
 
-(require 'erc)
-(if (eq 'darwin system-type)
-    (progn
-      (require 'notify)
-      (setq notify-method 'notify-via-message)
-      (require 'erc-nick-notify)))
-
 (add-to-list 'load-path "~/.emacs.d/site-lisp")
+
+(require 'paredit)
 
 (defun lein-server ()
   (interactive)
