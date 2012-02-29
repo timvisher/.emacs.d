@@ -26,15 +26,6 @@
 
 ;; Functions
 
-(defun lein-server ()
-  (interactive)
-  (let ((current-directory default-directory)
-        (lein-home (locate-dominating-file default-directory "project.clj")))
-    (progn
-      (cd lein-home)
-      (async-shell-command "lein ring server" "*lein server*")
-      (cd current-directory))))
-
 (defun cradle-run (args)
   (interactive "MRun Cradle with args: ")
   (let ((current-directory default-directory)

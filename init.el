@@ -48,6 +48,15 @@
 
 (add-to-list 'load-path "~/.emacs.d/site-lisp")
 
+(defun lein-server ()
+  (interactive)
+  (let ((current-directory default-directory)
+        (lein-home (locate-dominating-file default-directory "project.clj")))
+    (progn
+      (cd lein-home)
+      (async-shell-command "lein ring server" "*lein server*")
+      (cd current-directory))))
+
 (defun drag-up ()
   (interactive)
   (progn (kill-visual-line 1)
