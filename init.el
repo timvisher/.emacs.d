@@ -41,8 +41,6 @@
 
 (add-to-list 'load-path "~/.emacs.d/site-lisp")
 
-(require 'paredit)
-
 (defun lein-server ()
   (interactive)
   (let ((current-directory default-directory)
