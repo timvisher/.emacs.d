@@ -298,7 +298,7 @@
  '(erc-user-full-name "Tim Visher")
  '(find-ls-option (quote ("-print0 | xargs -0 ls -ld" . "-ld")))
  '(global-hl-line-mode nil)
- '(grep-find-template "find . <X> -type f <F> -exec grep <C> -nH <R> {} \\;")
+ '(grep-find-template "find . <X> -type f <F> -exec grep <C> -nH <R> {} ;")
  '(ido-ubiquitous-command-exceptions (quote (unhighlight-regexp)))
  '(ido-ubiquitous-mode t)
  '(indent-tabs-mode nil)
