@@ -287,7 +287,7 @@
  '(dired-dwim-target t)
  '(dired-recursive-copies (quote always))
  '(dired-recursive-deletes (quote always))
- '(dired-use-ls-dired nil)
+ '(dired-use-ls-dired (quote unspecified))
  '(erc-autojoin-channels-alist (quote (("freenode.net" "#clojure"))))
  '(erc-autojoin-delay 30)
  '(erc-autojoin-mode t)
