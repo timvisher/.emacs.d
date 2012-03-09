@@ -44,7 +44,7 @@
 (eval-after-load "deft" '(defun journal ()
   "Grab a new deft file and populate it with a joural entry for right now"
   (interactive)
-  (make-frame-command)
+  (select-frame-set-input-focus (make-frame))
   (deft-new-file)
   (visual-line-mode 1)
   (insert "journal entry " (format-time-string "%Y%m%d%H%M%S") "
@@ -54,7 +54,7 @@
 (eval-after-load "deft" '(defun kill-ring-deft ()
   "Make a new deft file and yank the kill ring into it"
   (interactive)
-  (make-frame-command)
+  (select-frame-set-input-focus (make-frame))
   (deft-new-file)
   (visual-line-mode 1)
   (yank)
