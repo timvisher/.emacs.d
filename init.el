@@ -41,6 +41,31 @@
 
 (add-to-list 'load-path "~/.emacs.d/site-lisp")
 
+(require 'deft)
+
+(defun journal ()
+  "Grab a new deft file and populate it with a joural entry for right now"
+  (interactive)
+  (make-frame-command)
+  (deft-new-file)
+  (visual-line-mode 1)
+  (insert "journal entry " (format-time-string "%Y%m%d%H%M%S") "
+
+"))
+
+(defun kill-ring-deft ()
+  "Make a new deft file and yank the kill ring into it"
+  (interactive)
+  (make-frame-command)
+  (deft-new-file)
+  (visual-line-mode 1)
+  (yank)
+  (goto-char (point-min))
+  (insert "
+
+")
+  (goto-char (point-min)))
+
 (defun lein-server ()
   (interactive)
   (let ((current-directory default-directory)
