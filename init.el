@@ -144,73 +144,11 @@
         (set-buffer-modified-p nil)
         t))))
 
-;; http://www.ftrain.com/util_emacs_hints.html
-(defun insert-time-stamp ()
-  "Inserts a time stamp 'YYYY-MM-DD HH:MM AM/PM'"
-  (interactive)
-  (insert (format-time-string "%Y-%m-%d - %I:%M %p")))
-
-(defun markdown-frame ()
-  "Create a buffer to quick edit markdown text."
-  (interactive)
-  (create-tmp-frame "markdown"))
-
-(defun create-tmp-frame (prefix)
-  "Create a frame PREFIXtimestamp."
-  ;; (let ((prefix-or-dimensions `(,prefix 85 ,(/ (height-from-display) 2))))
-  ;;   (kill-matching-timestamped-buffers prefix)
-  ;;   (create-or-focus-frame prefix)
-  ;;   ;; (set-frame-size (selected-frame) (width prefix-or-dimensions) (height prefix-or-dimensions))
-  ;;   (find-timestamped-tmp-file prefix)
-  ;;   (yank)
-  ;;   (beginning-of-buffer))
-  (kill-matching-timestamped-buffers prefix)
-  (create-or-focus-frame prefix)
-  ;; (set-frame-size (selected-frame) (width prefix-or-dimensions) (height prefix-or-dimensions))
-  (find-timestamped-tmp-file prefix)
-  (yank)
-  (beginning-of-buffer)  )
-
-(defun prefix (prefix-or-dimensions)
-  (car prefix-or-dimensions))
-
-(defun dimensions (prefix-or-dimensions)
-  (cdr prefix-or-dimensions))
-
-(defun width (prefix-or-dimensions)
-  (cadr prefix-or-dimensions))
-
-(defun height (prefix-or-dimensions)
-  (caddr prefix-or-dimensions))
-
-(defun create-or-focus-frame (prefix-and-dimensions)
-  "Search for a frame titled PREFIX* or DIMENSIONS. If it exists,
-   focus it. If it doesn't, create it and then focus it."
-  (select-frame-set-input-focus (matching-frame-or-new-frame prefix-and-dimensions)))
-
-(defun matching-frame-or-new-frame (prefix-and-dimensions)
-  (make-frame))
-
-(defun frame-exists (prefix-or-dimensions)
-  (frame-parameter (next-frame) 'buffer-list))
-
-(defun find-timestamped-tmp-file (prefix)
-  "Visit timestamped-tmp-file prefixed with PREFIX."
-  (find-file (timestamped-tmp-file prefix)))
-
-(defun kill-matching-timestamped-buffers (prefix)
-  "Kill timestamped-tmp-file buffers prefixed with PREFIX."
-  (kill-matching-buffers (concat prefix "[0-9]+\.markdown")))
-
-(defun timestamped-tmp-file (prefix)
-  "Get a tmp file prefixed with PREFIX."
-  (concat "~/tmp/" prefix (format-time-string "%Y%m%d%H%M%S") ".md"))
-
 ;; aliases
 
 (defalias 'qrr 'query-replace-regexp) ;; Yegge
 (defalias 's 'ispell)
-(defalias 'mdf 'markdown-frame)
+(defalias 'mdf 'kill-ring-deft)
 
 ;; keys
 
