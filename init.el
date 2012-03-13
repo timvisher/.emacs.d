@@ -51,19 +51,24 @@
 
 ")))
 
-(eval-after-load "deft" '(defun kill-ring-deft ()
-  "Make a new deft file and yank the kill ring into it"
+(defun copy-buffer-and-kill-frame ()
   (interactive)
-  (select-frame-set-input-focus (make-frame))
-  (deft-new-file)
-  (visual-line-mode 1)
-  (yank)
-  (goto-char (point-min))
-  (insert "
+  (kill-ring-save (point-min) (point-max))
+  (delete-frame (selected-frame)))
+
+(eval-after-load "deft" '(defun kill-ring-deft ()
+                           "Make a new deft file and yank the kill ring into it"
+                           (interactive)
+                           (select-frame-set-input-focus (make-frame))
+                           (deft-new-file)
+                           (visual-line-mode 1)
+                           (yank)
+                           (goto-char (point-min))
+                           (insert "
 
 ")
-  (goto-char (point-min))))
-
+                           (goto-char (point-min))
+                           (local-set-key (kbd "C-c C-q") 'copy-buffer-and-kill-frame)))
 
 (defun lein-server ()
   (interactive)
