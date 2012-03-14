@@ -176,7 +176,6 @@
 (global-set-key (kbd "C-h") 'backward-delete-char-untabify)
 (eval-after-load 'paredit '(define-key paredit-mode-map (kbd "C-h") 'paredit-backward-delete))
 (eval-after-load 'paredit '(define-key paredit-mode-map (kbd "M-h") 'paredit-backward-kill-word))
-(eval-after-load 'markdown-mode '(define-key markdown-mode-map (kbd "M-v") 'yank))
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.todo$" . org-mode))
 (eval-after-load 'slime '(fix-paredit-repl))
