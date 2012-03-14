@@ -42,12 +42,12 @@
 (add-to-list 'load-path "~/.emacs.d/site-lisp")
 
 (eval-after-load "deft" '(defun journal ()
-  "Grab a new deft file and populate it with a joural entry for right now"
-  (interactive)
-  (select-frame-set-input-focus (make-frame))
-  (deft-new-file)
-  (visual-line-mode 1)
-  (insert "journal entry " (format-time-string "%Y%m%d%H%M%S") "
+                           "Grab a new deft file and populate it with a joural entry for right now"
+                           (interactive)
+                           (select-frame-set-input-focus (make-frame))
+                           (deft-new-file)
+                           (visual-line-mode 1)
+                           (insert "journal entry " (format-time-string "%Y%m%d%H%M%S") "
 
 ")))
 
@@ -166,7 +166,7 @@
   (interactive)
   (local-set-key "{" 'paredit-open-curly)
   (local-set-key "}" 'paredit-close-curly)
-  (modify-syntax-entry ?\{ "(}") 
+  (modify-syntax-entry ?\{ "(}")
   (modify-syntax-entry ?\} "){")
   (modify-syntax-entry ?\[ "(]")
   (modify-syntax-entry ?\] ")["))
@@ -197,7 +197,7 @@
 
   (reb-update-regexp)
   (let ((re (with-output-to-string
-	      (print (reb-target-binding reb-regexp)))))
+              (print (reb-target-binding reb-regexp)))))
     (kill-new (substring re 2 (- (length re) 2)))
     (message "Regexp copied to kill-ring")))
 
