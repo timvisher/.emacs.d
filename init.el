@@ -54,7 +54,7 @@
 (defun copy-buffer-and-kill-frame ()
   (interactive)
   (kill-ring-save (point-min) (point-max))
-  (delete-frame (selected-frame)))
+  (delete-frame))
 
 (eval-after-load "deft" '(defun kill-ring-deft ()
                            "Make a new deft file and yank the kill ring into it"
