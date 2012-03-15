@@ -49,7 +49,8 @@
                            (visual-line-mode 1)
                            (insert "journal entry " (format-time-string "%Y%m%d%H%M%S") "
 
-")))
+")
+                           (local-set-key (kbd "C-c C-q") 'delete-frame)))
 
 (defun copy-buffer-and-kill-frame ()
   (interactive)
