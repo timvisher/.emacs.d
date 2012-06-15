@@ -81,7 +81,7 @@
         (lein-home (locate-dominating-file default-directory "project.clj")))
     (progn
       (cd lein-home)
-      (async-shell-command "lein ring server" "*lein server*")
+      (start-process "lein-server" "*lein server*" "lein" "ring" "server")
       (cd current-directory))))
 
 (defun drag-up ()
