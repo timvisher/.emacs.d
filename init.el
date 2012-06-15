@@ -1,6 +1,8 @@
 (require 'package)
 (add-to-list 'package-archives
              '("marmalade" . "http://marmalade-repo.org/packages/") t)
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.milkbox.net/packages/") t)
 (package-initialize)
 
 (require 'info)
@@ -13,7 +15,7 @@
   (package-refresh-contents))
 
 (defvar my-packages '(clojure-mode
-                      clojure-test-mode
+                      ;; clojure-test-mode
                       deft
                       elein
                       elisp-slime-nav
@@ -22,12 +24,10 @@
                       ido-ubiquitous
                       magit
                       markdown-mode
-                      marmalade
                       maxframe
-                      slime
                       smex
-                      find-file-in-project
                       paredit
+                      find-file-in-project
                       starter-kit
                       starter-kit-bindings
                       starter-kit-eshell
@@ -167,6 +167,8 @@
   (interactive)
   (local-set-key "{" 'paredit-open-curly)
   (local-set-key "}" 'paredit-close-curly)
+  (local-set-key "[" 'paredit-open-square)
+  (local-set-key "]" 'paredit-close-square)
   (modify-syntax-entry ?\{ "(}")
   (modify-syntax-entry ?\} "){")
   (modify-syntax-entry ?\[ "(]")
@@ -177,6 +179,10 @@
 (global-set-key (kbd "C-h") 'backward-delete-char-untabify)
 (eval-after-load 'paredit '(define-key paredit-mode-map (kbd "C-h") 'paredit-backward-delete))
 (eval-after-load 'paredit '(define-key paredit-mode-map (kbd "M-h") 'paredit-backward-kill-word))
+
+(defun turn-on-eldoc () (eldoc-mode 1))
+
+(eval-after-load 'clojure-mode '(add-hook 'clojure-mode-hook 'turn-on-eldoc))
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.todo$" . org-mode))
 (eval-after-load 'slime '(fix-paredit-repl))
@@ -259,13 +265,15 @@
  '(erc-autojoin-delay 30)
  '(erc-autojoin-mode t)
  '(erc-email-userid "tim.visher@gmail.com")
+ '(erc-modules (quote (autoaway autojoin button completion fill irccontrols list match menu move-to-prompt netsplit networks noncommands readonly ring services stamp track)))
  '(erc-nick "timvisher")
  '(erc-nick-notify-cmd "notify")
  '(erc-prompt-for-password t)
  '(erc-user-full-name "Tim Visher")
  '(find-ls-option (quote ("-print0 | xargs -0 ls -ld" . "-ld")))
  '(global-hl-line-mode nil)
- '(grep-find-template "find . <X> -type f <F> -exec grep <C> -nH <R> {} ;")
+ '(grep-find-ignored-directories (quote ("SCCS" "RCS" "CVS" "MCVS" ".svn" ".git" ".hg" ".bzr" "_MTN" "_darcs" "{arch}" "target")))
+ '(grep-find-template "find . <X> -type f <F> -exec grep <C> -nH <R> {} \\;")
  '(ido-ubiquitous-command-exceptions (quote (unhighlight-regexp)))
  '(ido-ubiquitous-mode t)
  '(indent-tabs-mode nil)
