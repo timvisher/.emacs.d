@@ -167,29 +167,31 @@
   (kmacro-push-ring)
   (edit-kbd-macro 'view-lossage))
 
-(defun fix-paredit-repl ()
-  (interactive)
-  (local-set-key "{" 'paredit-open-curly)
-  (local-set-key "}" 'paredit-close-curly)
-  (local-set-key "[" 'paredit-open-square)
-  (local-set-key "]" 'paredit-close-square)
-  (modify-syntax-entry ?\{ "(}")
-  (modify-syntax-entry ?\} "){")
-  (modify-syntax-entry ?\[ "(]")
-  (modify-syntax-entry ?\] ")["))
 
 (global-set-key (kbd "M-h") 'backward-kill-word)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "C-h") 'backward-delete-char-untabify)
 (eval-after-load 'paredit '(define-key paredit-mode-map (kbd "C-h") 'paredit-backward-delete))
 (eval-after-load 'paredit '(define-key paredit-mode-map (kbd "M-h") 'paredit-backward-kill-word))
-
+(eval-after-load 'paredit '(define-key paredit-mode-map (kbd "{") 'paredit-open-curly))
+(eval-after-load 'paredit '(define-key paredit-mode-map (kbd "}") 'paredit-close-curly))
+(eval-after-load 'paredit '(define-key paredit-mode-map (kbd "[") 'paredit-open-square))
+(eval-after-load 'paredit '(define-key paredit-mode-map (kbd "]") 'paredit-close-square))
 (defun turn-on-eldoc () (eldoc-mode 1))
-
+(defun turn-on-clojure-test () (clojure-test-mode 1))
+(defun turn-on-paredit () (paredit-mode 1))
 (eval-after-load 'clojure-mode '(add-hook 'clojure-mode-hook 'turn-on-eldoc))
+;;; Sadly clojure-test-mode currently requires slime which messes with clojure-jack-in. Figure this out at some point.
+;; (eval-after-load 'clojure-mode '(add-hook 'clojure-mode-hook 'turn-on-clojure-test))
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.todo$" . org-mode))
-(eval-after-load 'slime '(fix-paredit-repl))
+
+(defun fix-slime-repl-lisp-indent-function () (setq lisp-indent-function 'clojure-indent-function))
+(defun fix-slime-repl-syntax-table () (set-syntax-table clojure-mode-syntax-table))
+
+(eval-after-load 'slime '(add-hook 'slime-repl-mode-hook 'fix-slime-repl-lisp-indent-function))
+(eval-after-load 'slime '(add-hook 'slime-repl-mode-hook 'fix-slime-repl-syntax-table))
+(eval-after-load 'slime '(add-hook 'slime-repl-mode-hook 'turn-on-paredit))
 
 (global-set-key (kbd "<f1> r") 'info-emacs-manual)
 
