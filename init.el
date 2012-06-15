@@ -43,6 +43,8 @@
 
 (add-to-list 'load-path "~/.emacs.d/site-lisp")
 
+(eval-after-load "markdown" '(define-key markdown-mode-map (kbd "C-j") 'markdown-enter-key))
+
 (eval-after-load "deft" '(defun journal ()
                            "Grab a new deft file and populate it with a joural entry for right now"
                            (interactive)
