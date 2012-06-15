@@ -44,5 +44,7 @@
 
 (set-register ?t '"//mlvv258a/temp")
 (set-register ?c '(file . "d:/view_store/z002w5en_view"))
+(set-register ?~ '(file . "d:/view_store/z002w5en"))
+(set-register ?w '(file . "c:/Documents and Settings/z002w5en"))
 
 (eval-after-load 'textmate '(add-to-list '*textmate-project-roots* ".project"))
