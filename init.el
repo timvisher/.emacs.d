@@ -8,6 +8,8 @@
 (require 'info)
 (add-to-list 'Info-directory-list (concat (getenv "HOME") "/.emacs.d/info"))
 
+(require 'dired-x)
+
 (setq send-mail-function 'mailclient-send-it)
 (setq message-send-mail-function 'message-send-mail-with-mailclient)
 
