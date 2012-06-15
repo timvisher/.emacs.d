@@ -290,6 +290,7 @@
  '(mouse-avoidance-mode (quote banish) nil (avoid))
  '(save-place-file (concat (getenv "HOME") "/.emacs.d/" system-name ".places"))
  '(sentence-end-double-space nil)
+ '(solarized-contrast (quote high))
  '(tab-width 2)
  '(text-mode-hook (quote (whitespace-mode text-mode-hook-identify)))
  '(transient-mark-mode nil)
