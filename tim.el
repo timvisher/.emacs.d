@@ -49,3 +49,5 @@
 (defun cradle-deploy ()
   (interactive)
   (cradle-run "deploy"))
+
+(erc :server "irc.freenode.net" :nick "timvisher")
