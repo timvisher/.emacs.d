@@ -324,6 +324,8 @@
  '(save-place-file (concat (getenv "HOME") "/.emacs.d/" system-name ".places"))
  '(sentence-end-double-space nil)
  '(solarized-contrast (quote high))
+ '(sql-ms-options (quote ("-w" "15000" "-n")))
+ '(sql-ms-program "osql")
  '(tab-width 2)
  '(text-mode-hook (quote (whitespace-mode text-mode-hook-identify)))
  '(transient-mark-mode nil)
