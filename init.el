@@ -77,11 +77,14 @@
 
 (defun lein-server ()
   (interactive)
-  (let ((current-directory default-directory)
-        (lein-home (locate-dominating-file default-directory "project.clj")))
+  (let* ((process-name "lein-server")
+         (process (get-process process-name))
+         (current-directory default-directory)
+         (lein-home (locate-dominating-file default-directory "project.clj")))
     (progn
+      (if process (delete-process process))
       (cd lein-home)
-      (start-process "lein-server" "*lein server*" "lein" "ring" "server")
+      (start-process process-name "*lein server*" "lein" "ring" "server")
       (cd current-directory))))
 
 (defun position-in-line ()
