@@ -43,6 +43,9 @@
 
 (add-to-list 'load-path "~/.emacs.d/site-lisp")
 
+(eval-after-load 'winner (global-set-key (kbd "C-c [") 'winner-undo))
+(eval-after-load 'winner (global-set-key (kbd "C-c ]") 'winner-redo))
+
 (eval-after-load "markdown" '(define-key markdown-mode-map (kbd "C-j") 'markdown-enter-key))
 
 (eval-after-load "deft" '(defun journal ()
@@ -331,7 +334,9 @@
  '(transient-mark-mode nil)
  '(user-mail-address "tim.visher@gmail.com")
  '(vimgolf-key "da83e81eff86621ca95f8af89c387d19")
- '(visual-line-fringe-indicators (quote (left-curly-arrow right-curly-arrow))))
+ '(visual-line-fringe-indicators (quote (left-curly-arrow right-curly-arrow)))
+ '(winner-dont-bind-my-keys t)
+ '(winner-mode t nil (winner)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
