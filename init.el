@@ -16,7 +16,7 @@
 (when (not package-archive-contents)
   (package-refresh-contents))
 
-(defvar my-packages '(clojure-mode
+(defvar timvisher/my-packages '(clojure-mode
                       ;; clojure-test-mode
                       deft
                       elein
@@ -37,7 +37,7 @@
                       textmate
                       vimgolf))
 
-(dolist (p my-packages)
+(dolist (p timvisher/my-packages)
   (when (not (package-installed-p p))
     (package-install p)))
 
