@@ -195,7 +195,7 @@
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "C-h") 'backward-delete-char-untabify)
 
-(defun timvisher-map-custom-paredit-keys ()
+(defun timvisher/map-custom-paredit-keys ()
   (define-key paredit-mode-map (kbd "C-h") 'paredit-backward-delete)
   (define-key paredit-mode-map (kbd "M-h") 'paredit-backward-kill-word)
   (define-key paredit-mode-map (kbd "{") 'paredit-open-curly)
@@ -203,35 +203,35 @@
   (define-key paredit-mode-map (kbd "[") 'paredit-open-square)
   (define-key paredit-mode-map (kbd "]") 'paredit-close-square))
 
-(defun timvisher-turn-on-eldoc () (eldoc-mode 1))
+(defun timvisher/turn-on-eldoc () (eldoc-mode 1))
 
-(defun timvisher-turn-on-clojure-test () (clojure-test-mode 1))
+(defun timvisher/turn-on-clojure-test () (clojure-test-mode 1))
 
-(defun timvisher-turn-on-elein ()
+(defun timvisher/turn-on-elein ()
   (unless (featurep 'elein)
     (require 'elein)))
 
 (eval-after-load 'paredit
-  '(timvisher-map-custom-paredit-keys))
+  '(timvisher/map-custom-paredit-keys))
 
 (eval-after-load 'clojure-mode
-  '(add-hook 'clojure-mode-hook 'timvisher-turn-on-eldoc))
+  '(add-hook 'clojure-mode-hook 'timvisher/turn-on-eldoc))
 (eval-after-load 'clojure-mode
-  '(add-hook 'clojure-mode-hook 'timvisher-turn-on-elein))
+  '(add-hook 'clojure-mode-hook 'timvisher/turn-on-elein))
 ;;; Sadly clojure-test-mode currently requires slime which messes with clojure-jack-in. Figure this out at some point.
-;; (eval-after-load 'clojure-mode '(add-hook 'clojure-mode-hook 'timvisher-turn-on-clojure-test))
+;; (eval-after-load 'clojure-mode '(add-hook 'clojure-mode-hook 'timvisher/turn-on-clojure-test))
 
 (defun fix-slime-repl-lisp-indent-function () (setq lisp-indent-function 'clojure-indent-function))
 (defun fix-slime-repl-syntax-table () (set-syntax-table clojure-mode-syntax-table))
-(defun timvisher-turn-on-paredit () (paredit-mode 1))
+(defun timvisher/turn-on-paredit () (paredit-mode 1))
 
-(defun timvisher-fix-slime-repl ()
+(defun timvisher/fix-slime-repl ()
   (add-hook 'slime-repl-mode-hook 'fix-slime-repl-lisp-indent-function)
   (add-hook 'slime-repl-mode-hook 'fix-slime-repl-syntax-table)
-  (add-hook 'slime-repl-mode-hook 'timvisher-turn-on-paredit))
+  (add-hook 'slime-repl-mode-hook 'timvisher/turn-on-paredit))
 
 (eval-after-load 'slime
-  '(timvisher-fix-slime-repl))
+  '(timvisher/fix-slime-repl))
 
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.todo$" . org-mode))
