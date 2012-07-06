@@ -220,13 +220,13 @@
 ;;; Sadly clojure-test-mode currently requires slime which messes with clojure-jack-in. Figure this out at some point.
 ;; (eval-after-load 'clojure-mode '(add-hook 'clojure-mode-hook 'timvisher/turn-on-clojure-test))
 
-(defun fix-slime-repl-lisp-indent-function () (setq lisp-indent-function 'clojure-indent-function))
-(defun fix-slime-repl-syntax-table () (set-syntax-table clojure-mode-syntax-table))
+(defun timvisher/fix-slime-repl-lisp-indent-function () (setq lisp-indent-function 'clojure-indent-function))
+(defun timvisher/fix-slime-repl-syntax-table () (set-syntax-table clojure-mode-syntax-table))
 (defun timvisher/turn-on-paredit () (paredit-mode 1))
 
 (defun timvisher/fix-slime-repl ()
-  (add-hook 'slime-repl-mode-hook 'fix-slime-repl-lisp-indent-function)
-  (add-hook 'slime-repl-mode-hook 'fix-slime-repl-syntax-table)
+  (add-hook 'slime-repl-mode-hook 'timvisher/fix-slime-repl-lisp-indent-function)
+  (add-hook 'slime-repl-mode-hook 'timvisher/fix-slime-repl-syntax-table)
   (add-hook 'slime-repl-mode-hook 'timvisher/turn-on-paredit))
 
 (eval-after-load 'slime
