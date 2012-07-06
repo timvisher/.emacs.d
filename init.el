@@ -52,7 +52,7 @@
   '(define-key markdown-mode-map (kbd "C-j") 'markdown-enter-key))
 
 (eval-after-load "deft"
-  '(defun journal ()
+  '(defun timvisher/journal ()
      "Grab a new deft file and populate it with a joural entry for right now"
      (interactive)
      (select-frame-set-input-focus (make-frame))
