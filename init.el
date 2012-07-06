@@ -184,8 +184,6 @@
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.todo$" . org-mode))
 
-(global-set-key (kbd "<f1> r") 'info-emacs-manual)
-
 (put 'set-goal-column 'disabled nil)
 
 (setq whitespace-style '(trailing
