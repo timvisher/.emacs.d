@@ -69,7 +69,7 @@
   (delete-frame))
 
 (eval-after-load "deft"
-  '(defun kill-ring-deft ()
+  '(defun timvisher/kill-ring-deft ()
      "Make a new deft file and yank the kill ring into it"
      (interactive)
      (select-frame-set-input-focus (make-frame))
@@ -181,7 +181,7 @@
 
 (defalias 'qrr 'query-replace-regexp) ;; Yegge
 (defalias 's 'ispell)
-(defalias 'mdf 'kill-ring-deft)
+(defalias 'mdf 'timvisher/kill-ring-deft)
 
 ;; keys
 
