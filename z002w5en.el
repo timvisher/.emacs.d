@@ -1,4 +1,5 @@
 (require 'cl)
+(require 'w32-browser)
 
 ;; (add-to-list 'load-path "~/.emacs.d/site-lisp")
 ;; (add-to-list 'load-path "~/.emacs.d/site-lisp/eclim")
