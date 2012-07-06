@@ -202,12 +202,22 @@
   (define-key paredit-mode-map (kbd "}") 'paredit-close-curly)
   (define-key paredit-mode-map (kbd "[") 'paredit-open-square)
   (define-key paredit-mode-map (kbd "]") 'paredit-close-square))
+
 (defun timvisher-turn-on-eldoc () (eldoc-mode 1))
+
 (defun timvisher-turn-on-clojure-test () (clojure-test-mode 1))
+
+(defun timvisher-turn-on-elein ()
+  (unless (featurep 'elein)
+    (require 'elein)))
+
 (eval-after-load 'paredit
   '(timvisher-map-custom-paredit-keys))
+
 (eval-after-load 'clojure-mode
   '(add-hook 'clojure-mode-hook 'timvisher-turn-on-eldoc))
+(eval-after-load 'clojure-mode
+  '(add-hook 'clojure-mode-hook 'timvisher-turn-on-elein))
 ;;; Sadly clojure-test-mode currently requires slime which messes with clojure-jack-in. Figure this out at some point.
 ;; (eval-after-load 'clojure-mode '(add-hook 'clojure-mode-hook 'timvisher-turn-on-clojure-test))
 
@@ -264,8 +274,6 @@
 (remove-hook 'prog-mode-hook 'esk-turn-on-hl-line-mode)
 (add-hook 'text-mode-hook 'visual-line-mode)
 (add-hook 'text-mode-hook 'whitespace-mode)
-
-(require 'elein)
 
 (fset 'vimgolf-harvest
       (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([134217788 25 67108896 134217790 23 134217788 67108896 5 134217847 1 19 115 116 97 114 116 32 102 105 108 101 1 16 134217848 97 112 45 116 45 102 13 118 105 109 9 21 24 113 32 25 46 112 114 101 115 101 110 116 97 116 105 111 110 46 109 100 13 14 14 14 19 101 110 100 32 102 105 108 101 1 134217848 97 112 45 116 45 102 13 118 105 109 9 21 24 113 9 134217832 134217832 115 116 97 114 116 46 21 24 113 13 134217848 97 112 45 116 45 102 13 118 105 109 9 21 24 113 9 119 111 114 107 46 21 24 113 13 14 14 67108896 134217790 134217848 97 112 45 116 45 102 13 118 105 109 9 21 24 113 9 101 110 100 46 21 24 113 13 134217788 82 101 115 101 97 114 99 104 32 86 105 109 71 111 108 102 32 105 110 32 69 109 97 99 115 32 48 21 24 113 32 5 32 35 64 119 101 98 32 64 104 111 109 101 32 104 116 116 112 58 47 47 118 105 109 103 111 108 102 134217826 106 46 109 112 47 5 48 21 24 113 1 11 11 25 25 25 16 16 134217828 82 101 99 111 114 100 14 1 134217828 80 117 98 108 105 115 104 134217788 67108896 14 14 14 134217848 97 112 45 116 45 98 13 118 105 109 103 9 13] 0 "%d")) arg)))
