@@ -101,7 +101,7 @@
       (beginning-of-line)
       (- current-position (point)))))
 
-(defun drag-up ()
+(defun timvisher/drag-up ()
   (interactive)
   (let ((timvisher/position-in-line (timvisher/position-in-line)))
     (beginning-of-line)
@@ -112,7 +112,7 @@
     (previous-line)
     (goto-char (+ (point) timvisher/position-in-line))))
 
-(defun drag-down ()
+(defun timvisher/drag-down ()
   (interactive)
   (let ((timvisher/position-in-line (timvisher/position-in-line)))
     (beginning-of-line)
@@ -120,9 +120,6 @@
     (next-line)
     (yank)
     (previous-line)
-
-(global-set-key (kbd "<M-s-down>") 'drag-down)
-(global-set-key (kbd "<M-s-up>") 'drag-up)
     (goto-char (+ (point) timvisher/position-in-line))))
 
 ;; Yegge
@@ -176,6 +173,8 @@
         (set-visited-file-name newname)
         (set-buffer-modified-p nil)
         t))))
+(global-set-key (kbd "<M-s-down>") 'timvisher/drag-down)
+(global-set-key (kbd "<M-s-up>") 'timvisher/drag-up)
 
 ;; aliases
 
