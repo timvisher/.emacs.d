@@ -256,14 +256,14 @@
     (kill-new (substring re 2 (- (length re) 2)))
     (message "Regexp copied to kill-ring")))
 
-(defun turn-on-textmate-mode ()
+(defun timvisher/turn-on-textmate-mode ()
   (textmate-mode 1))
 
-(defun turn-on-subword-mode ()
+(defun timvisher/turn-on-subword-mode ()
   (subword-mode 1))
 
 (add-hook 'prog-mode-hook 'hs-minor-mode)
-(add-hook 'prog-mode-hook 'turn-on-textmate-mode)
+(add-hook 'prog-mode-hook 'timvisher/turn-on-textmate-mode)
 (add-hook 'prog-mode-hook 'glasses-mode)
 (add-hook 'prog-mode-hook 'whitespace-mode)
 (add-hook 'applescript-mode-hook 'run-prog-mode-hook)
@@ -300,8 +300,8 @@
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector ["#2d3743" "#ff4242" "#74af68" "#dbdb95" "#34cae2" "#008b8b" "#00ede1" "#e1e1e0"])
  '(backup-directory-alist (\` (("." \, (concat (getenv "HOME") "/.emacs.d/" system-name "-backups")))))
+ '(c-mode-common-hook (quote (timvisher/turn-on-subword-mode)))
  '(column-number-mode t)
- '(c-mode-common-hook (quote (turn-on-subword-mode)))
  '(css-indent-offset 3)
  '(custom-enabled-themes (quote (solarized-light)))
  '(custom-safe-themes (quote ("91f2c4c623100a649cde613e8336eaa2ee144104" "62b81fe9b7d13eef0539d6a0f5c0c37170c9e248" "5600dc0bb4a2b72a613175da54edb4ad770105aa" "0174d99a8f1fdc506fa54403317072982656f127" default)))
