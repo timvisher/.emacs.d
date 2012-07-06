@@ -95,7 +95,7 @@
       (start-process process-name "*lein server*" "lein" "ring" "server")
       (cd current-directory))))
 
-(defun position-in-line ()
+(defun timvisher/position-in-line ()
   (save-excursion
     (let ((current-position (point)))
       (beginning-of-line)
@@ -103,27 +103,27 @@
 
 (defun drag-up ()
   (interactive)
-  (let ((position-in-line (position-in-line)))
+  (let ((timvisher/position-in-line (timvisher/position-in-line)))
     (beginning-of-line)
     (kill-visual-line 1)
     (previous-line)
     (yank)
     (beginning-of-line)
     (previous-line)
-    (goto-char (+ (point) position-in-line))))
+    (goto-char (+ (point) timvisher/position-in-line))))
 
 (defun drag-down ()
   (interactive)
-  (let ((position-in-line (position-in-line)))
+  (let ((timvisher/position-in-line (timvisher/position-in-line)))
     (beginning-of-line)
     (kill-visual-line)
     (next-line)
     (yank)
     (previous-line)
-    (goto-char (+ (point) position-in-line))))
 
 (global-set-key (kbd "<M-s-down>") 'drag-down)
 (global-set-key (kbd "<M-s-up>") 'drag-up)
+    (goto-char (+ (point) timvisher/position-in-line))))
 
 ;; Yegge
 (defun swap-windows ()
