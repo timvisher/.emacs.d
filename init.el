@@ -221,7 +221,7 @@
 (require 'server)
 (unless (server-running-p) (server-start))
 
-(maximize-frame)
+(if (display-graphic-p) (maximize-frame))
 
 ;;; Customizations
 
