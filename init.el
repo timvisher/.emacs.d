@@ -344,7 +344,6 @@
  '(text-mode-hook (quote (whitespace-mode text-mode-hook-identify)))
  '(transient-mark-mode nil)
  '(user-mail-address "tim.visher@gmail.com")
- '(vimgolf-key "da83e81eff86621ca95f8af89c387d19")
  '(visual-line-fringe-indicators (quote (left-curly-arrow right-curly-arrow)))
  '(winner-dont-bind-my-keys t)
  '(winner-mode t nil (winner)))
