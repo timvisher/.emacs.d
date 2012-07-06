@@ -186,12 +186,6 @@
 
 (put 'set-goal-column 'disabled nil)
 
-(setq whitespace-style '(trailing
-                         space-before-tab
-                         face
-                         indentation
-                         space-after-tab))
-
 ;;; Make re-builder copy just the text without the `"` characters.
 (defun reb-copy ()
   "Copy current RE into the kill ring for later insertion."
@@ -299,6 +293,7 @@
  '(transient-mark-mode nil)
  '(user-mail-address "tim.visher@gmail.com")
  '(visual-line-fringe-indicators (quote (left-curly-arrow right-curly-arrow)))
+ '(whitespace-style (quote (trailing space-before-tab face indentation space-after-tab)))
  '(winner-dont-bind-my-keys t)
  '(winner-mode t nil (winner)))
 (custom-set-faces
