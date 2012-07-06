@@ -273,7 +273,8 @@
 ;;; If you get the dreaded ~/.emacs.d/server is not safe error on
 ;;; Windows. ~/.emacs.d/server -> Properties -> Security -> Advanced
 ;;; -> Owner and then set it to you.
-(server-start)
+(require 'server)
+(unless (server-running-p) (server-start))
 
 (maximize-frame)
 
