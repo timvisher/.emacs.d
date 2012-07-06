@@ -83,7 +83,7 @@
      (goto-char (point-min))
      (local-set-key (kbd "C-c C-q") 'timvisher/copy-buffer-and-kill-frame)))
 
-(defun lein-server ()
+(defun timvisher/lein-server ()
   (interactive)
   (let* ((process-name "lein-server")
          (process (get-process process-name))
