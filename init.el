@@ -63,7 +63,7 @@
 ")
      (local-set-key (kbd "C-c C-q") 'delete-frame)))
 
-(defun copy-buffer-and-kill-frame ()
+(defun timvisher/copy-buffer-and-kill-frame ()
   (interactive)
   (kill-ring-save (point-min) (point-max))
   (delete-frame))
@@ -81,7 +81,7 @@
 
 ")
      (goto-char (point-min))
-     (local-set-key (kbd "C-c C-q") 'copy-buffer-and-kill-frame)))
+     (local-set-key (kbd "C-c C-q") 'timvisher/copy-buffer-and-kill-frame)))
 
 (defun lein-server ()
   (interactive)
