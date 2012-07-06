@@ -43,40 +43,45 @@
 
 (add-to-list 'load-path "~/.emacs.d/site-lisp")
 
-(eval-after-load 'winner (global-set-key (kbd "C-c [") 'winner-undo))
-(eval-after-load 'winner (global-set-key (kbd "C-c ]") 'winner-redo))
+(eval-after-load 'winner
+  (global-set-key (kbd "C-c [") 'winner-undo))
+(eval-after-load 'winner
+  (global-set-key (kbd "C-c ]") 'winner-redo))
 
-(eval-after-load "markdown" '(define-key markdown-mode-map (kbd "C-j") 'markdown-enter-key))
+(eval-after-load "markdown"
+  '(define-key markdown-mode-map (kbd "C-j") 'markdown-enter-key))
 
-(eval-after-load "deft" '(defun journal ()
-                           "Grab a new deft file and populate it with a joural entry for right now"
-                           (interactive)
-                           (select-frame-set-input-focus (make-frame))
-                           (deft-new-file)
-                           (visual-line-mode 1)
-                           (insert "journal entry " (format-time-string "%Y%m%d%H%M%S") "
+(eval-after-load "deft"
+  '(defun journal ()
+     "Grab a new deft file and populate it with a joural entry for right now"
+     (interactive)
+     (select-frame-set-input-focus (make-frame))
+     (deft-new-file)
+     (visual-line-mode 1)
+     (insert "journal entry " (format-time-string "%Y%m%d%H%M%S") "
 
 ")
-                           (local-set-key (kbd "C-c C-q") 'delete-frame)))
+     (local-set-key (kbd "C-c C-q") 'delete-frame)))
 
 (defun copy-buffer-and-kill-frame ()
   (interactive)
   (kill-ring-save (point-min) (point-max))
   (delete-frame))
 
-(eval-after-load "deft" '(defun kill-ring-deft ()
-                           "Make a new deft file and yank the kill ring into it"
-                           (interactive)
-                           (select-frame-set-input-focus (make-frame))
-                           (deft-new-file)
-                           (visual-line-mode 1)
-                           (yank)
-                           (goto-char (point-min))
-                           (insert "
+(eval-after-load "deft"
+  '(defun kill-ring-deft ()
+     "Make a new deft file and yank the kill ring into it"
+     (interactive)
+     (select-frame-set-input-focus (make-frame))
+     (deft-new-file)
+     (visual-line-mode 1)
+     (yank)
+     (goto-char (point-min))
+     (insert "
 
 ")
-                           (goto-char (point-min))
-                           (local-set-key (kbd "C-c C-q") 'copy-buffer-and-kill-frame)))
+     (goto-char (point-min))
+     (local-set-key (kbd "C-c C-q") 'copy-buffer-and-kill-frame)))
 
 (defun lein-server ()
   (interactive)
@@ -199,8 +204,10 @@
   (define-key paredit-mode-map (kbd "]") 'paredit-close-square))
 (defun timvisher-turn-on-eldoc () (eldoc-mode 1))
 (defun timvisher-turn-on-clojure-test () (clojure-test-mode 1))
-(eval-after-load 'paredit '(timvisher-map-custom-paredit-keys))
-(eval-after-load 'clojure-mode '(add-hook 'clojure-mode-hook 'timvisher-turn-on-eldoc))
+(eval-after-load 'paredit
+  '(timvisher-map-custom-paredit-keys))
+(eval-after-load 'clojure-mode
+  '(add-hook 'clojure-mode-hook 'timvisher-turn-on-eldoc))
 ;;; Sadly clojure-test-mode currently requires slime which messes with clojure-jack-in. Figure this out at some point.
 ;; (eval-after-load 'clojure-mode '(add-hook 'clojure-mode-hook 'timvisher-turn-on-clojure-test))
 
@@ -213,7 +220,8 @@
   (add-hook 'slime-repl-mode-hook 'fix-slime-repl-syntax-table)
   (add-hook 'slime-repl-mode-hook 'timvisher-turn-on-paredit))
 
-(eval-after-load 'slime '(timvisher-fix-slime-repl))
+(eval-after-load 'slime
+  '(timvisher-fix-slime-repl))
 
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.todo$" . org-mode))
