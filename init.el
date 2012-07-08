@@ -30,6 +30,7 @@
                       starter-kit-bindings
                       starter-kit-eshell
                       starter-kit-lisp
+                      textmate
                       vimgolf))
 
 (dolist (p timvisher/my-packages)
@@ -89,11 +90,9 @@
 
 ;;; helm is the bee's knees
 (require 'helm-config)
-(require 'helm-ls-git)
-
-;;; Psh. Who needs textmate-minor-mode?
-(global-set-key (kbd "s-t") 'helm-ls-git-ls)
-(global-set-key (kbd "s-T") 'helm-imenu)
+;;; TODO Play with helm-ls-git. Right now it doesn't seem to list every file available to git, which is the main reason it should be able to replace textmate-goto-file
+;; (require 'helm-ls-git)
+;; (define-key *textmate-mode-map* [(super t)] 'helm-ls-git-ls)
 
 ;;; Could there be a better way than helm-buffers-list to switch buffers?
 (global-set-key (kbd "C-x C-b") 'helm-buffers-list)
@@ -161,12 +160,19 @@
   (add-hook 'slime-repl-mode-hook 'timvisher/fix-slime-repl-syntax-table)
   (add-hook 'slime-repl-mode-hook 'timvisher/turn-on-paredit))
 
+(eval-after-load 'textmate
+  '(define-key *textmate-mode-map* [(super shift t)] 'helm-imenu))
+
 ;;; Looky, looky, I've got hooky
 (add-hook 'prog-mode-hook 'hs-minor-mode)
 (add-hook 'prog-mode-hook 'glasses-mode)
 (add-hook 'prog-mode-hook 'whitespace-mode)
+(add-hook 'prog-mode-hook 'timvisher/turn-on-textmate-mode)
 (remove-hook 'prog-mode-hook 'esk-local-comment-auto-fill)
 (remove-hook 'prog-mode-hook 'esk-turn-on-hl-line-mode)
+
+(defun timvisher/turn-on-textmate-mode ()
+  (textmate-mode 1))
 
 (add-hook 'applescript-mode-hook 'run-prog-mode-hook)
 
