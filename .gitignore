@@ -12,3 +12,5 @@ tramp
 tutorial/
 url/
 auto-save-list/
+swank/
+helm-c-adaptive-history
