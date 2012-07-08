@@ -231,6 +231,12 @@
 (setq redisplay-dont-pause t)
 (put 'narrow-to-region 'disabled nil)
 
+;;; helm is the bee's knees
+(require 'helm-config)
+(require 'helm-ls-git)
+(global-set-key (kbd "s-t") 'helm-ls-git-ls)
+(global-set-key (kbd "s-T") 'helm-imenu)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -275,6 +281,8 @@
  '(grep-find-template "find . <X> -type f <F> -exec grep <C> -nH <R> {} ;")
  '(ido-ubiquitous-command-exceptions (quote (unhighlight-regexp)))
  '(ido-ubiquitous-mode t)
+ '(helm-M-x-always-save-history t)
+ '(helm-mode t)
  '(indent-tabs-mode nil)
  '(inferior-lisp-program "lein repl")
  '(inhibit-startup-screen nil)
