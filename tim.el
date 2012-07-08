@@ -1,5 +1,8 @@
 ;; Startup
 
+(eval-after-load 'grep
+  '(setq grep-find-template "gfind . <X> -type f <F> -exec grep <C> -nH <R> {} \\;"))
+
 (setq exec-path (split-string (getenv "PATH") ":"))
 (setq exec-path (append (list (concat (getenv "HOME") "/.gem/ruby/1.8/bin"))
                         (let ((brew-home "/usr/local"))

@@ -375,7 +375,6 @@
  '(find-ls-option (quote ("-print0 | xargs -0 ls -ld" . "-ld")))
  '(global-hl-line-mode nil)
  '(grep-find-ignored-directories (quote ("SCCS" "RCS" "CVS" "MCVS" ".svn" ".git" ".hg" ".bzr" "_MTN" "_darcs" "{arch}" "target")))
- '(grep-find-template "find . <X> -type f <F> -exec grep <C> -nH <R> {} ;")
  '(helm-M-x-always-save-history t)
  '(helm-c-use-adaptative-sorting t)
  '(helm-mode t)
