@@ -34,7 +34,6 @@
                       starter-kit-bindings
                       starter-kit-eshell
                       starter-kit-lisp
-                      textmate
                       vimgolf))
 
 (dolist (p timvisher/my-packages)
@@ -197,14 +196,10 @@
     (kill-new (substring re 2 (- (length re) 2)))
     (message "Regexp copied to kill-ring")))
 
-(defun timvisher/turn-on-textmate-mode ()
-  (textmate-mode 1))
-
 (defun timvisher/turn-on-subword-mode ()
   (subword-mode 1))
 
 (add-hook 'prog-mode-hook 'hs-minor-mode)
-(add-hook 'prog-mode-hook 'timvisher/turn-on-textmate-mode)
 (add-hook 'prog-mode-hook 'glasses-mode)
 (add-hook 'prog-mode-hook 'whitespace-mode)
 (add-hook 'applescript-mode-hook 'run-prog-mode-hook)
