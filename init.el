@@ -52,6 +52,9 @@
 ;;; Alright, time's up. Let's do enabling and configuring modes.
 ;;; ----------------------------------------------------------------------------
 
+;;; Growl from Emacs? Boom!
+(require 'todochiku)
+
 ;;; Make system and user specific emacs temp files
 (setq eshell-history-file-name (concat (getenv "HOME") "/.emacs.d/eshell/" system-name "-history"))
 
@@ -207,6 +210,11 @@
 ;;; Now, let's make Emacs our own.
 ;;; ----------------------------------------------------------------------------
 
+;;; Wouldn't it be so awesome if growl notified us when we were mentioned?
+
+(defun timvisher/notify-of-mention (match-type nickuserhost message)
+  (todochiku-message nickuserhost message (cdr (assoc 'irc todochiku-icons))))
+
 ;;; Deft is pretty awesome, and my journal entries should probably be kept in it
 (eval-after-load "deft"
   '(defun timvisher/journal ()
@@ -354,6 +362,7 @@
  '(erc-prompt-for-password nil)
  '(erc-save-queries-on-quit t)
  '(erc-services-mode t)
+ '(erc-text-matched-hook (quote (erc-log-matches timvisher/notify-of-mention)))
  '(erc-user-full-name "Tim Visher")
  '(find-ls-option (quote ("-print0 | xargs -0 ls -ld" . "-ld")))
  '(global-hl-line-mode nil)
