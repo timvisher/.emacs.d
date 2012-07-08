@@ -1,17 +1,13 @@
+;;; ----------------------------------------------------------------------------
+;;; Let's set up elpa, because it makes Emacs a more civilized place to live.
+;;; ----------------------------------------------------------------------------
+
 (require 'package)
 (add-to-list 'package-archives
              '("marmalade" . "http://marmalade-repo.org/packages/") t)
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.milkbox.net/packages/") t)
 (package-initialize)
-
-(require 'info)
-(add-to-list 'Info-directory-list (concat (getenv "HOME") "/.emacs.d/info"))
-
-(require 'dired-x)
-
-(setq send-mail-function 'mailclient-send-it)
-(setq message-send-mail-function 'message-send-mail-with-mailclient)
 
 (when (not package-archive-contents)
   (package-refresh-contents))
@@ -40,16 +36,172 @@
   (when (not (package-installed-p p))
     (package-install p)))
 
+;;; ----------------------------------------------------------------------------
+;;; And now let's get some system wide variables set up
+;;; ----------------------------------------------------------------------------
+
+;;; You always wants your custom info files to be in the Info-directory-list
+(eval-after-load 'info 
+  '(add-to-list 'Info-directory-list (concat (getenv "HOME") "/.emacs.d/info")))
+
+;;; We need site-lisp to be here for stuff that hasn't made it out of the wilderness and into elpa
 (add-to-list 'load-path "~/.emacs.d/site-lisp")
 
+;;; ----------------------------------------------------------------------------
+;;; Alright, time's up. Let's do enabling and configuring modes.
+;;; ----------------------------------------------------------------------------
+
+;;; Make system and user specific emacs temp files
+(setq eshell-history-file-name (concat (getenv "HOME") "/.emacs.d/eshell/" system-name "-history"))
+
+;;; When [mickey][redisplay-dont-pause] tells you something will make Emacs feel faster, you should probably shut up and do it.
+;; (setq redisplay-dont-pause t)
+
+;;; Goal column rocks
+(put 'set-goal-column 'disabled nil)
+
+;;; All the cool kids use narrow-to-region
+(put 'narrow-to-region 'disabled nil)
+
+;;; upcase-region is to useful to leave disabled
+(put 'upcase-region 'disabled nil)
+
+(require 'dired-x) ; Ooo baby, Virtual Dired is the new hotness!
+
+;;; Let's make sending mail just work exactly how you'd expect it to just work
+(setq send-mail-function 'mailclient-send-it)
+(setq message-send-mail-function 'message-send-mail-with-mailclient)
+
+;;; @jwiegely says winner mode is 'da bomb so it seems like it would be worth using
 (eval-after-load 'winner
   (global-set-key (kbd "C-c [") 'winner-undo))
 (eval-after-load 'winner
   (global-set-key (kbd "C-c ]") 'winner-redo))
 
+;;; markdown
+;;; Let's fix `C-j` in markdown mode.
+;;; TODO alias eval-after-load to eal
 (eval-after-load "markdown"
   '(define-key markdown-mode-map (kbd "C-j") 'markdown-enter-key))
 
+(add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
+
+;;; helm is the bee's knees
+(require 'helm-config)
+(require 'helm-ls-git)
+
+;;; Psh. Who needs textmate-minor-mode?
+(global-set-key (kbd "s-t") 'helm-ls-git-ls)
+(global-set-key (kbd "s-T") 'helm-imenu)
+
+;;; Could there be a better way than helm-buffers-list to switch buffers?
+(global-set-key (kbd "C-x C-b") 'helm-buffers-list)
+(global-set-key (kbd "C-x b") 'helm-buffers-list)
+
+;;; Let's not be crazy and use regular `M-x` now.
+(global-set-key (kbd "M-x") 'helm-M-x)
+
+;;; Let [Yegge][] tell the truth about what should be bound to delete.
+(global-set-key (kbd "M-h") 'backward-kill-word)
+(global-set-key (kbd "C-h") 'backward-delete-char-untabify)
+
+;;; Let's make paredit honor our awesome keys
+(eval-after-load 'paredit
+  '(timvisher/map-custom-paredit-keys))
+
+(defun timvisher/map-custom-paredit-keys ()
+  (define-key paredit-mode-map (kbd "C-h") 'paredit-backward-delete)
+  (define-key paredit-mode-map (kbd "M-h") 'paredit-backward-kill-word)
+  (define-key paredit-mode-map (kbd "{") 'paredit-open-curly)
+  (define-key paredit-mode-map (kbd "}") 'paredit-close-curly)
+  (define-key paredit-mode-map (kbd "[") 'paredit-open-square)
+  (define-key paredit-mode-map (kbd "]") 'paredit-close-square))
+
+;;; Let's configure clojure-mode-hook with some extra goodness
+
+;;; Don't be stupid and forget that `clojure-jack-in` is how you
+;;; should enable clojure-mode on your stuff
+;; (add-to-list 'auto-mode-alist '("\\.clj$" . clojure-mode))
+
+(eval-after-load 'clojure-mode
+  '(add-hook 'clojure-mode-hook 'timvisher/turn-on-eldoc))
+
+(eval-after-load 'clojure-mode
+  '(add-hook 'clojure-mode-hook 'timvisher/turn-on-elein))
+
+(defun timvisher/turn-on-eldoc () (eldoc-mode 1))
+
+(defun timvisher/turn-on-elein ()
+  (unless (featurep 'elein)
+    (require 'elein)))
+
+(defun timvisher/turn-on-clojure-test () (clojure-test-mode 1))
+
+;;; Now let's fix our slime
+
+;;; We need to require clojure-test-mode explicitly because the version from elpa requires slime and messes with clojure-jack-in
+(eval-after-load 'slime
+  '(require 'clojure-test-mode))
+
+(eval-after-load 'slime
+  '(add-hook 'clojure-mode-hook 'timvisher/turn-on-clojure-test))
+
+(eval-after-load 'slime
+  '(timvisher/fix-slime-repl))
+
+(defun timvisher/fix-slime-repl-lisp-indent-function () (setq lisp-indent-function 'clojure-indent-function))
+
+(defun timvisher/fix-slime-repl-syntax-table () (set-syntax-table clojure-mode-syntax-table))
+
+(defun timvisher/turn-on-paredit () (paredit-mode 1))
+
+(defun timvisher/fix-slime-repl ()
+  (add-hook 'slime-repl-mode-hook 'timvisher/fix-slime-repl-lisp-indent-function)
+  (add-hook 'slime-repl-mode-hook 'timvisher/fix-slime-repl-syntax-table)
+  (add-hook 'slime-repl-mode-hook 'timvisher/turn-on-paredit))
+
+;;; Looky, looky, I've got hooky
+(add-hook 'prog-mode-hook 'hs-minor-mode)
+(add-hook 'prog-mode-hook 'glasses-mode)
+(add-hook 'prog-mode-hook 'whitespace-mode)
+(remove-hook 'prog-mode-hook 'esk-local-comment-auto-fill)
+(remove-hook 'prog-mode-hook 'esk-turn-on-hl-line-mode)
+
+(add-hook 'applescript-mode-hook 'run-prog-mode-hook)
+
+(remove-hook 'text-mode-hook 'turn-on-auto-fill)
+(remove-hook 'text-mode-hook 'turn-on-flyspell)
+(add-hook 'text-mode-hook 'visual-line-mode)
+(add-hook 'text-mode-hook 'whitespace-mode)
+
+;;; ----------------------------------------------------------------------------
+;;; What needs to be overridden shall be overridden
+;;; ----------------------------------------------------------------------------
+
+;;; Why is kmacro-edit-lossage so suckily implemented?
+(defun kmacro-edit-lossage ()
+  "Edit most recent 300 keystrokes as a keyboard macro."
+  (interactive)
+  (kmacro-push-ring)
+  (edit-kbd-macro 'view-lossage))
+
+;;; Make re-builder copy just the text without the `"` characters.
+(defun reb-copy ()
+  "Copy current RE into the kill ring for later insertion."
+  (interactive)
+
+  (reb-update-regexp)
+  (let ((re (with-output-to-string
+              (print (reb-target-binding reb-regexp)))))
+    (kill-new (substring re 2 (- (length re) 2)))
+    (message "Regexp copied to kill-ring")))
+
+;;; ----------------------------------------------------------------------------
+;;; Now, let's make Emacs our own.
+;;; ----------------------------------------------------------------------------
+
+;;; Deft is pretty awesome, and my journal entries should probably be kept in it
 (eval-after-load "deft"
   '(defun timvisher/journal ()
      "Grab a new deft file and populate it with a joural entry for right now"
@@ -62,11 +214,7 @@
 ")
      (local-set-key (kbd "C-c C-q") 'delete-frame)))
 
-(defun timvisher/copy-buffer-and-kill-frame ()
-  (interactive)
-  (kill-ring-save (point-min) (point-max))
-  (delete-frame))
-
+;;; Let's put our edit clipboard functionality into deft as well
 (eval-after-load "deft"
   '(defun timvisher/kill-ring-deft ()
      "Make a new deft file and yank the kill ring into it"
@@ -82,6 +230,15 @@
      (goto-char (point-min))
      (local-set-key (kbd "C-c C-q") 'timvisher/copy-buffer-and-kill-frame)))
 
+(eval-after-load 'deft
+  '(defalias 'mdf 'timvisher/kill-ring-deft))
+
+(defun timvisher/copy-buffer-and-kill-frame ()
+  (interactive)
+  (kill-ring-save (point-min) (point-max))
+  (delete-frame))
+
+;;; We need to restart jetty often enough that it's be worth making it into a function
 (defun timvisher/lein-server ()
   (interactive)
   (let* ((process-name "lein-server")
@@ -94,12 +251,8 @@
       (start-process process-name "*lein server*" "lein" "ring" "server")
       (cd current-directory))))
 
-(defun timvisher/position-in-line ()
-  (save-excursion
-    (let ((current-position (point)))
-      (beginning-of-line)
-      (- current-position (point)))))
-
+;;; Ooo, that Eclipse sure does have some fancy-schmancy drag up and down features. Let's get that in Emacs as well.
+;;; TODO Wouldn't be awesome if this worked on the active region instead of just the current line? Oh, baby!
 (defun timvisher/drag-up ()
   (interactive)
   (let ((timvisher/position-in-line (timvisher/position-in-line)))
@@ -121,122 +274,41 @@
     (previous-line)
     (goto-char (+ (point) timvisher/position-in-line))))
 
+(defun timvisher/position-in-line ()
+  (save-excursion
+    (let ((current-position (point)))
+      (beginning-of-line)
+      (- current-position (point)))))
+
 (global-set-key (kbd "<M-s-down>") 'timvisher/drag-down)
 (global-set-key (kbd "<M-s-up>") 'timvisher/drag-up)
 
-;; aliases
+;;; Let [Yegge][] speak the wisdom of the query-replace-regexp
+(defalias 'qrr 'query-replace-regexp)
 
-(defalias 'qrr 'query-replace-regexp) ;; Yegge
+;;; ispell should be simple to type.
 (defalias 's 'ispell)
-(defalias 'mdf 'timvisher/kill-ring-deft)
 
-;; keys
-
-(defun kmacro-edit-lossage ()
-  "Edit most recent 300 keystrokes as a keyboard macro."
-  (interactive)
-  (kmacro-push-ring)
-  (edit-kbd-macro 'view-lossage))
-
-(global-set-key (kbd "M-h") 'backward-kill-word)
-(global-set-key (kbd "C-x C-b") 'ibuffer)
-(global-set-key (kbd "C-h") 'backward-delete-char-untabify)
-
-(defun timvisher/map-custom-paredit-keys ()
-  (define-key paredit-mode-map (kbd "C-h") 'paredit-backward-delete)
-  (define-key paredit-mode-map (kbd "M-h") 'paredit-backward-kill-word)
-  (define-key paredit-mode-map (kbd "{") 'paredit-open-curly)
-  (define-key paredit-mode-map (kbd "}") 'paredit-close-curly)
-  (define-key paredit-mode-map (kbd "[") 'paredit-open-square)
-  (define-key paredit-mode-map (kbd "]") 'paredit-close-square))
-
-(defun timvisher/turn-on-eldoc () (eldoc-mode 1))
-
-(defun timvisher/turn-on-clojure-test () (clojure-test-mode 1))
-
-(defun timvisher/turn-on-elein ()
-  (unless (featurep 'elein)
-    (require 'elein)))
-
-(eval-after-load 'paredit
-  '(timvisher/map-custom-paredit-keys))
-
-(eval-after-load 'clojure-mode
-  '(add-hook 'clojure-mode-hook 'timvisher/turn-on-eldoc))
-(eval-after-load 'clojure-mode
-  '(add-hook 'clojure-mode-hook 'timvisher/turn-on-elein))
-;;; Sadly clojure-test-mode currently requires slime which messes with clojure-jack-in. Figure this out at some point.
-;; (eval-after-load 'clojure-mode '(add-hook 'clojure-mode-hook 'timvisher/turn-on-clojure-test))
-
-(defun timvisher/fix-slime-repl-lisp-indent-function () (setq lisp-indent-function 'clojure-indent-function))
-(defun timvisher/fix-slime-repl-syntax-table () (set-syntax-table clojure-mode-syntax-table))
-(defun timvisher/turn-on-paredit () (paredit-mode 1))
-
-(defun timvisher/fix-slime-repl ()
-  (add-hook 'slime-repl-mode-hook 'timvisher/fix-slime-repl-lisp-indent-function)
-  (add-hook 'slime-repl-mode-hook 'timvisher/fix-slime-repl-syntax-table)
-  (add-hook 'slime-repl-mode-hook 'timvisher/turn-on-paredit))
-
-(eval-after-load 'slime
-  '(timvisher/fix-slime-repl))
-
-(add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.todo$" . org-mode))
-
-;;; Make re-builder copy just the text without the `"` characters.
-(defun reb-copy ()
-  "Copy current RE into the kill ring for later insertion."
-  (interactive)
-
-  (reb-update-regexp)
-  (let ((re (with-output-to-string
-              (print (reb-target-binding reb-regexp)))))
-    (kill-new (substring re 2 (- (length re) 2)))
-    (message "Regexp copied to kill-ring")))
 
 (defun timvisher/turn-on-subword-mode ()
   (subword-mode 1))
 
-(add-hook 'prog-mode-hook 'hs-minor-mode)
-(add-hook 'prog-mode-hook 'glasses-mode)
-(add-hook 'prog-mode-hook 'whitespace-mode)
-(add-hook 'applescript-mode-hook 'run-prog-mode-hook)
-(remove-hook 'text-mode-hook 'turn-on-auto-fill)
-(remove-hook 'text-mode-hook 'turn-on-flyspell)
-(remove-hook 'prog-mode-hook 'esk-local-comment-auto-fill)
-(remove-hook 'prog-mode-hook 'esk-turn-on-hl-line-mode)
-(add-hook 'text-mode-hook 'visual-line-mode)
-(add-hook 'text-mode-hook 'whitespace-mode)
+;;; ----------------------------------------------------------------------------
+;;; Alright, now let's start some stuff up that we always want started up
+;;; ----------------------------------------------------------------------------
 
-;;; If you get the dreaded ~/.emacs.d/server is not safe error on
-;;; Windows. ~/.emacs.d/server -> Properties -> Security -> Advanced
-;;; -> Owner and then set it to you.
-(require 'server)
+;;; We always want a server running for `emacsclient`, although the
+;;; horror of operating outside of Emacs is not lost on us.
+;;; 
+;;; Note: If you get the dreaded `~/.emacs.d/server is not safe` error
+;;; on Windows: Set `~/.emacs.d/server -> Properties -> Security ->
+;;; Advanced -> Owner` to you.
+(autoload 'server-running-p "server")
 (unless (server-running-p) (server-start))
 
+;;; Why shouldn't Emacs appear like it's your desktop? We all know it is
 (if (display-graphic-p) (maximize-frame))
-
-;;; Customizations
-
-;;; Make system and user specific emacs temp files
-(setq eshell-history-file-name (concat (getenv "HOME") "/.emacs.d/eshell/" system-name "-history"))
-
-(setq redisplay-dont-pause t)
-
-;;; Goal column rocks
-(put 'set-goal-column 'disabled nil)
-
-;;; All the cool kids use narrow-to-region
-(put 'narrow-to-region 'disabled nil)
-
-;;; upcase-region is to useful to leave disabled
-(put 'upcase-region 'disabled nil)
-
-;;; helm is the bee's knees
-(require 'helm-config)
-(require 'helm-ls-git)
-(global-set-key (kbd "s-t") 'helm-ls-git-ls)
-(global-set-key (kbd "s-T") 'helm-imenu)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -247,6 +319,7 @@
  '(backup-directory-alist (\` (("." \, (concat (getenv "HOME") "/.emacs.d/" system-name "-backups")))))
  '(c-mode-common-hook (quote (timvisher/turn-on-subword-mode)))
  '(column-number-mode t)
+ '(comment-column 0)
  '(css-indent-offset 3)
  '(custom-enabled-themes (quote (solarized-light)))
  '(custom-safe-themes (quote ("91f2c4c623100a649cde613e8336eaa2ee144104" "62b81fe9b7d13eef0539d6a0f5c0c37170c9e248" "5600dc0bb4a2b72a613175da54edb4ad770105aa" "0174d99a8f1fdc506fa54403317072982656f127" default)))
@@ -280,10 +353,11 @@
  '(global-hl-line-mode nil)
  '(grep-find-ignored-directories (quote ("SCCS" "RCS" "CVS" "MCVS" ".svn" ".git" ".hg" ".bzr" "_MTN" "_darcs" "{arch}" "target")))
  '(grep-find-template "find . <X> -type f <F> -exec grep <C> -nH <R> {} ;")
+ '(helm-M-x-always-save-history t)
+ '(helm-c-use-adaptative-sorting t)
+ '(helm-mode t)
  '(ido-ubiquitous-command-exceptions (quote (unhighlight-regexp)))
  '(ido-ubiquitous-mode t)
- '(helm-M-x-always-save-history t)
- '(helm-mode t)
  '(indent-tabs-mode nil)
  '(inferior-lisp-program "lein repl")
  '(inhibit-startup-screen nil)
@@ -310,3 +384,7 @@
  '(magit-item-highlight ((t (:inherit hl-line))))
  '(whitespace-indentation ((t (:inherit highlight :foreground "#e9e2cb"))))
  '(widget-field ((t (:inherit hl-line :box (:line-width 1 :color "#52676f"))))))
+
+;;; We pay homage:
+;;; [yegge]: https://sites.google.com/site/steveyegge2/effective-emacs
+;;; [redisplay-dont-pause]: http://www.masteringemacs.org/articles/2011/10/02/improving-performance-emacs-display-engine/
