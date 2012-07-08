@@ -183,8 +183,6 @@
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.todo$" . org-mode))
 
-(put 'set-goal-column 'disabled nil)
-
 ;;; Make re-builder copy just the text without the `"` characters.
 (defun reb-copy ()
   "Copy current RE into the kill ring for later insertion."
@@ -224,7 +222,15 @@
 (setq eshell-history-file-name (concat (getenv "HOME") "/.emacs.d/eshell/" system-name "-history"))
 
 (setq redisplay-dont-pause t)
+
+;;; Goal column rocks
+(put 'set-goal-column 'disabled nil)
+
+;;; All the cool kids use narrow-to-region
 (put 'narrow-to-region 'disabled nil)
+
+;;; upcase-region is to useful to leave disabled
+(put 'upcase-region 'disabled nil)
 
 ;;; helm is the bee's knees
 (require 'helm-config)
@@ -304,4 +310,3 @@
  '(magit-item-highlight ((t (:inherit hl-line))))
  '(whitespace-indentation ((t (:inherit highlight :foreground "#e9e2cb"))))
  '(widget-field ((t (:inherit hl-line :box (:line-width 1 :color "#52676f"))))))
-(put 'upcase-region 'disabled nil)
