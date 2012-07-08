@@ -101,6 +101,10 @@
 (global-set-key (kbd "C-x C-b") 'helm-buffers-list)
 (global-set-key (kbd "C-x b") 'helm-buffers-list)
 
+;;; And boy, oh boy! helm-for-files is pretty sweet!
+(global-set-key (kbd "C-x f") 'helm-for-files)
+(global-set-key (kbd "C-x C-f") 'helm-for-files)
+
 ;;; Let's not be crazy and use regular `M-x` now.
 (global-set-key (kbd "M-x") 'helm-M-x)
 
