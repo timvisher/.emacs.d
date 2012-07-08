@@ -105,6 +105,10 @@
 (global-set-key (kbd "C-x f") 'helm-for-files)
 (global-set-key (kbd "C-x C-f") 'helm-for-files)
 
+;;; helm-ucs? Yes please!
+(global-set-key (kbd "C-x 8 RET") 'helm-ucs)
+(global-set-key (kbd "C-c 8") 'helm-ucs)
+
 ;;; Let's not be crazy and use regular `M-x` now.
 (global-set-key (kbd "M-x") 'helm-M-x)
 
