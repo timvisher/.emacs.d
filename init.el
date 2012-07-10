@@ -31,6 +31,8 @@
                       starter-kit-eshell
                       starter-kit-lisp
                       textmate
+                      todochiku
+                      helm
                       vimgolf))
 
 (dolist (p timvisher/my-packages)
@@ -51,9 +53,6 @@
 ;;; ----------------------------------------------------------------------------
 ;;; Alright, time's up. Let's do enabling and configuring modes.
 ;;; ----------------------------------------------------------------------------
-
-;;; Growl from Emacs? Boom!
-(require 'todochiku)
 
 ;;; Make system and user specific emacs temp files
 (setq eshell-history-file-name (concat (getenv "HOME") "/.emacs.d/eshell/" system-name "-history"))
@@ -101,9 +100,9 @@
 (global-set-key (kbd "C-x C-b") 'helm-buffers-list)
 (global-set-key (kbd "C-x b") 'helm-buffers-list)
 
-;;; And boy, oh boy! helm-for-files is pretty sweet!
-(global-set-key (kbd "C-x f") 'helm-for-files)
-(global-set-key (kbd "C-x C-f") 'helm-for-files)
+;;; And boy, oh boy! helm-find-files is pretty sweet!
+(global-set-key (kbd "C-x f") 'helm-find-files)
+(global-set-key (kbd "C-x C-f") 'helm-find-files)
 
 ;;; helm-ucs? Yes please!
 (global-set-key (kbd "C-x 8 RET") 'helm-ucs)
