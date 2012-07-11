@@ -54,6 +54,12 @@
 ;;; Alright, time's up. Let's do enabling and configuring modes.
 ;;; ----------------------------------------------------------------------------
 
+;;; If we really, really don't want ido-mode, this is how to do it!
+(eval-after-load 'starter-kit-misc
+  '(ido-mode nil))
+(eval-after-load 'starter-kit-misc
+  '(ido-ubiquitous nil))
+
 ;;; Make system and user specific emacs temp files
 (setq eshell-history-file-name (concat (getenv "HOME") "/.emacs.d/eshell/" system-name "-history"))
 
