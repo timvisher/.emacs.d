@@ -47,18 +47,12 @@
         ".." (replace-regexp-in-string "\n" "" result))))))
 
 (defun helm-ls-git-transformer (candidates source)
-  (loop with root = (let ((default-directory
-                           (or helm-ls-git-root-directory
-                               (with-helm-current-buffer
-                                 default-directory))))
-                      (helm-ls-git-root-dir))
-        for i in candidates
-        for abs = (expand-file-name i root)
+  (loop for i in candidates
         for disp = (if (and helm-ff-transformer-show-only-basename
                             (not (string-match "[.]\\{1,2\\}$" i)))
-                       (helm-c-basename i) abs)
+                       (helm-c-basename i) i)
         collect
-        (cons (propertize disp 'face 'helm-ff-file) abs)))
+        (cons (propertize disp 'face 'helm-ff-file) disp)))
 
 (defun helm-ls-git-init ()
   (let ((data (helm-ls-git-list-files)))

@@ -99,8 +99,9 @@
 ;;; helm is the bee's knees
 (require 'helm-config)
 ;;; TODO Play with helm-ls-git. Right now it doesn't seem to list every file available to git, which is the main reason it should be able to replace textmate-goto-file
-;; (require 'helm-ls-git)
-;; (define-key *textmate-mode-map* [(super t)] 'helm-ls-git-ls)
+(require 'helm-ls-git)
+;; (eval-after-load 'textmate
+;;   '(define-key *textmate-mode-map* [(super t)] 'helm-ls-git-ls))
 
 ;;; Could there be a better way than helm-buffers-list to switch buffers?
 (global-set-key (kbd "C-x C-b") 'helm-buffers-list)
@@ -222,6 +223,15 @@
 ;;; ----------------------------------------------------------------------------
 ;;; Now, let's make Emacs our own.
 ;;; ----------------------------------------------------------------------------
+
+;; (defun timvisher/find-file-in-git-project ()
+;;   (interactive)
+;;   (let ((current-directory default-directory)
+;;         (git-root (expand-file-name (locate-dominating-file default-directory ".git"))))
+;;     (cd git-root)
+;;     (helm-ls-git-ls)
+;;     (cd current-directory)))
+;; (define-key *textmate-mode-map* [(super t)] 'timvisher/find-file-in-git-project)
 
 ;;; Wouldn't it be so awesome if growl notified us when we were mentioned?
 
