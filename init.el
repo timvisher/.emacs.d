@@ -136,7 +136,8 @@
   (define-key paredit-mode-map (kbd "{") 'paredit-open-curly)
   (define-key paredit-mode-map (kbd "}") 'paredit-close-curly)
   (define-key paredit-mode-map (kbd "[") 'paredit-open-square)
-  (define-key paredit-mode-map (kbd "]") 'paredit-close-square))
+  (define-key paredit-mode-map (kbd "]") 'paredit-close-square)
+  (define-key paredit-mode-map (kbd "M-(") 'paredit-wrap-sexp))
 
 ;;; Let's configure clojure-mode-hook with some extra goodness
 
