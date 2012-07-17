@@ -45,10 +45,6 @@
 ;;; System specific deft-directory location.
 (eval-after-load "deft" '(setq deft-directory (concat (getenv "HOME") "/Dropbox/deft notes/")))
 
-;;; All the cool kids swap `⛫` and `M`
-(if (boundp 'mac-command-modifier) (setq mac-command-modifier 'meta))
-(if (boundp 'mac-option-modifier) (setq mac-option-modifier 'super))
-
 ;;; ----------------------------------------------------------------------------
 ;;; Set up our custom functions
 ;;; ----------------------------------------------------------------------------

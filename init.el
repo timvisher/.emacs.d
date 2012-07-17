@@ -60,6 +60,10 @@
 (eval-after-load 'starter-kit-misc
   '(ido-ubiquitous nil))
 
+;;; All the cool kids swap meta and super.
+(if (boundp 'mac-command-modifier) (setq mac-command-modifier 'meta))
+(if (boundp 'mac-option-modifier) (setq mac-option-modifier 'super))
+
 ;;; Make system and user specific emacs temp files
 (setq eshell-history-file-name (concat (getenv "HOME") "/.emacs.d/eshell/" system-name "-history"))
 
@@ -347,8 +351,7 @@
 ;;; Why shouldn't Emacs appear like it's your desktop? We all know it is
 ;; (if (display-graphic-p) (maximize-frame))
 (when (display-graphic-p)
-  (when (string-match "darwin" system-configuration)
-    (ns-toggle-fullscreen)))
+  (if (string-match "darwin" system-configuration) (ns-toggle-fullscreen) (maximize-frame)))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
