@@ -345,7 +345,10 @@
 (unless (server-running-p) (server-start))
 
 ;;; Why shouldn't Emacs appear like it's your desktop? We all know it is
-(if (display-graphic-p) (maximize-frame))
+;; (if (display-graphic-p) (maximize-frame))
+(when (display-graphic-p)
+  (when (string-match "darwin" system-configuration)
+    (ns-toggle-fullscreen)))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -359,7 +362,7 @@
  '(comment-column 0)
  '(css-indent-offset 3)
  '(custom-enabled-themes (quote (solarized-light)))
- '(custom-safe-themes (quote ("91f2c4c623100a649cde613e8336eaa2ee144104" "62b81fe9b7d13eef0539d6a0f5c0c37170c9e248" "5600dc0bb4a2b72a613175da54edb4ad770105aa" "0174d99a8f1fdc506fa54403317072982656f127" default)))
+ '(custom-safe-themes (quote ("117284df029007a8012cae1f01c3156d54a0de4b9f2f381feab47809b8a1caef" "91f2c4c623100a649cde613e8336eaa2ee144104" "62b81fe9b7d13eef0539d6a0f5c0c37170c9e248" "5600dc0bb4a2b72a613175da54edb4ad770105aa" "0174d99a8f1fdc506fa54403317072982656f127" default)))
  '(custom-theme-directory "~/.emacs.d/site-lisp/themes")
  '(deft-directory "")
  '(deft-extension "md")
@@ -385,7 +388,7 @@
  '(erc-prompt-for-password nil)
  '(erc-save-queries-on-quit t)
  '(erc-services-mode t)
- '(erc-text-matched-hook (quote (erc-log-matches timvisher/notify-of-mention)))
+ '(erc-text-matched-hook (quote (erc-log-matches)))
  '(erc-user-full-name "Tim Visher")
  '(find-ls-option (quote ("-print0 | xargs -0 ls -ld" . "-ld")))
  '(global-hl-line-mode nil)
