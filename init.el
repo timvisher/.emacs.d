@@ -54,6 +54,9 @@
 ;;; Alright, time's up. Let's do enabling and configuring modes.
 ;;; ----------------------------------------------------------------------------
 
+;;; Highlighting the current line is pretty hot…
+(global-hl-line-mode t)
+
 ;;; If we really, really don't want ido-mode, this is how to do it!
 (eval-after-load 'starter-kit-misc
   '(ido-mode nil))
