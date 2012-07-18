@@ -13,28 +13,28 @@
   (package-refresh-contents))
 
 (defvar timvisher/my-packages '(clojure-mode
-                      ;; clojure-test-mode
-                      deft
-                      elein
-                      elisp-slime-nav
-                      furl
-                      idle-highlight-mode
-                      ido-ubiquitous
-                      magit
-                      markdown-mode
-                      maxframe
-                      smex
-                      paredit
-                      find-file-in-project
-                      starter-kit
-                      starter-kit-bindings
-                      starter-kit-eshell
-                      starter-kit-lisp
-                      textmate
-                      todochiku
-                      ;; TODO Try helm out in a few months when it's a little more stable.
-                      ;; helm
-                      vimgolf))
+                                ;; clojure-test-mode
+                                deft
+                                elein
+                                elisp-slime-nav
+                                furl
+                                idle-highlight-mode
+                                ido-ubiquitous
+                                magit
+                                markdown-mode
+                                maxframe
+                                smex
+                                paredit
+                                find-file-in-project
+                                starter-kit
+                                starter-kit-bindings
+                                starter-kit-eshell
+                                starter-kit-lisp
+                                textmate
+                                todochiku
+                                ;; TODO Try helm out in a few months when it's a little more stable.
+                                ;; helm
+                                vimgolf))
 
 (dolist (p timvisher/my-packages)
   (when (not (package-installed-p p))
