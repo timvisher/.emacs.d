@@ -264,6 +264,10 @@
 )")
   (backward-char 3))
 
+(defun timvisher/clojure-test-comment ()
+  (interactive)
+  (timvisher/clojure-insert-test-comment-call))
+
 ;;; Wouldn't it be so awesome if growl notified us when we were mentioned?
 
 (defun timvisher/notify-of-mention (match-type nickuserhost message)
