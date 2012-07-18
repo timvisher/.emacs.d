@@ -241,6 +241,24 @@
 ;;     (cd current-directory)))
 ;; (define-key *textmate-mode-map* [(super t)] 'timvisher/find-file-in-git-project)
 
+(defun timvisher/clojure-test-comment ()
+  (interactive)
+  (beginning-of-defun)
+  (search-forward " ")
+  (let ((b (point)))
+    (search-forward " ")
+    (backward-char)
+    (copy-region-as-kill b (point)))
+  (end-of-defun)
+  (open-line 1)
+  (newline-and-indent)
+  (insert "(comment
+  (")
+  (yank)
+  (insert " )
+)")
+  (backward-char 3))
+
 ;;; Wouldn't it be so awesome if growl notified us when we were mentioned?
 
 (defun timvisher/notify-of-mention (match-type nickuserhost message)
