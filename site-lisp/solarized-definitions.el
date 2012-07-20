@@ -136,6 +136,7 @@ in order to expand or compress the tonal range displayed."
             ((t (:foreground ,base0  :background ,base02
                              :box (:line-width 1 :color ,base02)))))
            (region ((t (:background ,base02))))
+           (next-error ((t (:background ,orange))))
            (secondary-selection ((t (:background ,base02))))
            (trailing-whitespace ((t (:foreground ,red :inverse-video t))))
            (vertical-border ((t (:foreground ,base0))))
