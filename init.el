@@ -424,6 +424,7 @@
  '(inhibit-startup-screen nil)
  '(js-indent-level 2)
  '(mouse-avoidance-mode (quote banish) nil (avoid))
+ '(org-hide-leading-stars t)
  '(save-place-file (concat (getenv "HOME") "/.emacs.d/" system-name ".places"))
  '(sentence-end-double-space nil)
  '(solarized-contrast (quote high))
