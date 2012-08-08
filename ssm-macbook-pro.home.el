@@ -67,4 +67,6 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; Always run ERC on my mac.
-(erc :server "irc.freenode.net" :nick "timvisher")
+(condition-case nil
+    (erc :server "irc.freenode.net" :nick "timvisher")
+  (error "Failed to connect to IRC!"))
