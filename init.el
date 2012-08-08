@@ -32,7 +32,8 @@
                       starter-kit-lisp
                       textmate
                       todochiku
-                      helm
+                      ;; TODO Try helm out in a few months when it's a little more stable.
+                      ;; helm
                       vimgolf))
 
 (dolist (p timvisher/my-packages)
@@ -54,11 +55,11 @@
 ;;; Alright, time's up. Let's do enabling and configuring modes.
 ;;; ----------------------------------------------------------------------------
 
-;;; If we really, really don't want ido-mode, this is how to do it!
-(eval-after-load 'starter-kit-misc
-  '(ido-mode nil))
-(eval-after-load 'starter-kit-misc
-  '(ido-ubiquitous nil))
+;; ;;; If we really, really don't want ido-mode, this is how to do it!
+;; (eval-after-load 'starter-kit-misc
+;;   '(ido-mode nil))
+;; (eval-after-load 'starter-kit-misc
+;;   '(ido-ubiquitous nil))
 
 ;;; All the cool kids swap meta and super.
 (if (boundp 'mac-command-modifier) (setq mac-command-modifier 'meta))
@@ -100,27 +101,28 @@
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
 
-;;; helm is the bee's knees
-(require 'helm-config)
-;;; TODO Play with helm-ls-git. Right now it doesn't seem to list every file available to git, which is the main reason it should be able to replace textmate-goto-file
-(require 'helm-ls-git)
-;; (eval-after-load 'textmate
-;;   '(define-key *textmate-mode-map* [(super t)] 'helm-ls-git-ls))
+;;; TODO Try helm out in a few months when it's a little more stable.
+;; ;;; helm is the bee's knees
+;; (require 'helm-config)
+;; ;;; TODO Play with helm-ls-git. Right now it doesn't seem to list every file available to git, which is the main reason it should be able to replace textmate-goto-file
+;; (require 'helm-ls-git)
+;; ;; (eval-after-load 'textmate
+;; ;;   '(define-key *textmate-mode-map* [(super t)] 'helm-ls-git-ls))
 
-;;; Could there be a better way than helm-buffers-list to switch buffers?
-(global-set-key (kbd "C-x C-b") 'helm-buffers-list)
-(global-set-key (kbd "C-x b") 'helm-buffers-list)
+;; ;;; Could there be a better way than helm-buffers-list to switch buffers?
+;; (global-set-key (kbd "C-x C-b") 'helm-buffers-list)
+;; (global-set-key (kbd "C-x b") 'helm-buffers-list)
 
-;;; And boy, oh boy! helm-find-files is pretty sweet!
-(global-set-key (kbd "C-x f") 'helm-find-files)
-(global-set-key (kbd "C-x C-f") 'helm-find-files)
+;; ;;; And boy, oh boy! helm-find-files is pretty sweet!
+;; (global-set-key (kbd "C-x f") 'helm-find-files)
+;; (global-set-key (kbd "C-x C-f") 'helm-find-files)
 
-;;; helm-ucs? Yes please!
-(global-set-key (kbd "C-x 8 RET") 'helm-ucs)
-(global-set-key (kbd "C-c 8") 'helm-ucs)
+;; ;;; helm-ucs? Yes please!
+;; (global-set-key (kbd "C-x 8 RET") 'helm-ucs)
+;; (global-set-key (kbd "C-c 8") 'helm-ucs)
 
-;;; Let's not be crazy and use regular `M-x` now.
-(global-set-key (kbd "M-x") 'helm-M-x)
+;; ;;; Let's not be crazy and use regular `M-x` now.
+;; (global-set-key (kbd "M-x") 'helm-M-x)
 
 ;;; Let [Yegge][] tell the truth about what should be bound to delete.
 (global-set-key (kbd "M-h") 'backward-kill-word)
