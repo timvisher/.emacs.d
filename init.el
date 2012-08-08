@@ -240,6 +240,12 @@
 ;;     (cd current-directory)))
 ;; (define-key *textmate-mode-map* [(super t)] 'timvisher/find-file-in-git-project)
 
+(defun timvisher/edit-init-file ()
+  (interactive)
+  (find-file user-init-file))
+
+(global-set-key (kbd "C-c i") 'timvisher/edit-init-file)
+
 (defun timvisher/clojure-test-comment ()
   (interactive)
   (beginning-of-defun)
