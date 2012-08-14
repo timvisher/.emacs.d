@@ -269,9 +269,37 @@
 )")
   (backward-char 3))
 
+(defun timvisher/clojure-test-comment-in-comment-block-p ()
+  (save-excursion
+    (beginning-of-defun)
+    (let ((cp (point)))
+      (search-forward "(comment" nil "end")
+      (= 8 (- (point) cp)))))
+
+(defun timvisher/clear-top-level-form ()
+  (beginning-of-defun)
+  (let ((cp (point)))
+    (end-of-defun)
+    (next-line)
+    (delete-region cp (point))))
+
+(setq timvisher/function-forms '("defn" "defn-" "defmethod"))
+
+(defun timvisher/clojure-at-function-definition-p ()
+  (save-excursion
+    (let ((cp (point)))
+      )))
+
+(defun timvisher/clojure-in-function-form-p ()
+  (save-excursion
+    (beginning-of-defun)))
+
 (defun timvisher/clojure-test-comment ()
   (interactive)
-  (timvisher/clojure-insert-test-comment-call))
+  (if (not (timvisher/clojure-test-comment-in-comment-block-p)) (timvisher/clojure-insert-test-comment-call) (progn (timvisher/clear-top-level-form) (beginning-of-defun))))
+
+(eval-after-load 'clojure-mode
+  '(define-key clojure-mode-map (kbd "C-c c t c") 'timvisher/clojure-test-comment))
 
 ;;; Wouldn't it be so awesome if growl notified us when we were mentioned?
 
