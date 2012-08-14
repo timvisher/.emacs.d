@@ -66,6 +66,8 @@
 ;;; Start up default processes
 ;;; ----------------------------------------------------------------------------
 
+(setq erc-nick "timvisher")
+
 ;;; Always run ERC on my mac.
 (condition-case nil
     (erc :server "irc.freenode.net" :nick "timvisher")

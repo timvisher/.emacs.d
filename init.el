@@ -448,7 +448,6 @@
  '(erc-log-channels-directory "~/Dropbox/log")
  '(erc-log-mode t)
  '(erc-log-write-after-insert t)
- '(erc-nick "timvisher")
  '(erc-nick-notify-cmd "notify")
  '(erc-nickserv-passwords (quote ((freenode (("timvisher" . "rideon"))))))
  '(erc-prompt-for-nickserv-password nil)
