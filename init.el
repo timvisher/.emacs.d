@@ -102,6 +102,10 @@
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
 
+;;; Ruby
+
+(add-to-list 'auto-mode-alist '("Rakefile" . ruby-mode))
+
 ;;; TODO Try helm out in a few months when it's a little more stable.
 ;; ;;; helm is the bee's knees
 ;; (require 'helm-config)
