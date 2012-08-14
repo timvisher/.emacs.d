@@ -31,9 +31,10 @@
                                 starter-kit-eshell
                                 starter-kit-lisp
                                 textmate
-                                todochiku
+                                ;; todochiku
                                 ;; TODO Try helm out in a few months when it's a little more stable.
                                 ;; helm
+                                wgrep
                                 vimgolf))
 
 (dolist (p timvisher/my-packages)
