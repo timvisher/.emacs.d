@@ -465,6 +465,8 @@
  '(ido-ubiquitous-command-exceptions (quote (unhighlight-regexp)))
  '(ido-ubiquitous-mode t)
  '(indent-tabs-mode nil)
+ '(indicate-buffer-boundaries (quote left))
+ '(indicate-empty-lines t)
  '(inferior-lisp-program "lein repl")
  '(inhibit-startup-screen nil)
  '(js-indent-level 2)
