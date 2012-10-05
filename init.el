@@ -194,7 +194,6 @@
 
 ;;; Looky, looky, I've got hooky
 (add-hook 'prog-mode-hook 'hs-minor-mode)
-(add-hook 'prog-mode-hook 'glasses-mode)
 (add-hook 'prog-mode-hook 'whitespace-mode)
 (add-hook 'prog-mode-hook 'timvisher/turn-on-textmate-mode)
 (remove-hook 'prog-mode-hook 'esk-local-comment-auto-fill)
