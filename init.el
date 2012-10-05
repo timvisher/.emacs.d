@@ -14,6 +14,7 @@
 
 (defvar timvisher/my-packages '(clojure-mode
                                 ;; clojure-test-mode
+                                expand-region
                                 deft
                                 elein
                                 elisp-slime-nav
@@ -78,7 +79,7 @@
 ;;; All the cool kids use narrow-to-region
 (put 'narrow-to-region 'disabled nil)
 
-;;; upcase-region is to useful to leave disabled
+;;; upcase-region is too useful to leave disabled
 (put 'upcase-region 'disabled nil)
 
 (require 'dired-x) ; Ooo baby, Virtual Dired is the new hotness!
@@ -101,6 +102,9 @@
 
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
+
+;;; Magnar Sven's mother was the golden goose: http://emacsrocks.com/
+(global-set-key (kbd "C-=") 'er/expand-region)
 
 ;;; Ruby
 
