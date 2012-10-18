@@ -110,6 +110,10 @@
 
 (add-to-list 'auto-mode-alist '("Rakefile" . ruby-mode))
 
+;;; ibuffer is the way to go for browsing your buffers!
+
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+
 ;;; TODO Try helm out in a few months when it's a little more stable.
 ;; ;;; helm is the bee's knees
 ;; (require 'helm-config)
