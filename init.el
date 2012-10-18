@@ -431,6 +431,8 @@
  '(column-number-mode t)
  '(comment-column 0)
  '(css-indent-offset 3)
+ '(cua-enable-cua-keys nil)
+ '(cua-mode t nil (cua-base))
  '(custom-enabled-themes (quote (solarized-light)))
  '(custom-safe-themes (quote ("117284df029007a8012cae1f01c3156d54a0de4b9f2f381feab47809b8a1caef" "91f2c4c623100a649cde613e8336eaa2ee144104" "62b81fe9b7d13eef0539d6a0f5c0c37170c9e248" "5600dc0bb4a2b72a613175da54edb4ad770105aa" "0174d99a8f1fdc506fa54403317072982656f127" default)))
  '(custom-theme-directory "~/.emacs.d/site-lisp/themes")
@@ -492,6 +494,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(cua-rectangle ((t (:inherit region))))
  '(magit-item-highlight ((t (:inherit hl-line))))
  '(whitespace-indentation ((t (:inherit highlight :foreground "#e9e2cb"))))
  '(widget-field ((t (:inherit hl-line :box (:line-width 1 :color "#52676f"))))))
