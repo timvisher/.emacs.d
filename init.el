@@ -107,6 +107,16 @@
 
 ;;; Magnar Sven's mother was the golden goose: http://emacsrocks.com/
 (global-set-key (kbd "C-=") 'er/expand-region)
+(global-unset-key (kbd "C-c r"))
+(global-set-key (kbd "C-c r i \"") 'er/mark-inside-quotes)
+(global-set-key (kbd "C-c r i \'") 'er/mark-inside-quotes)
+(global-set-key (kbd "C-c r i p") 'er/mark-inside-pairs)
+(global-set-key (kbd "C-c r a \"") 'er/mark-outside-quotes)
+(global-set-key (kbd "C-c r a \'") 'er/mark-outside-quotes)
+(global-set-key (kbd "C-c r a p") 'er/mark-outside-pairs)
+(global-set-key (kbd "C-c r i t") 'er/mark-inner-tag)
+(global-set-key (kbd "C-c r a t") 'er/mark-outer-tag)
+
 
 ;;; Ruby
 
