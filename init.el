@@ -63,6 +63,8 @@
 ;; (eval-after-load 'starter-kit-misc
 ;;   '(ido-ubiquitous nil))
 
+(defalias 'csr 'cua-set-rectangle-mark)
+
 ;;; All the cool kids swap meta and super.
 (if (boundp 'mac-command-modifier) (setq mac-command-modifier 'meta))
 (if (boundp 'mac-option-modifier) (setq mac-option-modifier 'super))
