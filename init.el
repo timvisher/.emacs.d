@@ -104,6 +104,7 @@
 
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.txt$" . markdown-mode))
 
 ;;; Magnar Sven's mother was the golden goose: http://emacsrocks.com/
 (global-set-key (kbd "C-=") 'er/expand-region)
@@ -482,6 +483,7 @@
  '(helm-M-x-always-save-history t)
  '(helm-c-use-adaptative-sorting t)
  '(helm-mode t)
+ '(ido-everywhere t)
  '(ido-ubiquitous-command-exceptions (quote (unhighlight-regexp)))
  '(ido-ubiquitous-mode t)
  '(indent-tabs-mode nil)
