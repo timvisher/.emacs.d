@@ -92,9 +92,9 @@
 
 ;;; @jwiegely says winner mode is 'da bomb so it seems like it would be worth using
 (eval-after-load 'winner
-  (global-set-key (kbd "C-c [") 'winner-undo))
+  '(global-set-key (kbd "C-c [") 'winner-undo))
 (eval-after-load 'winner
-  (global-set-key (kbd "C-c ]") 'winner-redo))
+  '(global-set-key (kbd "C-c ]") 'winner-redo))
 
 ;;; markdown
 ;;; Let's fix `C-j` in markdown mode.
@@ -172,6 +172,8 @@
 ;;; Don't be stupid and forget that `clojure-jack-in` is how you
 ;;; should enable clojure-mode on your stuff
 ;; (add-to-list 'auto-mode-alist '("\\.clj$" . clojure-mode))
+
+(add-to-list 'auto-mode-alist '("\\.cljs$" . clojure-mode))
 
 (eval-after-load 'clojure-mode
   '(add-hook 'clojure-mode-hook 'timvisher/turn-on-eldoc))
@@ -450,8 +452,8 @@
  '(css-indent-offset 3)
  '(cua-enable-cua-keys nil)
  '(cua-mode t nil (cua-base))
- '(custom-enabled-themes (quote (solarized-light)))
- '(custom-safe-themes (quote ("117284df029007a8012cae1f01c3156d54a0de4b9f2f381feab47809b8a1caef" "91f2c4c623100a649cde613e8336eaa2ee144104" "62b81fe9b7d13eef0539d6a0f5c0c37170c9e248" "5600dc0bb4a2b72a613175da54edb4ad770105aa" "0174d99a8f1fdc506fa54403317072982656f127" default)))
+ ;; '(custom-enabled-themes (quote (solarized-light)))
+ ;; '(custom-safe-themes (quote ("117284df029007a8012cae1f01c3156d54a0de4b9f2f381feab47809b8a1caef" "91f2c4c623100a649cde613e8336eaa2ee144104" "62b81fe9b7d13eef0539d6a0f5c0c37170c9e248" "5600dc0bb4a2b72a613175da54edb4ad770105aa" "0174d99a8f1fdc506fa54403317072982656f127" default)))
  '(custom-theme-directory "~/.emacs.d/site-lisp/themes")
  '(deft-directory "")
  '(deft-extension "md")
@@ -494,6 +496,7 @@
  '(js-indent-level 2)
  '(mouse-avoidance-mode (quote banish) nil (avoid))
  '(org-hide-leading-stars t)
+ '(save-interprogram-paste-before-kill t)
  '(save-place-file (concat (getenv "HOME") "/.emacs.d/" system-name ".places"))
  '(sentence-end-double-space nil)
  '(solarized-contrast (quote high))
@@ -513,7 +516,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(cua-rectangle ((t (:inherit region))))
- '(magit-item-highlight ((t (:inherit hl-line))))
+ '(magit-item-highlight ((t (:inherit hl-line))) t)
  '(whitespace-indentation ((t (:inherit highlight :foreground "#e9e2cb"))))
  '(widget-field ((t (:inherit hl-line :box (:line-width 1 :color "#52676f"))))))
 
