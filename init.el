@@ -517,8 +517,8 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(cua-rectangle ((t (:inherit region))))
- '(esk-paren-face ((t (:foreground "brightblack"))))
- '(magit-item-highlight ((t (:inherit hl-line))) t)
+ '(esk-paren-face ((t (:foreground "grey55"))))
+ '(magit-item-highlight ((t (:inherit hl-line))))
  '(whitespace-indentation ((t (:inherit highlight :foreground "#e9e2cb"))))
  '(widget-field ((t (:inherit hl-line :box (:line-width 1 :color "#52676f"))))))
 

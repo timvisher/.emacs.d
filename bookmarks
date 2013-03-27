@@ -1,0 +1,25 @@
+;;;; Emacs Bookmark Format Version 1 ;;;;
+;;; This format is meant to be slightly human-readable;
+;;; nevertheless, you probably don't want to edit it.
+;;; -*- End Of Bookmark File Format Version Stamp -*-
+(("renderHeader"
+ (filename . "~/projects/rn-wall-front-end/src/cdn/javascript/wire/wire.js")
+ (front-context-string . " = function (con")
+ (rear-context-string . "elf.renderHeader")
+ (position . 32673))
+("wire.js"
+ (filename . "~/projects/rn-wall-front-end/src/cdn/javascript/wire/wire.js")
+ (front-context-string . "\n               ")
+ (rear-context-string . "ubView.render();")
+ (position . 9384))
+("maybe the click handler?"
+ (filename . "~/projects/rn-client-portal/resources/src/client/js/jquery.select2-3.2.js")
+ (front-context-string . ".val() === \" \") ")
+ (rear-context-string . " if (this.search")
+ (position . 38407))
+("rweb-1.0.2.js"
+ (filename . "~/projects/rn-js/rweb/src/js/rweb-1.0.2.js")
+ (front-context-string . "compileTemplate(")
+ (rear-context-string . "           self.")
+ (position . 5139))
+)
