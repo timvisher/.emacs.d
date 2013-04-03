@@ -454,6 +454,7 @@
  '(css-indent-offset 3)
  '(cua-enable-cua-keys nil)
  '(cua-mode t nil (cua-base))
+ '(custom-safe-themes (quote ("117284df029007a8012cae1f01c3156d54a0de4b9f2f381feab47809b8a1caef" default)))
  '(custom-theme-directory "~/.emacs.d/site-lisp/themes")
  '(deft-directory "")
  '(deft-extension "md")
@@ -527,3 +528,6 @@
 ;;; We pay homage:
 ;;; [yegge]: https://sites.google.com/site/steveyegge2/effective-emacs
 ;;; [redisplay-dont-pause]: http://www.masteringemacs.org/articles/2011/10/02/improving-performance-emacs-display-engine/
+
+;;; I like solarized. Only the cool kids use th3 dark mode, though.
+(load-theme 'solarized-light)
