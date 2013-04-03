@@ -232,6 +232,8 @@
 (add-hook 'text-mode-hook 'visual-line-mode)
 (add-hook 'text-mode-hook 'whitespace-mode)
 
+(add-hook 'markdown-mode-hook 'visual-line-mode)
+
 ;;; ----------------------------------------------------------------------------
 ;;; What needs to be overridden shall be overridden
 ;;; ----------------------------------------------------------------------------
