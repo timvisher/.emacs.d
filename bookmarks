@@ -2,7 +2,12 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("renderHeader"
+(("routes.clj"
+ (filename . "~/Dropbox/wallpaperrr/wallpaperrr/src/wallpaperrr/routes.clj")
+ (front-context-string . "\n\n(comment\n  (wa")
+ (rear-context-string . "(log/trace \"\")))")
+ (position . 5865))
+("renderHeader"
  (filename . "~/projects/rn-wall-front-end/src/cdn/javascript/wire/wire.js")
  (front-context-string . " = function (con")
  (rear-context-string . "elf.renderHeader")
