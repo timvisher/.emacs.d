@@ -13,7 +13,9 @@
   (package-refresh-contents))
 
 (defvar timvisher/my-packages '(clojure-mode
-                                ;; clojure-test-mode
+                                nrepl
+                                align-cljlet
+                                clojure-test-mode
                                 expand-region
                                 deft
                                 elein
@@ -57,13 +59,24 @@
 ;;; Alright, time's up. Let's do enabling and configuring modes.
 ;;; ----------------------------------------------------------------------------
 
+(electric-pair-mode 1)
+(electric-indent-mode 1)
+
+;;; Supposedly I need to turn this on to get scroll wheel support (like gnome-terminal) in iTerm but it also captures the mouse for things like cursor selection which breaks iterm selection clipboard copying. Not sure if I like this.
+;; (xterm-mouse-mode 1)
+;; (global-set-key (kbd "<mouse-4>") 'next-line)
+;; (global-set-key (kbd "<mouse-5>") 'previous-line)
+
 ;; ;;; If we really, really don't want ido-mode, this is how to do it!
 ;; (eval-after-load 'starter-kit-misc
 ;;   '(ido-mode nil))
 ;; (eval-after-load 'starter-kit-misc
 ;;   '(ido-ubiquitous nil))
 
+(global-set-key (kbd "C-c k") 'kill-whole-line)
+
 (defalias 'csr 'cua-set-rectangle-mark)
+(global-set-key (kbd "C-c r SPC") 'cua-set-rectangle-mark)
 
 ;;; All the cool kids swap meta and super.
 (if (boundp 'mac-command-modifier) (setq mac-command-modifier 'meta))
@@ -107,15 +120,21 @@
 (add-to-list 'auto-mode-alist '("\\.txt$" . markdown-mode))
 
 ;;; Magnar Sven's mother was the golden goose: http://emacsrocks.com/
-(global-set-key (kbd "C-=") 'er/expand-region)
 (global-unset-key (kbd "C-c r"))
+(global-set-key (kbd "C-c r =") 'er/expand-region)
+(autoload 'er/mark-inside-quotes "expand-region")
 (global-set-key (kbd "C-c r i \"") 'er/mark-inside-quotes)
 (global-set-key (kbd "C-c r i \'") 'er/mark-inside-quotes)
+(autoload 'er/mark-inside-pairs "expand-region")
 (global-set-key (kbd "C-c r i p") 'er/mark-inside-pairs)
+(autoload 'er/mark-outside-quotes "expand-region")
 (global-set-key (kbd "C-c r a \"") 'er/mark-outside-quotes)
 (global-set-key (kbd "C-c r a \'") 'er/mark-outside-quotes)
+(autoload 'er/mark-outside-pairs "expand-region")
 (global-set-key (kbd "C-c r a p") 'er/mark-outside-pairs)
+(autoload 'er/mark-inner-tag "expand-region")
 (global-set-key (kbd "C-c r i t") 'er/mark-inner-tag)
+(autoload 'er/mark-outer-tag "expand-region")
 (global-set-key (kbd "C-c r a t") 'er/mark-outer-tag)
 
 
@@ -496,7 +515,9 @@
  '(inhibit-startup-screen nil)
  '(js-indent-level 2)
  '(mouse-avoidance-mode (quote banish) nil (avoid))
+ '(org-babel-load-languages (quote ((emacs-lisp . t) (js . t))))
  '(org-hide-leading-stars t)
+ '(org-insert-heading-respect-content t)
  '(save-interprogram-paste-before-kill t)
  '(save-place-file (concat (getenv "HOME") "/.emacs.d/" system-name ".places"))
  '(sentence-end-double-space nil)

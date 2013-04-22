@@ -36,7 +36,8 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; Growl from Emacs? Boom!
-(require 'todochiku)
+(if (featurep 'todochicku)
+    (require 'todochiku))
 
 ;;; Why, oh why does brew insist on installing gnu tools at `g` prefixes?
 (eval-after-load 'grep
