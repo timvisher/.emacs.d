@@ -510,7 +510,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector ["#2d3743" "#ff4242" "#74af68" "#dbdb95" "#34cae2" "#008b8b" "#00ede1" "#e1e1e0"])
- '(archive-extract-hook (quote (timvisher/make-read-only)))
+ '(archive-extract-hook (quote (timvisher/make-read-only)) t)
  '(backup-directory-alist (\` (("." \, (concat (getenv "HOME") "/.emacs.d/" system-name "-backups")))))
  '(c-mode-common-hook (quote (timvisher/turn-on-subword-mode)))
  '(column-number-mode t)
@@ -560,7 +560,7 @@
  '(inhibit-startup-screen nil)
  '(js-indent-level 2)
  '(mouse-avoidance-mode (quote banish) nil (avoid))
- '(org-babel-load-languages (quote ((emacs-lisp . t) (js . t))))
+ '(org-babel-load-languages (quote ((emacs-lisp . t) (js . t) (clojure . t))))
  '(org-hide-leading-stars t)
  '(org-insert-heading-respect-content t)
  '(org-src-fontify-natively t)
