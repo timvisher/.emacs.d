@@ -162,7 +162,6 @@
 ;;; Magnar Sven's mother was the golden goose: http://emacsrocks.com/
 (global-unset-key (kbd "C-c r"))
 (global-set-key (kbd "C-c r =") 'er/expand-region)
-xpand-region keybindings. EOM
 (autoload 'er/mark-inside-quotes "expand-region")
 (global-set-key (kbd "C-c r i \"") 'er/mark-inside-quotes)
 (global-set-key (kbd "C-c r i \'") 'er/mark-inside-quotes)
