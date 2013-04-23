@@ -115,8 +115,12 @@
 
 (global-set-key (kbd "C-c k") 'kill-whole-line)
 
+(global-unset-key (kbd "C-c r"))
 (defalias 'csr 'cua-set-rectangle-mark)
 (global-set-key (kbd "C-c r SPC") 'cua-set-rectangle-mark)
+
+;;; git grep is pretty awesome
+(global-set-key (kbd "C-c r g") 'vc-git-grep)
 
 ;;; All the cool kids swap meta and super.
 (if (boundp 'mac-command-modifier) (setq mac-command-modifier 'meta))
@@ -213,10 +217,6 @@
 (global-set-key (kbd "M-h") 'backward-kill-word)
 (global-set-key (kbd "C-h") 'backward-delete-char-untabify)
 
-;;; Let's make paredit honor our awesome keys
-(eval-after-load 'paredit
-  '(timvisher/map-custom-paredit-keys))
-
 (defun timvisher/map-custom-paredit-keys ()
   (define-key paredit-mode-map (kbd "C-h") 'paredit-backward-delete)
   (define-key paredit-mode-map (kbd "M-h") 'paredit-backward-kill-word)
@@ -225,6 +225,10 @@
   (define-key paredit-mode-map (kbd "[") 'paredit-open-square)
   (define-key paredit-mode-map (kbd "]") 'paredit-close-square)
   (define-key paredit-mode-map (kbd "M-(") 'paredit-wrap-sexp))
+
+;;; Let's make paredit honor our awesome keys
+(eval-after-load 'paredit
+  '(timvisher/map-custom-paredit-keys))
 
 ;;; Let's configure clojure-mode-hook with some extra goodness
 
