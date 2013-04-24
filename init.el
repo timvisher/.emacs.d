@@ -561,6 +561,7 @@
  '(js-indent-level 2)
  '(mouse-avoidance-mode (quote banish) nil (avoid))
  '(org-babel-load-languages (quote ((emacs-lisp . t) (js . t) (clojure . t))))
+ '(org-babel-tangle-lang-exts (quote (("clojure" . "clj") ("emacs-lisp" . "el") ("javascript" . "js"))))
  '(org-hide-leading-stars t)
  '(org-insert-heading-respect-content t)
  '(org-src-fontify-natively t)
