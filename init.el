@@ -51,6 +51,7 @@
                                 nrepl
                                 align-cljlet
                                 clojure-test-mode
+                                htmlize
                                 expand-region
                                 deft
                                 elein
@@ -112,14 +113,12 @@
 ;; (eval-after-load 'starter-kit-misc
 ;;   '(ido-ubiquitous nil))
 
-
 (global-set-key (kbd "C-c k") 'kill-whole-line)
 
-(global-unset-key (kbd "C-c r"))
 (defalias 'csr 'cua-set-rectangle-mark)
-(global-set-key (kbd "C-c r SPC") 'cua-set-rectangle-mark)
 
 ;;; git grep is pretty awesome
+(global-unset-key (kbd "C-c r"))        ; Not sure what `C-c r` normally does but I don't like it!
 (global-set-key (kbd "C-c r g") 'vc-git-grep)
 
 ;;; All the cool kids swap meta and super.
@@ -164,7 +163,6 @@
 (add-to-list 'auto-mode-alist '("\\.txt$" . markdown-mode))
 
 ;;; Magnar Sven's mother was the golden goose: http://emacsrocks.com/
-(global-unset-key (kbd "C-c r"))
 (global-set-key (kbd "C-c r =") 'er/expand-region)
 (autoload 'er/mark-inside-quotes "expand-region")
 (global-set-key (kbd "C-c r i \"") 'er/mark-inside-quotes)
@@ -504,6 +502,8 @@
 (when (display-graphic-p)
   (if (string-match "darwin" system-configuration) (ns-toggle-fullscreen) (maximize-frame)))
 
+(global-set-key (kbd "C-c r SPC") 'cua-set-rectangle-mark)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -563,6 +563,7 @@
  '(org-babel-load-languages (quote ((emacs-lisp . t) (js . t))))
  '(org-hide-leading-stars t)
  '(org-insert-heading-respect-content t)
+ '(org-src-fontify-natively t)
  '(save-interprogram-paste-before-kill t)
  '(save-place-file (concat (getenv "HOME") "/.emacs.d/" system-name ".places"))
  '(sentence-end-double-space nil)
@@ -587,7 +588,7 @@
  ;; If there is more than one, they won't work right.
  '(cua-rectangle ((t (:inherit region))))
  '(esk-paren-face ((t (:foreground "grey55"))))
- '(magit-item-highlight ((t (:inherit hl-line))))
+ '(magit-item-highlight ((t (:inherit hl-line))) t)
  '(whitespace-indentation ((t (:inherit highlight :foreground "#e9e2cb"))))
  '(widget-field ((t (:inherit hl-line :box (:line-width 1 :color "#52676f"))))))
 
