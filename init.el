@@ -240,6 +240,9 @@
   '(add-hook 'clojure-mode-hook 'timvisher/turn-on-eldoc))
 
 (eval-after-load 'clojure-mode
+  '(define-key clojure-mode-map (kbd "C-c l") 'align-cljlet))
+
+(eval-after-load 'clojure-mode
   '(add-hook 'clojure-mode-hook 'timvisher/turn-on-elein))
 
 (defun timvisher/turn-on-eldoc () (eldoc-mode 1))
@@ -510,7 +513,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector ["#2d3743" "#ff4242" "#74af68" "#dbdb95" "#34cae2" "#008b8b" "#00ede1" "#e1e1e0"])
- '(archive-extract-hook (quote (timvisher/make-read-only)) t)
+ '(archive-extract-hook (quote (timvisher/make-read-only)))
  '(backup-directory-alist (\` (("." \, (concat (getenv "HOME") "/.emacs.d/" system-name "-backups")))))
  '(c-mode-common-hook (quote (timvisher/turn-on-subword-mode)))
  '(column-number-mode t)
@@ -589,7 +592,7 @@
  ;; If there is more than one, they won't work right.
  '(cua-rectangle ((t (:inherit region))))
  '(esk-paren-face ((t (:foreground "grey55"))))
- '(magit-item-highlight ((t (:inherit hl-line))) t)
+ '(magit-item-highlight ((t (:inherit hl-line))))
  '(whitespace-indentation ((t (:inherit highlight :foreground "#e9e2cb"))))
  '(widget-field ((t (:inherit hl-line :box (:line-width 1 :color "#52676f"))))))
 
