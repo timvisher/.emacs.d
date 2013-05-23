@@ -164,6 +164,8 @@
 
 ;;; Magnar Sven's mother was the golden goose: http://emacsrocks.com/
 (global-set-key (kbd "C-c r =") 'er/expand-region)
+(autoload 'er/contract-region "expand-region")
+(global-set-key (kbd "C-c r -") 'er/contract-region)
 (autoload 'er/mark-inside-quotes "expand-region")
 (global-set-key (kbd "C-c r i \"") 'er/mark-inside-quotes)
 (global-set-key (kbd "C-c r i \'") 'er/mark-inside-quotes)
@@ -237,15 +239,13 @@
 (add-to-list 'auto-mode-alist '("\\.cljs$" . clojure-mode))
 
 (eval-after-load 'clojure-mode
-  '(add-hook 'clojure-mode-hook 'timvisher/turn-on-eldoc))
+  '(add-hook 'nrepl-interaction-mode 'nrepl-turn-on-eldoc-mode))
 
 (eval-after-load 'clojure-mode
   '(define-key clojure-mode-map (kbd "C-c l") 'align-cljlet))
 
 (eval-after-load 'clojure-mode
   '(add-hook 'clojure-mode-hook 'timvisher/turn-on-elein))
-
-(defun timvisher/turn-on-eldoc () (eldoc-mode 1))
 
 (defun timvisher/turn-on-elein ()
   (unless (featurep 'elein)
@@ -394,10 +394,72 @@
 (defun timvisher/notify-of-mention (match-type nickuserhost message)
   (todochiku-message nickuserhost message (cdr (assoc 'irc todochiku-icons))))
 
+;; (let ((current-deft-filter-regexp deft-filter-regexp))
+;;     (if deft-filter-regexp
+;;         (progn
+;;           (deft-filter-clear)
+;;           (deft-new-file)
+;;           (deft-filter current-deft-filter-regexp))
+;;       (deft-new-file)))
+
+;; (defun timvisher/blog (blog-title)
+;;   "Grab a new deft file and populate it with a blog entry titled BLOG-TITLE for right now."
+;;   (interactive "sBlog Title: ")
+;;   ;; (let ((current-deft-filter-regexp deft-filter-regexp))
+;;   ;;   (if deft-filter-regexp
+;;   ;;       (progn
+;;   ;;         (deft-filter-clear)
+;;   ;;         (deft-new-file)
+;;   ;;         (deft-filter current-deft-filter-regexp))
+;;   ;;     (deft-new-file)))
+;;   (deft-new-file)
+;;   (visual-line-mode 1)
+;;   (insert "blogpost-"
+;;           (format-time-string "%Y%m%d%H%M%S")
+;;           "-"
+;;           (replace-regexp-in-string " " "-" (downcase blog-title))
+;;           "
+
+;; # "
+;;           (titlecase-string blog-title)
+;;           "
+
+;; ")
+;;   (local-set-key (kbd "C-c C-q") 'delete-frame))
+
+(eval-after-load "deft"
+  '(defun timvisher/blog (blog-title)
+     "Grab a new deft file and populate it with a blog entry titled BLOG-TITLE for right now."
+     (interactive "sBlog Title: ")
+     ;; (let ((current-deft-filter-regexp deft-filter-regexp))
+     ;;   (if deft-filter-regexp
+     ;;       (progn
+     ;;         (deft-filter-clear)
+     ;;         (deft-new-file)
+     ;;         (deft-filter current-deft-filter-regexp))
+     ;;     (deft-new-file)))
+     (deft-new-file)
+     (visual-line-mode 1)
+     (insert "blogpost-"
+             (format-time-string "%Y%m%d%H%M%S")
+             "-"
+             (replace-regexp-in-string " " "-" (downcase blog-title))
+             "
+
+# "
+             (titlecase-string blog-title)
+             "
+
+")
+     (local-set-key (kbd "C-c C-q") 'delete-frame)))
+
+(eval-after-load "deft"
+  '(require 'titlecase))
+
 ;;; Deft is pretty awesome, and my journal entries should probably be kept in it
 (eval-after-load "deft"
   '(defun timvisher/journal ()
-     "Grab a new deft file and populate it with a joural entry for right now"
+     "Grab a new deft file and populate it with a journal entry for right now"
      (interactive)
      (select-frame-set-input-focus (make-frame))
      (deft-new-file)
@@ -563,8 +625,6 @@
  '(inhibit-startup-screen nil)
  '(js-indent-level 2)
  '(mouse-avoidance-mode (quote banish) nil (avoid))
- '(org-babel-load-languages (quote ((emacs-lisp . t) (js . t) (clojure . t))))
- '(org-babel-tangle-lang-exts (quote (("clojure" . "clj") ("emacs-lisp" . "el") ("javascript" . "js"))))
  '(org-hide-leading-stars t)
  '(org-insert-heading-respect-content t)
  '(org-src-fontify-natively t)
@@ -592,7 +652,8 @@
  ;; If there is more than one, they won't work right.
  '(cua-rectangle ((t (:inherit region))))
  '(esk-paren-face ((t (:foreground "grey55"))))
- '(magit-item-highlight ((t (:inherit hl-line))))
+ '(magit-item-highlight ((t (:inherit hl-line))) t)
+ '(match ((t (:inherit idle-highlight))))
  '(whitespace-indentation ((t (:inherit highlight :foreground "#e9e2cb"))))
  '(widget-field ((t (:inherit hl-line :box (:line-width 1 :color "#52676f"))))))
 
