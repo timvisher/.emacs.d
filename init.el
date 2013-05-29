@@ -666,3 +666,5 @@
 
 ;;; I like solarized. Only the cool kids use th3 dark mode, though.
 (load-theme 'solarized-light)
+
+(message "you're loaded, Charnock!")
