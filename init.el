@@ -120,9 +120,17 @@
 
 (defalias 'csr 'cua-set-rectangle-mark)
 
-;;; git grep is pretty awesome
+(defun timvisher/ack-from-root (arg)
+  (interactive "P")
+  (if (not current-prefix-arg)
+      (let ((current-prefix-arg 4))
+        (call-interactively 'ack))
+    (call-interactively 'ack)))
+
+;;; git grep is pretty awesome, so is ack
 (global-unset-key (kbd "C-c r"))        ; Not sure what `C-c r` normally does but I don't like it!
-(global-set-key (kbd "C-c r g") 'vc-git-grep)
+;; (gloabl-set-key (kbd "C-c r g") 'vc-git-grep)
+(global-set-key (kbd "C-c r g") 'timvisher/ack-from-root)
 
 ;;; All the cool kids swap meta and super.
 (if (boundp 'mac-command-modifier) (setq mac-command-modifier 'meta))
