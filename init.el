@@ -657,7 +657,7 @@
  ;; If there is more than one, they won't work right.
  '(cua-rectangle ((t (:inherit region))))
  '(esk-paren-face ((t (:foreground "grey55"))))
- '(magit-item-highlight ((t (:inherit hl-line))) t)
+ '(magit-item-highlight ((t (:inherit hl-line))))
  '(match ((t (:inherit idle-highlight))))
  '(whitespace-indentation ((t (:inherit highlight :foreground "#e9e2cb"))))
  '(widget-field ((t (:inherit hl-line :box (:line-width 1 :color "#52676f"))))))
