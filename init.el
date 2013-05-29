@@ -84,6 +84,9 @@
 ;;; And now let's get some system wide variables set up
 ;;; ----------------------------------------------------------------------------
 
+;;; <f1> should be the only way to access help, because C-h is better bound to backward-delete-char-untabify
+(define-key isearch-mode-map (kbd "C-h") 'isearch-delete-char)
+
 ;;; You always wants your custom info files to be in the Info-directory-list
 (eval-after-load 'info 
   '(add-to-list 'Info-directory-list (concat (getenv "HOME") "/.emacs.d/info")))
