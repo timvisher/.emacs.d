@@ -129,6 +129,9 @@
                                   ((<= 16 (car arg)) nil))))
     (call-interactively 'ack)))
 
+;;; OOO, I wants it! http://www.youtube.com/watch?v=Wzr12gBrXA8
+;; (define-key ack-minibuffer-local-map (kbd "C-w") 'isearch-yank-word-or-char)
+
 ;;; git grep is pretty awesome, so is ack
 (global-unset-key (kbd "C-c r"))        ; Not sure what `C-c r` normally does but I don't like it!
 ;; (gloabl-set-key (kbd "C-c r g") 'vc-git-grep)
