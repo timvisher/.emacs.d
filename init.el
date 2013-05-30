@@ -122,9 +122,11 @@
 
 (defun timvisher/ack-from-root (arg)
   (interactive "P")
-  (if (not current-prefix-arg)
-      (let ((current-prefix-arg 4))
-        (call-interactively 'ack))
+  (let ((current-prefix-arg (cond ((not arg) 4)
+
+                                  ((= 4 (car arg)) 16)
+
+                                  ((<= 16 (car arg)) nil))))
     (call-interactively 'ack)))
 
 ;;; git grep is pretty awesome, so is ack
