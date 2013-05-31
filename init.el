@@ -145,6 +145,46 @@
 
 (define-key isearch-mode-map (kbd "C-c r g") 'timvisher/isearch-ack-from-root)
 
+;; (let ((split-and-delete-window-functions '(split-window-right
+;;                                            split-window-below
+;;                                            split-window-horizontally
+;;                                            split-window-sensibily
+;;                                            split-window-vertically
+;;                                            delete-window
+;;                                            quit-window)))
+;;   (dolist (f split-and-delete-window-functions)
+;;     (defadvice f (after rebalance-windows activate)
+;;       (balance-windows))
+;;     (ad-activate f)))
+
+(defadvice split-window-right (after rebalance-windows activate)
+  (balance-windows))
+(ad-activate 'split-window-right)
+
+(defadvice split-window-below (after rebalance-windows activate)
+  (balance-windows))
+(ad-activate 'split-window-below)
+
+(defadvice split-window-horizontally (after rebalance-windows activate)
+  (balance-windows))
+(ad-activate 'split-window-horizontally)
+
+(defadvice split-window-sensibily (after rebalance-windows activate)
+  (balance-windows))
+(ad-activate 'split-window-sensibily)
+
+(defadvice split-window-vertically (after rebalance-windows activate)
+  (balance-windows))
+(ad-activate 'split-window-vertically)
+
+(defadvice delete-window (after rebalance-windows activate)
+  (balance-windows))
+(ad-activate 'delete-window)
+
+(defadvice quit-window (after rebalance-windows activate)
+  (balance-windows))
+(ad-activate 'quit-window)
+
 ;;; OOO, I wants it! http://www.youtube.com/watch?v=Wzr12gBrXA8
 ;; (define-key ack-minibuffer-local-map (kbd "C-w") 'isearch-yank-word-or-char)
 
