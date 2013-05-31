@@ -129,6 +129,22 @@
                                   ((<= 16 (car arg)) nil))))
     (call-interactively 'ack)))
 
+(defun timvisher/isearch-ack-from-root (arg regexp)
+  (interactive
+   (list current-prefix-arg
+         (cond
+          ((functionp isearch-word)
+           (funcall isearch-word isearch-string))
+          (isearch-word (word-search-regexp isearch-string))
+          (isearch-regexp isearch-string)
+          (t (regexp-quote isearch-string)))))
+  (let ((ack-command (concat "ag " regexp)))
+    (isearch-done nil)
+    (isearch-clean-overlays)
+    (call-interactively 'timvisher/ack-from-root)))
+
+(define-key isearch-mode-map (kbd "C-c r g") 'timvisher/isearch-ack-from-root)
+
 ;;; OOO, I wants it! http://www.youtube.com/watch?v=Wzr12gBrXA8
 ;; (define-key ack-minibuffer-local-map (kbd "C-w") 'isearch-yank-word-or-char)
 
@@ -641,6 +657,7 @@
  '(indicate-empty-lines t)
  '(inferior-lisp-program "lein repl")
  '(inhibit-startup-screen nil)
+ '(isearch-allow-scroll t)
  '(js-indent-level 2)
  '(mouse-avoidance-mode (quote banish) nil (avoid))
  '(org-hide-leading-stars t)
