@@ -93,6 +93,9 @@
 
 ;;; We need site-lisp to be here for stuff that hasn't made it out of the wilderness and into elpa
 (add-to-list 'load-path "~/.emacs.d/site-lisp")
+(add-to-list 'load-path "~/.emacs.d/timvisher")
+
+(load "custom")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Alright, time's up. Let's do enabling and configuring modes.
@@ -655,97 +658,6 @@
   (if (string-match "darwin" system-configuration) (ns-toggle-fullscreen) (maximize-frame)))
 
 (global-set-key (kbd "C-c r SPC") 'cua-set-rectangle-mark)
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(ansi-color-names-vector ["#2d3743" "#ff4242" "#74af68" "#dbdb95" "#34cae2" "#008b8b" "#00ede1" "#e1e1e0"])
- '(archive-extract-hook (quote (timvisher/make-read-only)))
- '(backup-directory-alist (\` (("." \, (concat (getenv "HOME") "/.emacs.d/" system-name "-backups")))))
- '(c-mode-common-hook (quote (timvisher/turn-on-subword-mode)))
- '(column-number-mode t)
- '(comment-column 0)
- '(css-indent-offset 3)
- '(cua-enable-cua-keys nil)
- '(cua-mode t nil (cua-base))
- '(custom-safe-themes (quote ("117284df029007a8012cae1f01c3156d54a0de4b9f2f381feab47809b8a1caef" default)))
- '(custom-theme-directory "~/.emacs.d/site-lisp/themes")
- '(deft-directory "")
- '(deft-extension "md")
- '(deft-text-mode (quote markdown-mode))
- '(dired-dwim-target t)
- '(dired-recursive-copies (quote always))
- '(dired-recursive-deletes (quote always))
- '(dired-use-ls-dired (quote unspecified))
- '(elein-lein "lein")
- '(erc-autojoin-channels-alist (quote (("freenode.net" "#clojure" "#emacs"))))
- '(erc-autojoin-delay 30)
- '(erc-autojoin-mode t)
- '(erc-autojoin-timing (quote ident))
- '(erc-email-userid "tim.visher@gmail.com")
- '(erc-enable-logging (quote erc-log-all-but-server-buffers))
- '(erc-log-channels-directory "~/Dropbox/log")
- '(erc-log-mode t)
- '(erc-log-write-after-insert t)
- '(erc-nick-notify-cmd "notify")
- '(erc-nickserv-passwords (quote ((freenode (("timvisher" . "rideon"))))))
- '(erc-prompt-for-nickserv-password nil)
- '(erc-prompt-for-password nil)
- '(erc-save-queries-on-quit t)
- '(erc-services-mode t)
- '(erc-text-matched-hook (quote (erc-log-matches)))
- '(erc-user-full-name "Tim Visher")
- '(find-ls-option (quote ("-print0 | xargs -0 ls -ld" . "-ld")))
- '(global-hl-line-mode t)
- '(global-hl-line-sticky-flag t)
- '(grep-find-ignored-directories (quote ("SCCS" "RCS" "CVS" "MCVS" ".svn" ".git" ".hg" ".bzr" "_MTN" "_darcs" "{arch}" "target")))
- '(helm-M-x-always-save-history t)
- '(helm-c-use-adaptative-sorting t)
- '(helm-mode t)
- '(ido-everywhere t)
- '(ido-ubiquitous-command-exceptions (quote (unhighlight-regexp)))
- '(ido-ubiquitous-mode t)
- '(indent-tabs-mode nil)
- '(indicate-buffer-boundaries (quote left))
- '(indicate-empty-lines t)
- '(inferior-lisp-program "lein repl")
- '(inhibit-startup-screen nil)
- '(isearch-allow-scroll t)
- '(js-indent-level 2)
- '(mouse-avoidance-mode (quote banish) nil (avoid))
- '(org-hide-leading-stars t)
- '(org-insert-heading-respect-content t)
- '(org-src-fontify-natively t)
- '(save-interprogram-paste-before-kill t)
- '(save-place-file (concat (getenv "HOME") "/.emacs.d/" system-name ".places"))
- '(sentence-end-double-space nil)
- '(sh-basic-offset 2)
- '(sh-indentation 2)
- '(solarized-contrast (quote high))
- '(sql-ms-options (quote ("-w" "15000" "-n")))
- '(sql-ms-program "osql")
- '(standard-indent 2)
- '(tab-width 2)
- '(text-mode-hook (quote (whitespace-mode text-mode-hook-identify)))
- '(transient-mark-mode nil)
- '(user-mail-address "tim.visher@gmail.com")
- '(visual-line-fringe-indicators (quote (left-curly-arrow right-curly-arrow)))
- '(whitespace-style (quote (trailing space-before-tab face indentation space-after-tab)))
- '(winner-dont-bind-my-keys t)
- '(winner-mode t nil (winner)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(cua-rectangle ((t (:inherit region))))
- '(esk-paren-face ((t (:foreground "grey55"))))
- '(magit-item-highlight ((t (:inherit hl-line))))
- '(match ((t (:inherit idle-highlight))))
- '(whitespace-indentation ((t (:inherit highlight :foreground "#e9e2cb"))))
- '(widget-field ((t (:inherit hl-line :box (:line-width 1 :color "#52676f"))))))
 
 ;;; We pay homage:
 ;;; [yegge]: https://sites.google.com/site/steveyegge2/effective-emacs
