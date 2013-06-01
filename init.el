@@ -576,7 +576,4 @@
 ;;; [yegge]: https://sites.google.com/site/steveyegge2/effective-emacs
 ;;; [redisplay-dont-pause]: http://www.masteringemacs.org/articles/2011/10/02/improving-performance-emacs-display-engine/
 
-;;; I like solarized. Only the cool kids use th3 dark mode, though.
-;; (load-theme 'solarized-light)
-
 (message "you're loaded, Charnock!")
