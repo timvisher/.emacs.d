@@ -129,6 +129,8 @@
                                   ((<= 16 (car arg)) nil))))
     (call-interactively 'ack)))
 
+(autoload 'ack-command "ack")
+
 (defun timvisher/isearch-ack-from-root (arg regexp)
   (interactive
    (list current-prefix-arg
