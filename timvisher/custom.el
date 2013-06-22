@@ -16,7 +16,6 @@
  '(custom-file "~/.emacs.d/timvisher/custom.el")
  '(custom-safe-themes (quote ("117284df029007a8012cae1f01c3156d54a0de4b9f2f381feab47809b8a1caef" default)))
  '(custom-theme-directory "~/.emacs.d/site-lisp/themes")
- '(debug-on-error t)
  '(deft-directory "")
  '(deft-extension "md")
  '(deft-text-mode (quote markdown-mode))
@@ -87,6 +86,7 @@
  ;; If there is more than one, they won't work right.
  '(cua-rectangle ((t (:inherit region))))
  '(esk-paren-face ((t (:foreground "grey55"))))
+ '(hl-line ((t (:inherit highlight :background "color-255"))))
  '(magit-item-highlight ((t (:inherit hl-line))))
  '(match ((t (:inherit idle-highlight))))
  '(whitespace-indentation ((t (:inherit highlight :foreground "#e9e2cb"))))
