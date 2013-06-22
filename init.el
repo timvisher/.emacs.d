@@ -247,10 +247,17 @@
 (eval-after-load 'textmate
   '(define-key *textmate-mode-map* [(super shift t)] 'helm-imenu))
 
+(defun timvisher/load-yas-snippets ()
+  (yas/load-directory "~/.emacs.d/snippets"))
+
 ;;; Looky, looky, I've got hooky
 (add-hook 'prog-mode-hook 'hs-minor-mode)
 (add-hook 'prog-mode-hook 'whitespace-mode)
 (add-hook 'prog-mode-hook 'timvisher/turn-on-textmate-mode)
+(autoload 'yas-minor-mode-on "yasnippet")
+(add-hook 'prog-mode-hook 'yas-minor-mode-on)
+(eval-after-load 'yasnippet
+  (add-hook 'yas-minor-mode-hook 'timvisher/load-yas-snippets))
 (remove-hook 'prog-mode-hook 'esk-local-comment-auto-fill)
 (remove-hook 'prog-mode-hook 'esk-turn-on-hl-line-mode)
 
