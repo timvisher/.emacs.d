@@ -45,6 +45,8 @@
 
 (load "timvisher_ack")
 
+(load "timvisher_flush-lines")
+
 ;; (let ((split-and-delete-window-functions '(split-window-right
 ;;                                            split-window-below
 ;;                                            split-window-horizontally
