@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: temporary def
+# key: ddef
+# --
+(def ^:dynamic *${1:charnock}* $0)

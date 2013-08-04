@@ -74,7 +74,7 @@
 	      (24 1)))
 	    "Improved JavaScript editing mode" single])
  (jumpc .
-	[(2 0)
+	[(3 0)
 	 nil "jump to previous insertion points" single])
  (lex .
       [(1 1)
@@ -110,13 +110,13 @@
 	    [(1 1)
 	     nil "highlight groups of digits in long numbers" single])
  (oauth2 .
-	 [(0 8)
+	 [(0 9)
 	  nil "OAuth 2.0 Authorization Protocol" single])
  (omn-mode .
 	   [(1 0)
 	    nil "Support for OWL Manchester Notation" single])
  (org .
-      [(20130617)
+      [(20130624)
        nil "Outline-based notes management and organizer" tar])
  (quarter-plane .
 		[(0 1)

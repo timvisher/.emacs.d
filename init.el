@@ -185,6 +185,8 @@
 
 (load "timvisher_python-customizations")
 
+(load "timvisher_clojure")
+
 (defun timvisher/map-custom-paredit-keys ()
   (define-key paredit-mode-map (kbd "C-h") 'paredit-backward-delete)
   (define-key paredit-mode-map (kbd "M-h") 'paredit-backward-kill-word)
@@ -206,8 +208,15 @@
 
 (add-to-list 'auto-mode-alist '("\\.cljs$" . clojure-mode))
 
+(autoload 'nrepl-turn-on-eldoc-mode "nrepl")
+
 (eval-after-load 'clojure-mode
-  '(add-hook 'nrepl-interaction-mode 'nrepl-turn-on-eldoc-mode))
+  '(add-hook 'clojure-mode-hook 'nrepl-turn-on-eldoc-mode))
+
+(autoload 'clojure-enable-nrepl "nrepl")
+
+(eval-after-load 'clojure-mode
+  '(add-hook 'clojure-mode-hook 'clojure-enable-nrepl))
 
 (eval-after-load 'clojure-mode
   '(define-key clojure-mode-map (kbd "C-c l") 'align-cljlet))

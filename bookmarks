@@ -2,7 +2,12 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("base64-presentation.org"
+(("core.clj"
+ (filename . "~/git/page-stats/src/page_stats/core.clj")
+ (front-context-string . "rls     (trace :")
+ (rear-context-string . " data]\n  (let [u")
+ (position . 6287))
+("base64-presentation.org"
  (filename . "~/Dropbox/base64-presentation/base64-presentation.org")
  (front-context-string . "    #+end_src\n\n*")
  (rear-context-string . "     }\n      };\n")
