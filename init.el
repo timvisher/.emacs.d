@@ -266,7 +266,7 @@
 (autoload 'yas-minor-mode-on "yasnippet")
 (add-hook 'prog-mode-hook 'yas-minor-mode-on)
 (eval-after-load 'yasnippet
-  (add-hook 'yas-minor-mode-hook 'timvisher/load-yas-snippets))
+  '(add-hook 'yas-minor-mode-hook 'timvisher/load-yas-snippets))
 (remove-hook 'prog-mode-hook 'esk-local-comment-auto-fill)
 (remove-hook 'prog-mode-hook 'esk-turn-on-hl-line-mode)
 
@@ -377,6 +377,11 @@
 
 (defun timvisher/notify-of-mention (match-type nickuserhost message)
   (todochiku-message nickuserhost message (cdr (assoc 'irc todochiku-icons))))
+
+(defun timvisher-setup-erc-password ()
+  (if (file-exists-p "~/.freenode-password.el") (load-file "~/.freenode-password.el")))
+
+(eval-after-load 'erc '(timvisher-setup-erc-password))
 
 ;; (let ((current-deft-filter-regexp deft-filter-regexp))
 ;;     (if deft-filter-regexp
