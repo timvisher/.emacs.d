@@ -76,5 +76,5 @@
     (when (not (package-installed-p p))
       (package-install p))))
 
-(timvisher/install-package-list timvisher/my-packages)
+;; (timvisher/install-package-list timvisher/my-packages)
 

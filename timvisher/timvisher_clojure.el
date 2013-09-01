@@ -4,7 +4,7 @@
                                      clojure-test-mode
                                      elein))
 
-(timvisher/install-package-list timvisher/clojure-packages)
+;; (timvisher/install-package-list timvisher/clojure-packages)
 
 (autoload 'align-cljlet "align-cljlet")
 
