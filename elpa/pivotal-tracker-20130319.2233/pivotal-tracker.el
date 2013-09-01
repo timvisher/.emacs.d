@@ -338,14 +338,14 @@
 (require 'json)
 
 ;;; '{"name":"Exhaust ports are ray shielded","description":null}
-(json-encode (list :name "Ensure that all account triples 200 for 1/.../0 scripts in prod"
-                   :description nil
-                   ))
+;; (json-encode (list :name "Ensure that all account triples 200 for 1/.../0 scripts in prod"
+;;                    :description nil
+;;                    ))
 
-pivotal-api-token
-839233
+;; pivotal-api-token
+;; 839233
 
-(pivotal-json-api (pivotal-v5-url "projects" "839233" "stories") "GET" 'pivotal-add-story-callback)
+;; (pivotal-json-api (pivotal-v5-url "projects" "839233" "stories") "GET" 'pivotal-add-story-callback)
 
 (defun pivotal-json-api (url method callback &optional json-data)
   (let ((url-request-method method)
