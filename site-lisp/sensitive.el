@@ -21,48 +21,12 @@
 
 ;;; Code:
 
-(defun join (separator sequence)
-  (apply 'concat
-         (append (list (car sequence))
-                 (mapcar (lambda (part)
-                           (concat separator part))
-                         (cdr sequence)))))
-
-(defun tree-seq (branch? children root)
-  (cl-labels ((walk (node)
-                    (cons node
-                          (if (funcall branch? node)
-                              (cl-mapcan 'walk (cddr (funcall children node)))))))
-    (walk root)))
-
-;; (tree-seq 'file-directory-p
-;;           (lambda (directory)
-;;             (directory-files directory t))
-;;           "~/Dropbox/sensitive")
-
-;; (cl-labels ((one (x)
-;;                  (if (integerp x)
-;;                      x
-;;                    (one 10))))
-;;   (one (one 'a)))
-
-;;; Boom!
-;; (cl-labels ((one (x)
-;;                  (if (integerp x)
-;;                      x
-;;                    (cl-mapcar 'one '(10 11 12)))))
-;;   (one (one 'a)))
-
-(defun file-seq (root)
-  (mapcar (lambda (maybe-directory)
-            (if (file-directory-p (join "/" (list root maybe-directory)))
-                (file-seq (join "/" (list root maybe-directory)))
-              (join "/" (list root maybe-directory))))
-          (cddr (directory-files root))))
+(require 'cl-lib)
+(require 'sequences)
 
 ;;;###autoload
 (defun load-sensitive-files ()
-  (cl-dolist (setting-file (gnus-recursive-directory-files "~/Dropbox/sensitive"))
+  (cl-dolist (setting-file (cl-remove-if 'file-directory-p (file-seq "~/Dropbox/sensitive")))
     (with-temp-buffer
       (insert-file-contents setting-file)
       (goto-char (point-min))
