@@ -380,17 +380,8 @@
 (defun timvisher/notify-of-mention (match-type nickuserhost message)
   (todochiku-message nickuserhost message (cdr (assoc 'irc todochiku-icons))))
 
-(defun timvisher-setup-erc-password ()
-  (if (file-exists-p "~/.freenode-password.el")
-      (load-file "~/.freenode-password.el")))
-
-(eval-after-load 'erc '(timvisher-setup-erc-password))
-
-(defun timvisher-setup-pivotal-api-key ()
-  (if (file-exists-p "~/.pivotal-tracker-api-key.el")
-      (load-file "~/.pivotal-tracker-api-key.el")))
-
-(eval-after-load 'erc '(timvisher-setup-erc-password))
+(require 'sensitive-autoloads)
+(load-sensitive-files)
 
 ;; (let ((current-deft-filter-regexp deft-filter-regexp))
 ;;     (if deft-filter-regexp
