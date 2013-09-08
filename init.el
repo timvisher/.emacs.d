@@ -187,6 +187,8 @@
 
 (load "timvisher_clojure")
 
+(require 'google-this)
+
 (defun timvisher/map-custom-paredit-keys ()
   (define-key paredit-mode-map (kbd "C-h") 'paredit-backward-delete)
   (define-key paredit-mode-map (kbd "M-h") 'paredit-backward-kill-word)
