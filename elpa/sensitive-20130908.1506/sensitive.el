@@ -5,7 +5,8 @@
 ;; Author: Tim Visher <tim.visher@gmail.com>
 ;; Keywords: convenience
 ;; Package-Requires: ((emacs "24") (sequences "0.1.0))
-;; Version: 1.0.0
+;; Version: 20130908.1506
+;; X-Original-Version: 1.0.0
 
 ;; This file is not part of GNU Emacs.
 
