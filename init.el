@@ -21,12 +21,14 @@
 (eval-after-load 'info 
   '(add-to-list 'Info-directory-list (concat (getenv "HOME") "/.emacs.d/info")))
 
+Info-directory-list
+
 ;;; ----------------------------------------------------------------------------
 ;;; Alright, time's up. Let's do enabling and configuring modes.
 ;;; ----------------------------------------------------------------------------
 
-(electric-pair-mode 1)
-(electric-indent-mode 1)
+;; (electric-pair-mode 1)
+;; (electric-indent-mode 1)
 
 ;;; Supposedly I need to turn this on to get scroll wheel support (like gnome-terminal) in iTerm but it also captures the mouse for things like cursor selection which breaks iterm selection clipboard copying. Not sure if I like this.
 ;; (xterm-mouse-mode 1)
@@ -187,9 +189,10 @@
 
 (load "timvisher_clojure")
 
-(require 'google-this)
+(google-this-mode 1)
 
 (defun timvisher/map-custom-paredit-keys ()
+  (message "timvisher/map-custom-paredit-keys has been called, CHARNOCK!")
   (define-key paredit-mode-map (kbd "C-h") 'paredit-backward-delete)
   (define-key paredit-mode-map (kbd "M-h") 'paredit-backward-kill-word)
   (define-key paredit-mode-map (kbd "{") 'paredit-open-curly)
@@ -382,9 +385,6 @@
 (defun timvisher/notify-of-mention (match-type nickuserhost message)
   (todochiku-message nickuserhost message (cdr (assoc 'irc todochiku-icons))))
 
-(require 'sensitive-autoloads)
-(load-sensitive-files)
-
 ;; (let ((current-deft-filter-regexp deft-filter-regexp))
 ;;     (if deft-filter-regexp
 ;;         (progn
@@ -562,6 +562,8 @@
 
 ;;; Custom's in it's own file because having it constantly editing your init.el file sucks
 (load "custom")
+
+(load-sensitive-files)
 
 ;;; We pay homage:
 ;;; [yegge]: https://sites.google.com/site/steveyegge2/effective-emacs

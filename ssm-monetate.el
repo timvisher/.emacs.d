@@ -69,7 +69,7 @@
 
 (setq erc-nick "timvisher")
 
-;;; Always run ERC on my mac.
-(condition-case nil
-    (erc :server "irc.freenode.net" :nick "timvisher")
-  (error "Failed to connect to IRC!"))
+;;; Alway1s run ERC on my mac.
+;;; (condition-case nil
+;;;     (erc :server "irc.freenode.net" :nick "timvisher")
+;;;   (error "Failed to connect to IRC!"))

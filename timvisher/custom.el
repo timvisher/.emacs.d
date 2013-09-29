@@ -42,6 +42,7 @@
  '(erc-text-matched-hook (quote (erc-log-matches)))
  '(erc-user-full-name "Tim Visher")
  '(find-ls-option (quote ("-print0 | xargs -0 ls -ld" . "-ld")))
+ '(git-commit-max-summary-line-length 80)
  '(global-hl-line-mode t)
  '(global-hl-line-sticky-flag t)
  '(grep-find-ignored-directories (quote ("SCCS" "RCS" "CVS" "MCVS" ".svn" ".git" ".hg" ".bzr" "_MTN" "_darcs" "{arch}" "target")))

@@ -179,7 +179,7 @@
 	[(20130723 2134)
 	 nil "Writable grep buffer and apply the changes to files [github]" single])
  (weechat .
-	  [(20130907 1738)
+	  [(20130909 1738)
 	   ((s
 	     (1 3 1))
 	    (cl-lib
@@ -1165,7 +1165,7 @@
 	  [(20121017 157)
 	   nil "No description available. [github]" single])
  (quickrun .
-	   [(20130908 2130)
+	   [(20130910 16)
 	    nil "Run commands quickly [github]" single])
  (quickref .
 	   [(20130113 1700)
@@ -1357,15 +1357,18 @@
 			  [(20130306 1515)
 			   nil "Monochromatic version of the Phoenix theme [github]" single])
  (phi-search-mc .
-		[(20130827 146)
+		[(20130910 47)
 		 ((phi-search
 		   (1 1 3))
 		  (multiple-cursors
 		   (1 2 1)))
 		 "multiple-cursors extension for phi-search [github]" single])
  (phi-search .
-	     [(20130909 248)
+	     [(20130909 1917)
 	      nil "another incremental search command, compatible with \"multiple-cursors\" [github]" tar])
+ (phi-rectangle .
+		[(20130910 39)
+		 nil "another rectangle-mark command (rewrite of rect-mark) [github]" single])
  (ph .
      [(20130312 2037)
       ((emacs
@@ -1499,7 +1502,7 @@
 	  [(20121025 1200)
 	   nil "Predictive abbreviation expansion [hg]" single])
  (p4 .
-     [(20130831 1831)
+     [(20130909 1757)
       nil "Simple Perforce-Emacs Integration [github]" single])
  (outshine .
 	   [(20130815 1459)
@@ -1727,6 +1730,9 @@
  (occidental-theme .
 		   [(20130312 2058)
 		    nil "Custom theme for faces based on Adwaita [github]" single])
+ (obsidian-theme .
+		 [(20130908 2146)
+		  nil "port of the eclipse obsidian theme [github]" single])
  (object-registry .
 		  [(20130521 2113)
 		   ((cl-lib
@@ -2853,7 +2859,7 @@
 	    (20120509)))
 	  "helm-sources and some utilities for GNU R. [github]" single])
  (helm .
-       [(20130908 1158)
+       [(20130909 950)
 	nil "Helm is an Emacs incremental and narrowing framework [github]" tar])
  (header2 .
 	  [(20130723 2321)
@@ -3525,7 +3531,7 @@
 	       [(20121109 238)
 		nil "increment/decrement numbers like in vim [github]" single])
  (evil-nerd-commenter .
-		      [(20130908 2351)
+		      [(20130909 2300)
 		       nil "Comment/uncomment lines efficiently. Like Nerd Commenter in Vim [github]" tar])
  (evil-leader .
 	      [(20130730 1744)
@@ -3922,7 +3928,7 @@
       [(20130826 1941)
        nil "a code browser for Emacs [github]" tar])
  (ebib .
-       [(20130908 2300)
+       [(20130909 1443)
 	nil "a BibTeX database manager [github]" tar])
  (easy-after-load .
 		  [(20121224 2049)
@@ -4132,7 +4138,7 @@
 	  [(20120115 1513)
 	   nil "a pcl-cvs like interface for managing darcs patches [darcs]" tar])
  (d-mode .
-	 [(20130807 32)
+	 [(20130811 22)
 	  nil "D Programming Language mode for (X)Emacs [github]" single])
  (cyberpunk-theme .
 		  [(20130807 1135)
@@ -4525,6 +4531,9 @@
  (autopair .
 	   [(20121123 1829)
 	    nil "Automagically pair braces and quotes like TextMate [github]" single])
+ (automargin .
+	     [(20130909 1127)
+	      nil "add margins to windows not-splitted, and center them [github]" single])
  (auto-yasnippet .
 		 [(20130820 959)
 		  ((yasnippet
@@ -4582,7 +4591,7 @@
 			  [(20130824 1158)
 			   nil "Automatically byte-compile when saved [wiki]" single])
  (audio-notes-mode .
-		   [(20130817 2251)
+		   [(20130909 946)
 		    nil "Play audio notes synced from somewhere else. [github]" single])
  (auctex-lua .
 	     [(20130818 1420)
