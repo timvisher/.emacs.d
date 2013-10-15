@@ -290,6 +290,8 @@ Info-directory-list
 
 (add-hook 'lisp-mode-hook 'enable-paredit-mode)
 (add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode)
+(add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
+(add-hook 'emacs-lisp-mode-hook 'turn-on-elisp-slime-nav-mode)
 
 
 (defun timvisher/turn-on-textmate-mode ()
