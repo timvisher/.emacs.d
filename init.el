@@ -17,6 +17,8 @@
 
 (load "timvisher_keys")
 
+(defalias 'yes-or-no-p 'y-or-n-p)
+
 ;;; You always wants your custom info files to be in the Info-directory-list
 (eval-after-load 'info 
   '(add-to-list 'Info-directory-list (concat (getenv "HOME") "/.emacs.d/info")))
@@ -29,6 +31,10 @@ Info-directory-list
 
 ;; (electric-pair-mode 1)
 ;; (electric-indent-mode 1)
+
+(ido-mode 1)
+
+(ido-ubiquitous-mode 1)
 
 ;;; Supposedly I need to turn this on to get scroll wheel support (like gnome-terminal) in iTerm but it also captures the mouse for things like cursor selection which breaks iterm selection clipboard copying. Not sure if I like this.
 ;; (xterm-mouse-mode 1)
@@ -189,7 +195,8 @@ Info-directory-list
 
 (load "timvisher_clojure")
 
-(google-this-mode 1)
+(when (featurep 'google-this)
+    (google-this-mode 1))
 
 (defun timvisher/map-custom-paredit-keys ()
   (message "timvisher/map-custom-paredit-keys has been called, CHARNOCK!")
@@ -276,6 +283,14 @@ Info-directory-list
         '(add-hook 'yas-minor-mode-hook 'timvisher/load-yas-snippets))))
 (remove-hook 'prog-mode-hook 'esk-local-comment-auto-fill)
 (remove-hook 'prog-mode-hook 'esk-turn-on-hl-line-mode)
+
+;; add paredit to lisp mode hook
+
+(require 'paredit)
+
+(add-hook 'lisp-mode-hook 'enable-paredit-mode)
+(add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode)
+
 
 (defun timvisher/turn-on-textmate-mode ()
   (textmate-mode 1))

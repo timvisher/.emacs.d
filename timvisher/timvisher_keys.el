@@ -10,3 +10,11 @@
 
 (define-key isearch-mode-map (kbd "<f1>") 'isearch-help-map)
 
+;; magit needs to be at our finger tips
+
+(global-set-key (kbd "C-c g") 'magit-status)
+
+;;; smex… so good…
+
+(global-set-key (kbd "M-x") 'smex)
+
