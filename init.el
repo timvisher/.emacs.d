@@ -32,8 +32,6 @@ Info-directory-list
 ;; (electric-pair-mode 1)
 ;; (electric-indent-mode 1)
 
-(ido-mode 1)
-
 (ido-ubiquitous-mode 1)
 
 ;;; Supposedly I need to turn this on to get scroll wheel support (like gnome-terminal) in iTerm but it also captures the mouse for things like cursor selection which breaks iterm selection clipboard copying. Not sure if I like this.
@@ -193,77 +191,16 @@ Info-directory-list
 
 (load "timvisher_python-customizations")
 
+(load "timvisher_paredit")
+
 (load "timvisher_clojure")
+
+(add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
+
+(add-hook 'emacs-lisp-mode-hook 'turn-on-elisp-slime-nav-mode)
 
 (when (featurep 'google-this)
     (google-this-mode 1))
-
-(defun timvisher/map-custom-paredit-keys ()
-  (message "timvisher/map-custom-paredit-keys has been called, CHARNOCK!")
-  (define-key paredit-mode-map (kbd "C-h") 'paredit-backward-delete)
-  (define-key paredit-mode-map (kbd "M-h") 'paredit-backward-kill-word)
-  (define-key paredit-mode-map (kbd "{") 'paredit-open-curly)
-  (define-key paredit-mode-map (kbd "}") 'paredit-close-curly)
-  (define-key paredit-mode-map (kbd "[") 'paredit-open-square)
-  (define-key paredit-mode-map (kbd "]") 'paredit-close-square)
-  (define-key paredit-mode-map (kbd "M-(") 'paredit-wrap-sexp))
-
-;;; Let's make paredit honor our awesome keys
-(eval-after-load 'paredit
-  '(timvisher/map-custom-paredit-keys))
-
-;;; Let's configure clojure-mode-hook with some extra goodness
-
-;;; Don't be stupid and forget that `clojure-jack-in` is how you
-;;; should enable clojure-mode on your stuff
-;; (add-to-list 'auto-mode-alist '("\\.clj$" . clojure-mode))
-
-(add-to-list 'auto-mode-alist '("\\.cljs$" . clojure-mode))
-
-(autoload 'nrepl-turn-on-eldoc-mode "nrepl")
-
-(eval-after-load 'clojure-mode
-  '(add-hook 'clojure-mode-hook 'nrepl-turn-on-eldoc-mode))
-
-(autoload 'clojure-enable-nrepl "nrepl")
-
-(eval-after-load 'clojure-mode
-  '(add-hook 'clojure-mode-hook 'clojure-enable-nrepl))
-
-(eval-after-load 'clojure-mode
-  '(define-key clojure-mode-map (kbd "C-c l") 'align-cljlet))
-
-(eval-after-load 'clojure-mode
-  '(add-hook 'clojure-mode-hook 'timvisher/turn-on-elein))
-
-(defun timvisher/turn-on-elein ()
-  (unless (featurep 'elein)
-    (require 'elein)))
-
-(defun timvisher/turn-on-clojure-test () (clojure-test-mode 1))
-
-;;; Now let's fix our slime
-
-;;; We need to require clojure-test-mode explicitly because the version from elpa requires slime and messes with clojure-jack-in
-(eval-after-load 'slime
-  '(require 'clojure-test-mode))
-
-(eval-after-load 'slime
-  '(add-hook 'clojure-mode-hook 'timvisher/turn-on-clojure-test))
-
-(eval-after-load 'slime
-  '(timvisher/fix-slime-repl))
-
-(defun timvisher/fix-slime-repl-lisp-indent-function () (setq lisp-indent-function 'clojure-indent-function))
-
-(defun timvisher/fix-slime-repl-syntax-table () (set-syntax-table clojure-mode-syntax-table))
-
-(defun timvisher/turn-on-paredit () (paredit-mode 1))
-
-(defun timvisher/fix-slime-repl ()
-  (add-hook 'slime-repl-mode-hook 'timvisher/fix-slime-repl-lisp-indent-function)
-  (add-hook 'slime-repl-mode-hook 'timvisher/fix-slime-repl-syntax-table)
-  (add-hook 'slime-repl-mode-hook 'timvisher/turn-on-paredit))
 
 (eval-after-load 'textmate
   '(define-key *textmate-mode-map* [(super shift t)] 'helm-imenu))
@@ -283,16 +220,6 @@ Info-directory-list
         '(add-hook 'yas-minor-mode-hook 'timvisher/load-yas-snippets))))
 (remove-hook 'prog-mode-hook 'esk-local-comment-auto-fill)
 (remove-hook 'prog-mode-hook 'esk-turn-on-hl-line-mode)
-
-;; add paredit to lisp mode hook
-
-(require 'paredit)
-
-(add-hook 'lisp-mode-hook 'enable-paredit-mode)
-(add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode)
-(add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
-(add-hook 'emacs-lisp-mode-hook 'turn-on-elisp-slime-nav-mode)
-
 
 (defun timvisher/turn-on-textmate-mode ()
   (textmate-mode 1))
