@@ -18,3 +18,6 @@
 
 (global-set-key (kbd "M-x") 'smex)
 
+;;; burry buffer should be readily availably
+
+(global-set-key (kbd "C-c y") 'bury-buffer)
