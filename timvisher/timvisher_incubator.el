@@ -12,6 +12,7 @@
       (error (format "Could not locate `%s` above `%s`" root-file original-default-directory)))))
 
 (defmacro timvisher/with-package-repos (package-repo-urls &rest body)
+  (declare (indent 1))
   `(let* ((package-repos (mapcar (lambda (package-repo-url)
                                    `(,(secure-hash 'md5 package-repo-url)
                                      .
