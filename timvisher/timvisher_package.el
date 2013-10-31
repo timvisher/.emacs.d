@@ -13,29 +13,29 @@
 (when (not package-archive-contents)
   (package-refresh-contents))
 
-(defvar timvisher/my-packages '(expand-region
+(defvar timvisher/my-packages '(ag
                                 better-defaults
+                                dash
+                                dash-functional
                                 deft
                                 elisp-slime-nav
+                                expand-region
+                                ;; TODO Try helm out in a few months when it's a little more stable.
+                                ;; helm
                                 idle-highlight-mode
                                 ido-ubiquitous
                                 magit
                                 markdown-mode
-                                smex
                                 paredit
-                                smartparens
-                                textmate
-                                yasnippet
-                                dash
-                                dash-functional
-                                ack
+                                pbcopy
                                 sensitive
+                                smartparens
+                                smex
+                                textmate
                                 ;; todochiku
-                                ;; TODO Try helm out in a few months when it's a little more stable.
-                                ;; helm
-                                wgrep
                                 vimgolf
-                                pbcopy))
+                                wgrep
+                                yasnippet))
 
 (defun timvisher/install-package-list (package-list)
   (dolist (p package-list)

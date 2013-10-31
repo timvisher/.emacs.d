@@ -29,6 +29,16 @@ Info-directory-list
 ;;; Alright, time's up. Let's do enabling and configuring modes.
 ;;; ----------------------------------------------------------------------------
 
+(setq shell-file-name "bash")
+(setq shell-command-switch "-c")
+
+(require 'ansi-color)
+(defun colorize-compilation-buffer ()
+  (toggle-read-only)
+  (ansi-color-apply-on-region (point-min) (point-max))
+  (toggle-read-only))
+(add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
+
 ;; (electric-pair-mode 1)
 ;; (electric-indent-mode 1)
 
@@ -48,8 +58,6 @@ Info-directory-list
 (global-set-key (kbd "C-c k") 'kill-whole-line)
 
 (defalias 'csr 'cua-set-rectangle-mark)
-
-(load "timvisher_ack")
 
 (load "timvisher_flush-lines")
 
