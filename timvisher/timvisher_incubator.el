@@ -25,3 +25,8 @@
 ;;   package-archives
 ;;   (package-list-packages))
 
+(defun align-css-block ()
+  (interactive)
+  (save-excursion
+   (er/mark-inside-pairs)
+   (align-regexp (region-beginning) (region-end) ":\\([[:space:]]*\\)" 1 1 t)))
