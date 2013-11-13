@@ -1,6 +1,6 @@
 (defun timvisher/dominating-compile ()
   (interactive)
-  (let ((default-directory (locate-dominating-file default-directory "Makefile")))
+  (let ((default-directory (vc-call-backend (vc-responsible-backend default-directory) 'root default-directory)))
     (call-interactively 'compile)))
 
 (defun timvisher/dominating-shell (root-file)
