@@ -29,4 +29,5 @@
   (interactive)
   (save-excursion
    (er/mark-inside-pairs)
+   (indent-region (region-beginning) (region-end))
    (align-regexp (region-beginning) (region-end) ":\\([[:space:]]*\\)" 1 1 t)))
