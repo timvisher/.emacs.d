@@ -34,6 +34,8 @@ Info-directory-list
 
 (ido-ubiquitous-mode 1)
 
+(flx-ido-mode 1)
+
 ;;; Supposedly I need to turn this on to get scroll wheel support (like gnome-terminal) in iTerm but it also captures the mouse for things like cursor selection which breaks iterm selection clipboard copying. Not sure if I like this.
 ;; (xterm-mouse-mode 1)
 ;; (global-set-key (kbd "<mouse-4>") 'next-line)
