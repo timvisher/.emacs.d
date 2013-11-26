@@ -1,6 +1,8 @@
+(autoload 'vc-deduce-backend "vc")
+
 (defun timvisher/dominating-compile ()
   (interactive)
-  (let ((default-directory (vc-call-backend (vc-responsible-backend default-directory) 'root default-directory)))
+  (let ((default-directory (vc-call-backend (vc-deduce-backend) 'root default-directory)))
     (call-interactively 'compile)))
 
 (defun timvisher/dominating-shell (root-file)
