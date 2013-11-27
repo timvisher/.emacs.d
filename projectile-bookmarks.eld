@@ -1,1 +1,1 @@
-("~/.emacs.d/")
+("~/.emacs.d/" "~/Dropbox/bash_configuration/")

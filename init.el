@@ -202,16 +202,12 @@ Info-directory-list
 (when (featurep 'google-this)
     (google-this-mode 1))
 
-(eval-after-load 'textmate
-  '(define-key *textmate-mode-map* [(super shift t)] 'helm-imenu))
-
 (defun timvisher/load-yas-snippets ()
   (yas/load-directory "~/.emacs.d/snippets"))
 
 ;;; Looky, looky, I've got hooky
 (add-hook 'prog-mode-hook 'hs-minor-mode)
 (add-hook 'prog-mode-hook 'whitespace-mode)
-(add-hook 'prog-mode-hook 'timvisher/turn-on-textmate-mode)
 (if (locate-library "yasnippet")
     (lambda ()
       (autoload 'yas-minor-mode-on "yasnippet")
@@ -220,9 +216,6 @@ Info-directory-list
         '(add-hook 'yas-minor-mode-hook 'timvisher/load-yas-snippets))))
 (remove-hook 'prog-mode-hook 'esk-local-comment-auto-fill)
 (remove-hook 'prog-mode-hook 'esk-turn-on-hl-line-mode)
-
-(defun timvisher/turn-on-textmate-mode ()
-  (textmate-mode 1))
 
 (add-hook 'applescript-mode-hook 'run-prog-mode-hook)
 
@@ -258,15 +251,6 @@ Info-directory-list
 ;;; ----------------------------------------------------------------------------
 ;;; Now, let's make Emacs our own.
 ;;; ----------------------------------------------------------------------------
-
-;; (defun timvisher/find-file-in-git-project ()
-;;   (interactive)
-;;   (let ((current-directory default-directory)
-;;         (git-root (expand-file-name (locate-dominating-file default-directory ".git"))))
-;;     (cd git-root)
-;;     (helm-ls-git-ls)
-;;     (cd current-directory)))
-;; (define-key *textmate-mode-map* [(super t)] 'timvisher/find-file-in-git-project)
 
 (defun timvisher/edit-init-file ()
   (interactive)
