@@ -7,20 +7,16 @@
   (define-key paredit-mode-map (kbd "[") 'paredit-open-square)
   (define-key paredit-mode-map (kbd "]") 'paredit-close-square)
   (define-key paredit-mode-map (kbd "M-(") 'paredit-wrap-sexp)
+  (define-key paredit-mode-map (kbd "M-)") 'paredit-forward-slurp-sexp)
   (message "timvisher/map-custom-paredit-keys has finished, CHARNOCK!"))
 
 ;;; Let's make paredit honor our awesome keys
 (eval-after-load 'paredit
   '(timvisher/map-custom-paredit-keys))
 
-(defun timvisher/add-paredit-to-mode-hooks ()
-  (message "timvisher/add-paredit-to-mode-hooks sCHARNOCK")
-  (add-hook 'lisp-mode-hook 'enable-paredit-mode)
-  (add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode)
-  (message "timvisher/add-paredit-to-mode-hooks eCHARNOCK"))
+(autoload 'enable-paredit-mode "paredit"
+     "Turn on pseudo-structural editing of Lisp code."
+     t)
 
-(eval-after-load 'paredit
-  '(timvisher/add-paredit-to-mode-hooks))
-
-(eval-after-load 'paredit
-  '(message "paredit has loaded CHARNOCK"))
+(add-hook 'lisp-mode-hook 'enable-paredit-mode)
+(add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode)
