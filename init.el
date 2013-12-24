@@ -488,6 +488,10 @@ Info-directory-list
 
 (global-set-key (kbd "C-c r SPC") 'cua-set-rectangle-mark)
 
+;;; Load system specific configuration
+
+(load-file (format "%s.el" system-name))
+
 ;;; Custom's in it's own file because having it constantly editing your init.el file sucks
 (load "custom")
 
