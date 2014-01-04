@@ -1,5 +1,5 @@
 (defvar timvisher/clojure-packages '(clojure-mode
-                                     nrepl
+                                     cider
                                      align-cljlet
                                      clojure-test-mode
                                      elein))
@@ -15,15 +15,15 @@
 
 (add-to-list 'auto-mode-alist '("\\.cljs$" . clojure-mode))
 
-(autoload 'nrepl-turn-on-eldoc-mode "nrepl")
+(autoload 'cider-turn-on-eldoc-mode "cider")
 
 (eval-after-load 'clojure-mode
-  '(add-hook 'clojure-mode-hook 'nrepl-turn-on-eldoc-mode))
+  '(add-hook 'clojure-mode-hook 'cider-turn-on-eldoc-mode))
 
-(autoload 'clojure-enable-nrepl "nrepl")
+(autoload 'clojure-enable-cider "cider")
 
 (eval-after-load 'clojure-mode
-  '(add-hook 'clojure-mode-hook 'clojure-enable-nrepl))
+  '(add-hook 'clojure-mode-hook 'clojure-enable-cider))
 
 (eval-after-load 'clojure-mode
   '(define-key clojure-mode-map (kbd "C-c l") 'align-cljlet))
