@@ -74,6 +74,7 @@
  '(org-src-fontify-natively t)
  '(save-interprogram-paste-before-kill t)
  '(save-place-file (concat (getenv "HOME") "/.emacs.places"))
+ '(savehist-mode t)
  '(sensitive-root "~/Dropbox/sensitive")
  '(sentence-end-double-space nil)
  '(sh-basic-offset 2)
