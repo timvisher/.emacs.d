@@ -73,6 +73,20 @@ in the `cider-error-buffer', which defaults to *cider-error*."
   :type 'boolean
   :group 'cider)
 
+(defcustom cider-interactive-eval-result-prefix "=> "
+  "The prefix displayed in the minibuffer before a result value."
+  :type 'string
+  :group 'cider)
+
+(defcustom cider-switch-to-repl-command 'cider-switch-to-relevant-repl-buffer
+  "Select the command to be invoked when switching-to-repl.
+The default option is `cider-switch-to-relevant-repl-buffer'.  If
+you'd like to not use smart matching of repl buffer based on
+project directory, you can assign it to `cider-switch-to-current-repl-buffer'
+which will use the default REPL connection."
+  :type 'symbol
+  :group 'cider)
+
 (defface cider-error-highlight-face
   '((((supports :underline (:style wave)))
      (:underline (:style wave :color "red") :inherit unspecified))
@@ -90,13 +104,11 @@ in the `cider-error-buffer', which defaults to *cider-error*."
 ;;; Connection info
 (defun cider--clojure-version ()
   "Retrieve the underlying connection's Clojure version."
-  (let ((version-string (cider-eval-and-get-value "(clojure-version)")))
-   (substring version-string 1 (1- (length version-string)))))
+  (cider-eval-and-get-value "(clojure-version)"))
 
 (defun cider--backend-version ()
   "Retrieve the underlying connection's nREPL version."
-  (let ((version-string (cider-eval-and-get-value "(:version-string clojure.tools.nrepl/version)")))
-    (substring version-string 1 (1- (length version-string)))))
+  (cider-eval-and-get-value "(:version-string clojure.tools.nrepl/version)"))
 
 (defun cider--connection-info (nrepl-connection-buffer)
   "Return info about NREPL-CONNECTION-BUFFER.
@@ -149,59 +161,98 @@ to jump back to the last Clojure source buffer."
     (setq cider-last-clojure-buffer buffer)))
 
 (defun cider-switch-to-repl-buffer (&optional arg)
+  "Invoke `cider-switch-to-repl-command'."
+  (interactive "p")
+  (funcall cider-switch-to-repl-command arg))
+
+(defun cider-switch-to-current-repl-buffer (&optional arg)
   "Select the REPL buffer, when possible in an existing window.
 
 Hint: You can use `display-buffer-reuse-frames' and
 `special-display-buffer-names' to customize the frame in which
 the buffer should appear.
 
-With a prefix ARG sets the name of the REPL buffer to the one
-of the current source file."
-  (interactive "P")
+With a prefix ARG sets the namespace in the REPL buffer to that
+of the namespace in the Clojure source buffer."
+  (interactive "p")
   (if (not (cider-connected-p))
       (message "No active nREPL connection.")
     (let ((buffer (current-buffer)))
-      (when arg
+      (when (eq 4 arg)
         (cider-repl-set-ns (cider-current-ns)))
       (pop-to-buffer (cider-find-or-create-repl-buffer))
       (cider-remember-clojure-buffer buffer)
       (goto-char (point-max)))))
 
-(defun cider-switch-to-relevant-repl-buffer (arg)
+(defun cider-find-connection-buffer-for-project-directory (project-directory)
+  "Find the relevant connection-buffer for the given PROJECT-DIRECTORY.
+
+A check is made to ensure that all connection buffers have a project-directory
+otherwise there is ambiguity as to which connection buffer should be selected.
+
+If there are multiple connection buffers matching PROJECT-DIRECTORY there
+is ambiguity, therefore nil is returned."
+  (when (not (car (-filter
+                   (lambda (conn)
+                     (not
+                      (with-current-buffer (get-buffer conn)
+                        nrepl-project-dir)))
+                   nrepl-connection-list)))
+    (let ((matching-connections
+           (-filter
+            (lambda (conn)
+              (let ((conn-proj-dir (with-current-buffer (get-buffer conn)
+                                     nrepl-project-dir)))
+                (when conn-proj-dir
+                  (equal (file-truename project-directory)
+                         (file-truename conn-proj-dir)))))
+            nrepl-connection-list)))
+      (when (= 1 (length matching-connections))
+        (car matching-connections)))))
+
+(defun cider-switch-to-relevant-repl-buffer (&optional arg)
   "Select the REPL buffer, when possible in an existing window.
 The buffer chosen is based on the file open in the current buffer.
+
+If the REPL buffer cannot be unambiguously determined, the REPL
+buffer is chosen based on the current connection buffer and a
+message raised informing the user.
 
 Hint: You can use `display-buffer-reuse-frames' and
 `special-display-buffer-names' to customize the frame in which
 the buffer should appear.
 
-With a prefix ARG sets the name of the REPL buffer to the one
-of the current source file.
+With a prefix ARG sets the namespace in the REPL buffer to that
+of the namespace in the Clojure source buffer.
 
 With a second prefix ARG the chosen REPL buffer is based on a
-supplied project directory."
-  (interactive "P")
+supplied project directory using IDO."
+  (interactive "p")
   (if (not (cider-connected-p))
       (message "No active nREPL connection.")
-    (let ((project-directory
-           (or (when arg
-                 (ido-read-directory-name "Project: "))
-               (nrepl-project-directory-for (nrepl-current-dir)))))
-      (if project-directory
-          (let ((buf (car (-filter
-                           (lambda (conn)
-                             (let ((conn-proj-dir (with-current-buffer (get-buffer conn)
-                                                    nrepl-project-dir)))
-                               (when conn-proj-dir
-                                 (equal (file-truename project-directory)
-                                        (file-truename conn-proj-dir)))))
-                           nrepl-connection-list))))
-            (if buf
-                (setq nrepl-connection-list
-                      (cons buf (delq buf nrepl-connection-list)))
-              (message "No relevant nREPL connection found. Switching to default connection.")))
-        (message "No project directory found. Switching to default nREPL connection.")))
-    (cider-switch-to-repl-buffer '())))
+
+    (let* ((project-directory
+            (or (when (eq 16 arg) (ido-read-directory-name "Project: "))
+                (nrepl-project-directory-for (nrepl-current-dir))))
+           (connection-buffer
+            (or
+             (and (= 1 (length nrepl-connection-list)) (car nrepl-connection-list))
+             (and project-directory
+                  (cider-find-connection-buffer-for-project-directory project-directory)))))
+      (when connection-buffer
+        (setq nrepl-connection-list
+              (cons connection-buffer (delq connection-buffer nrepl-connection-list))))
+      (cider-switch-to-current-repl-buffer arg)
+      (message
+       (format (if connection-buffer
+                   "Switched to REPL: %s"
+                 "Could not determine relevant nREPL connection, using: %s")
+               (with-current-buffer (nrepl-current-connection-buffer)
+                 (format "%s:%s, %s:%s"
+                         (or (nrepl--project-name nrepl-project-dir) "<no project>")
+                         nrepl-buffer-ns
+                         (car nrepl-endpoint)
+                         (cadr nrepl-endpoint))))))))
 
 (defun cider-switch-to-last-clojure-buffer ()
   "Switch to the last Clojure buffer.
@@ -224,12 +275,37 @@ Returns to the buffer in which the command was invoked."
     (cider-repl-clear-buffer)
     (switch-to-buffer origin-buffer)))
 
-;;; Evaluating
+;;; Minibuffer eval
+(defvar cider-minibuffer-history '()
+  "History list of expressions read from the minibuffer.")
+
+(defvar cider-minibuffer-map
+  (let ((map (make-sparse-keymap)))
+    (set-keymap-parent map minibuffer-local-map)
+    (define-key map "TAB" 'complete-symbol)
+    (define-key map "M-TAB" 'complete-symbol)
+    map)
+  "Minibuffer keymap used for reading Clojure expressions.")
+
+(defun cider-read-from-minibuffer (prompt &optional initial-value history)
+  "Read a string from the minibuffer, prompting with PROMPT.
+If INITIAL-VALUE is non-nil, it is inserted into the minibuffer before
+reading input."
+  (minibuffer-with-setup-hook
+      (lambda ()
+        (add-hook 'completion-at-point-functions
+                  #'cider-complete-at-point nil t)
+        (run-hooks 'eval-expression-minibuffer-setup-hook))
+    (read-from-minibuffer prompt initial-value
+                          cider-minibuffer-map nil
+                          'cider-minibuffer-history)))
+
 (defun cider-read-and-eval ()
   "Read a sexp from the minibuffer and output its result to the echo area."
   (interactive)
-  (cider-interactive-eval (read-from-minibuffer "CIDER Eval: ")))
+  (cider-interactive-eval (cider-read-from-minibuffer "CIDER Eval: ")))
 
+;;; Eval
 (defun cider-eval-region (start end)
   "Evaluate the region.
 The two arguments START and END are character positions;
@@ -456,13 +532,10 @@ Uses `find-file'."
 
 (defun cider-completion-complete-core-fn (str)
   "Return a list of completions for STR using complete.core/completions."
-  (let ((strlst
-         (cider-eval-and-get-value
-          (format "(require 'complete.core) (complete.core/completions \"%s\" *ns*)" str)
-          nrepl-buffer-ns
-          (nrepl-current-tooling-session))))
-    (when strlst
-      (car (read-from-string strlst)))))
+  (cider-eval-and-get-value
+   (format "(clojure.core/require 'complete.core) (complete.core/completions \"%s\" *ns*)" str)
+   nrepl-buffer-ns
+   (nrepl-current-tooling-session)))
 
 (defun cider-completion-complete-op-fn (str)
   "Return a list of completions for STR using the nREPL \"complete\" op."
@@ -555,7 +628,9 @@ The handler simply inserts the result value in BUFFER."
   "Make an interactive eval handler for BUFFER."
   (nrepl-make-response-handler buffer
                                (lambda (buffer value)
-                                 (message "%s" value))
+                                 (message "%s%s"
+                                          cider-interactive-eval-result-prefix
+                                          (cider-font-lock-as-clojure value)))
                                (lambda (buffer value)
                                  (cider-repl-emit-interactive-output value))
                                (lambda (buffer err)
@@ -883,6 +958,9 @@ If invoked with a PREFIX argument, print the result in the current buffer."
   "Evaluate the expression preceding point and replace it with its result."
   (interactive)
   (let ((last-sexp (cider-last-sexp)))
+    ;; we have to be sure the evaluation won't result in an error
+    (cider-eval-and-get-value last-sexp)
+    ;; seems like the sexp is valid, so we can safely kill it
     (backward-kill-sexp)
     (cider-interactive-eval-print last-sexp)))
 
@@ -896,7 +974,7 @@ If invoked with a PREFIX argument, switch to the REPL buffer."
 
 (defun cider-eval-print-last-sexp ()
   "Evaluate the expression preceding point.
-Print its value into the current buffer"
+Print its value into the current buffer."
   (interactive)
   (cider-interactive-eval-print (cider-last-sexp)))
 
@@ -904,6 +982,15 @@ Print its value into the current buffer"
   "Evaluate the expression preceding point and pprint its value in a popup buffer."
   (interactive)
   (let ((form (cider-last-sexp))
+        (result-buffer (cider-popup-buffer cider-result-buffer nil)))
+    (cider-tooling-eval (format "(clojure.pprint/pprint %s)" form)
+                        (cider-popup-eval-out-handler result-buffer)
+                        (cider-current-ns))))
+
+(defun cider-pprint-eval-defun-at-point ()
+  "Evaluate the current top-level form at point and pprint its value in a popup buffer."
+  (interactive)
+  (let ((form (cider-defun-at-point))
         (result-buffer (cider-popup-buffer cider-result-buffer nil)))
     (cider-tooling-eval (format "(clojure.pprint/pprint %s)" form)
                         (cider-popup-eval-out-handler result-buffer)
@@ -969,6 +1056,7 @@ See command `cider-mode'."
 
 ;; this is horrible, but with async callbacks we can't rely on dynamic scope
 (defvar cider-ido-ns nil)
+(defvar cider-ido-var-callback nil)
 
 (defun cider-ido-form (ns)
   "Construct a Clojure form for ido read using NS."
@@ -990,38 +1078,66 @@ See command `cider-mode'."
   "Perform up using NS."
   (mapconcat 'identity (butlast (split-string ns "\\.")) "."))
 
-(defun cider-ido-select (selected targets callback)
-  "Peform ido select using SELECTED, TARGETS and CALLBACK."
+(defun cider-ido-var-select (selected targets)
+  "Peform ido select using SELECTED and TARGETS."
   ;; TODO: immediate RET gives "" as selected for some reason
   ;; this is an OK workaround though
   (cond ((equal "" selected)
-         (cider-ido-select (car targets) targets callback))
+         (cider-ido-var-select (car targets) targets))
         ((equal "/" (substring selected -1)) ; selected a namespace
-         (cider-ido-read-var (substring selected 0 -1) callback))
+         (cider-ido-read-var (substring selected 0 -1) cider-ido-var-callback))
         ((equal ".." selected)
-         (cider-ido-read-var (cider-ido-up-ns cider-ido-ns) callback))
+         (cider-ido-read-var (cider-ido-up-ns cider-ido-ns) cider-ido-var-callback))
         ;; non ido variable selection techniques don't return qualified symbols, so this shouldn't either
-        (t (funcall callback selected))))
+        (t (funcall cider-ido-var-callback selected))))
 
-(defun cider-ido-read-var-handler (ido-callback buffer)
-  "Create an ido read var handler with IDO-CALLBACK for BUFFER."
-  (lexical-let ((ido-callback ido-callback))
+(defun cider-ido-read-sym-handler (label ido-select buffer)
+  "Create an ido read var handler with IDO-SELECT for BUFFER."
+  (lexical-let ((ido-select ido-select)
+                (label label))
     (nrepl-make-response-handler buffer
                                  (lambda (buffer value)
                                    ;; make sure to eval the callback in the buffer that the symbol was requested from so we get the right namespace
                                    (with-current-buffer buffer
                                      (let* ((targets (car (read-from-string value)))
-                                            (selected (ido-completing-read "Var: " targets nil t)))
-                                       (cider-ido-select selected targets ido-callback))))
+                                            (selected (ido-completing-read label targets nil t)))
+                                       (funcall ido-select selected targets))))
                                  nil nil nil)))
 
 (defun cider-ido-read-var (ns ido-callback)
   "Perform ido read var in NS using IDO-CALLBACK."
   ;; Have to be stateful =(
   (setq cider-ido-ns ns)
+  (setq cider-ido-var-callback ido-callback)
   (cider-tooling-eval (prin1-to-string (cider-ido-form cider-ido-ns))
-                     (cider-ido-read-var-handler ido-callback (current-buffer))
-                     nrepl-buffer-ns))
+                      (cider-ido-read-sym-handler "Var:" 'cider-ido-var-select (current-buffer))
+                      nrepl-buffer-ns))
+
+(defun cider-ido-fns-form (ns)
+  "Construct a Clojure form for reading fns using supplied NS."
+  (format "(let [fn-pred (fn [[k v]] (and (fn? (.get v))
+                                     (not (re-find #\"clojure.\" (str v)))))]
+              (sort
+                (map (comp name key)
+                     (filter fn-pred
+                         (concat
+                           (ns-interns '%s)
+                           (ns-refers '%s))))))" ns ns))
+
+(defun cider-ido-fn-callback (f targets)
+  (with-current-buffer (cider-current-repl-buffer)
+    (cider-repl--replace-input (format "(%s)" f))
+    (goto-char (- (point-max) 1))))
+
+(defun cider-load-fn-into-repl-buffer ()
+  "Browse functions available in current repl buffer using ido.
+Once selected, the name of the fn will appear in the repl buffer in parens
+ready to call."
+  (interactive)
+  (cider-tooling-eval (cider-ido-fns-form (cider-current-ns))
+                      (cider-ido-read-sym-handler (format "Fn: %s/" nrepl-buffer-ns)
+                                                  'cider-ido-fn-callback (current-buffer))
+                      nrepl-buffer-ns))
 
 (defun cider-read-symbol-name (prompt callback &optional query)
   "Either read a symbol name using PROMPT or choose the one at point.

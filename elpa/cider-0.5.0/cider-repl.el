@@ -93,6 +93,27 @@ change the setting's value."
   :type 'boolean
   :group 'cider-repl)
 
+(defcustom cider-repl-print-length nil
+  "Non-nil means limit the number of objects printed in REPL to this value.
+This is implemented by setting the value of the Clojure var
+*print-length*.  The `cider-repl-toggle-print-length-limiting'
+command can be used to interactively change whether this setting
+is enforced or not."
+  :type 'integer
+  :group 'cider-repl)
+
+(defcustom cider-repl-use-clojure-font-lock nil
+  "Non-nil means to use Clojure mode font-locking for input and result.
+Nil means that `cider-repl-input-face' and `cider-repl-result-face'
+will be used."
+  :type 'boolean
+  :group 'cider-repl)
+
+(defcustom cider-repl-result-prefix ""
+  "The prefix displayed in the REPL before a result value."
+  :type 'string
+  :group 'cider)
+
 (defcustom cider-repl-tab-command 'cider-repl-indent-and-complete-symbol
   "Select the command to be invoked by the TAB key.
 The default option is `cider-repl-indent-and-complete-symbol'.  If
@@ -120,35 +141,26 @@ to specific the full path to it.  Localhost is assumed."
   :group 'cider-repl)
 
 ;;;; REPL buffer local variables
-(defvar cider-repl-input-start-mark)
+(defvar-local cider-repl-input-start-mark nil)
 
-(defvar cider-repl-prompt-start-mark)
+(defvar-local cider-repl-prompt-start-mark nil)
 
-(defvar cider-repl-old-input-counter 0
+(defvar-local cider-repl-old-input-counter 0
   "Counter used to generate unique `cider-old-input' properties.
 This property value must be unique to avoid having adjacent inputs be
 joined together.")
 
-(defvar cider-repl-input-history '()
+(defvar-local cider-repl-input-history '()
   "History list of strings read from the nREPL buffer.")
 
-(defvar cider-repl-input-history-items-added 0
+(defvar-local cider-repl-input-history-items-added 0
   "Variable counting the items added in the current session.")
 
-(defvar cider-repl-output-start nil
+(defvar-local cider-repl-output-start nil
   "Marker for the start of output.")
 
-(defvar cider-repl-output-end nil
+(defvar-local cider-repl-output-end nil
   "Marker for the end of output.")
-
-(nrepl-make-variables-buffer-local
- 'cider-repl-input-start-mark
- 'cider-repl-prompt-start-mark
- 'cider-repl-old-input-counter
- 'cider-repl-input-history
- 'cider-repl-input-history-items-added
- 'cider-repl-output-start
- 'cider-repl-output-end)
 
 (defun cider-repl-tab ()
   "Invoked on TAB keystrokes in `cider-repl-mode' buffers."
@@ -226,7 +238,11 @@ Insert a banner, unless NOPROMPT is non-nil."
       (cider-repl-mode))
     ;; use the same requires by default as clojure.main does
     (cider-eval-sync nrepl-repl-requires-sexp)
+    (when cider-repl-print-length
+      (cider-repl-set-print-length cider-repl-print-length))
     (cider-repl-reset-markers)
+    ;; honor :init-ns from lein's :repl-options on startup
+    (setq nrepl-buffer-ns (cider-eval-and-get-value "(str *ns*)"))
     (unless noprompt
       (cider-repl--insert-banner-and-prompt nrepl-buffer-ns))
     (cider-remember-clojure-buffer cider-current-clojure-buffer)
@@ -435,10 +451,14 @@ If BOL is non-nil insert at the beginning of the line."
       (cider-save-marker cider-repl-output-start
         (cider-save-marker cider-repl-output-end
           (goto-char cider-repl-input-start-mark)
-          (when (and bol (not (bolp))) (insert-before-markers "\n"))
-          (cider-propertize-region `(face cider-repl-result-face
-                                          rear-nonsticky (face))
-            (insert-before-markers string)))))
+          (when (and bol (not (bolp)))
+            (insert-before-markers "\n"))
+          (insert-before-markers (propertize cider-repl-result-prefix 'face 'font-lock-comment-face))
+          (if cider-repl-use-clojure-font-lock
+              (insert-before-markers (cider-font-lock-as-clojure string))
+            (cider-propertize-region
+                `(face cider-repl-result-face rear-nonsticky (face))
+              (insert-before-markers string))))))
     (cider-repl--show-maximum-output)))
 
 (defun cider-repl-newline-and-indent ()
@@ -516,14 +536,23 @@ If NEWLINE is true then add a newline at the end of the input."
                            (point)
                            `(cider-old-input
                              ,(incf cider-repl-old-input-counter))))
-    (let ((overlay (make-overlay cider-repl-input-start-mark end)))
-      ;; These properties are on an overlay so that they won't be taken
-      ;; by kill/yank.
-      (overlay-put overlay 'read-only t)
-      (overlay-put overlay 'face 'cider-repl-input-face)))
+    (if cider-repl-use-clojure-font-lock
+        (let ((input-string (buffer-substring cider-repl-input-start-mark end)))
+          (save-excursion
+            ;; TODO: Think of a more efficient way to do that
+            (cider-repl-kill-input)
+            ;; replace the current input with a Clojure font-locked version of itself
+            (insert (cider-font-lock-as-clojure input-string) "\n")))
+      (let ((overlay (make-overlay cider-repl-input-start-mark end)))
+        ;; These properties are on an overlay so that they won't be taken
+        ;; by kill/yank.
+        (overlay-put overlay 'read-only t)
+        (overlay-put overlay 'face 'cider-repl-input-face))))
   (let* ((input (cider-repl--current-input))
-         (form (if (and (not (string-match "\\`[ \t\r\n]*\\'" input)) cider-repl-use-pretty-printing)
-                   (format "(clojure.pprint/pprint %s)" input) input)))
+         (form (if (and (not (string-match "\\`[ \t\r\n]*\\'" input))
+                        cider-repl-use-pretty-printing)
+                   (format "(clojure.pprint/pprint %s)" input)
+                 input)))
     (goto-char (point-max))
     (cider-repl--mark-input-start)
     (cider-repl--mark-output-start)
@@ -594,6 +623,23 @@ text property `cider-old-input'."
   (message "Pretty printing in nREPL %s."
            (if cider-repl-use-pretty-printing "enabled" "disabled")))
 
+(defun cider-repl-set-print-length (print-length)
+  "Set the clojure var *print-length* to PRINT-LENGTH."
+  (let* ((form (format "(set! *print-length* %d)"
+                       print-length)))
+    (cider-eval-sync form)))
+
+(defun cider-repl-toggle-print-length-limiting ()
+  "Toggle the enforcement of `cider-repl-print-length'."
+  (interactive)
+  (when (integerp cider-repl-print-length)
+    (let* ((form (format "(set! *print-length* (if *print-length* nil %d))"
+                         cider-repl-print-length))
+           (print-length (cider-eval-and-get-value form)))
+      (if print-length
+          (message "*print-length* limited to %d" print-length)
+        (message "*print-length* unlimited")))))
+
 (defvar cider-repl-clear-buffer-hook)
 
 (defun cider-repl-clear-buffer ()
@@ -632,7 +678,8 @@ text property `cider-old-input'."
 
 (defun cider--all-ns ()
   "Get a list of the available namespaces."
-  (read (cider-eval-and-get-value "(map str (all-ns))")))
+  (cider-eval-and-get-value
+   "(clojure.core/map clojure.core/str (clojure.core/all-ns))"))
 
 (defun cider-repl-set-ns (ns)
   "Switch the namespace of the REPL buffer to NS.
@@ -892,6 +939,20 @@ constructs."
 (cider-repl-add-shortcut "conn-rotate" 'cider-rotate-connection)
 (cider-repl-add-shortcut "clear" 'cider-repl-clear-buffer)
 (cider-repl-add-shortcut "ns" 'cider-repl-set-ns)
+(cider-repl-add-shortcut "help" 'cider-repl-shortcuts-help)
+
+(defun cider-repl-shortcuts-help ()
+  "Display a help buffer."
+  (interactive)
+  (ignore-errors (kill-buffer "*CIDER REPL Shortcuts Help*"))
+  (with-current-buffer (get-buffer-create "*CIDER REPL Shortcuts Help*")
+    (insert "CIDER REPL shortcuts:\n\n")
+    (maphash (lambda (k v) (insert (format "%s:\n\t%s\n" k v))) cider-repl-shortcuts)
+    (goto-char (point-min))
+    (help-mode)
+    (display-buffer (current-buffer) t))
+  (cider-repl-handle-shortcut)
+  (current-buffer))
 
 (defun cider-repl--available-shortcuts ()
   "Return the available REPL shortcuts."
@@ -973,8 +1034,7 @@ ENDP) DELIM."
     (define-key map (kbd "C-c M-m") 'cider-macroexpand-all)
     (define-key map (kbd "C-c C-z") 'cider-switch-to-last-clojure-buffer)
     (define-key map (kbd "C-c M-s") 'cider-selector)
-    (define-key map (kbd "C-c M-r") 'cider-rotate-connection)
-    (define-key map (kbd "C-c M-d") 'cider-display-current-connection-info)
+    (define-key map (kbd "C-c M-f") 'cider-load-fn-into-repl-buffer)
     (define-key map (kbd "C-c C-q") 'cider-quit)
     (define-key map (string cider-repl-shortcut-dispatch-char) 'cider-repl-handle-shortcut)
     map))

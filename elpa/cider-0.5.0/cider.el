@@ -9,7 +9,8 @@
 ;;         Hugo Duncan <hugo@hugoduncan.org>
 ;;         Steve Purcell <steve@sanityinc.com>
 ;; URL: http://www.github.com/clojure-emacs/cider
-;; Version: 0.4.0
+;; Version: 0.5.0
+;; Package-Requires: ((clojure-mode "2.0.0") (cl-lib "0.3") (dash "2.4.1") (pkg-info "0.4"))
 ;; Keywords: languages, clojure, cider
 
 ;; This program is free software: you can redistribute it and/or modify
@@ -93,7 +94,7 @@ start the server."
 ;;;###autoload
 (defun cider (host port)
   "Connect to an nREPL server identified by HOST and PORT."
-  (interactive (list (read-string "Host: " nrepl-host nil nrepl-host)
+  (interactive (list (read-string "Host: " (nrepl-current-host) nil (nrepl-current-host))
                      (string-to-number (let ((port (nrepl-default-port)))
                                          (read-string "Port: " port nil port)))))
   (setq cider-current-clojure-buffer (current-buffer))

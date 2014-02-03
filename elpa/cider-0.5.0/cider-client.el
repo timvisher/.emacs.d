@@ -84,17 +84,22 @@
 (add-hook 'nrepl-connected-hook 'cider-display-connected-message)
 
 ;;; Evaluation helpers
+(defun cider-ns-form-p (form)
+  "Check if FORM is an ns form."
+  (string-match "^[[:space:]]*\(ns\\([[:space:]]*$\\|[[:space:]]+\\)" form))
+
 (defun cider-eval (input callback &optional ns session)
   "Send the request INPUT and register the CALLBACK as the response handler.
 NS & SESSION specify the context in which to evaluate the request."
   ;; namespace forms are always evaluated in the "user" namespace
-  (let ((ns (if (string-match "^[[:space:]]*\(ns\\([[:space:]]*$\\|[[:space:]]+\\)" input)
+  (let ((ns (if (cider-ns-form-p input)
                 "user"
               ns)))
     ;; prevent forms from being evaluated in the wrong or a non-existing namespace
     (when (and ns
                (derived-mode-p 'clojure-mode)
-               (not (string= ns nrepl-buffer-ns)))
+               (not (string= ns nrepl-buffer-ns))
+               (not (cider-ns-form-p input)))
       (cider-eval-ns-form))
     (nrepl-send-string input callback ns session)))
 
@@ -119,9 +124,13 @@ NS & SESSION specify the evaluation context."
 NS specifies the namespace in which to evaluate the request."
   (cider-eval-sync input ns (nrepl-current-tooling-session)))
 
+(defun cider-get-raw-value (eval-result)
+  "Get the raw value (as string) from EVAL-RESULT."
+  (plist-get eval-result :value))
+
 (defun cider-get-value (eval-result)
   "Get the value from EVAL-RESULT."
-  (plist-get eval-result :value))
+  (read (cider-get-raw-value eval-result)))
 
 (defun cider-send-op (op attributes handler)
   "Send the specified OP with ATTRIBUTES and response HANDLER."

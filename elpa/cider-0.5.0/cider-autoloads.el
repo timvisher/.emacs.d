@@ -3,8 +3,8 @@
 ;;; Code:
 
 
-;;;### (autoloads (cider cider-jack-in) "cider" "cider.el" (21191
-;;;;;;  22243 0 0))
+;;;### (autoloads (cider cider-jack-in) "cider" "cider.el" (21225
+;;;;;;  49148 0 0))
 ;;; Generated autoloads from cider.el
 
 (autoload 'cider-jack-in "cider" "\
@@ -24,7 +24,7 @@ Connect to an nREPL server identified by HOST and PORT.
 ;;;***
 
 ;;;### (autoloads (cider-macroexpand-all cider-macroexpand-1) "cider-macroexpansion"
-;;;;;;  "cider-macroexpansion.el" (21191 22243 0 0))
+;;;;;;  "cider-macroexpansion.el" (21225 49148 0 0))
 ;;; Generated autoloads from cider-macroexpansion.el
 
 (autoload 'cider-macroexpand-1 "cider-macroexpansion" "\
@@ -41,8 +41,8 @@ Invoke 'clojure.walk/macroexpand-all' on the expression at point.
 
 ;;;***
 
-;;;### (autoloads (cider-mode) "cider-mode" "cider-mode.el" (21191
-;;;;;;  22243 0 0))
+;;;### (autoloads (cider-mode) "cider-mode" "cider-mode.el" (21225
+;;;;;;  49148 0 0))
 ;;; Generated autoloads from cider-mode.el
 
 (autoload 'cider-mode "cider-mode" "\
@@ -55,7 +55,7 @@ Minor mode for REPL interaction from a Clojure buffer.
 ;;;***
 
 ;;;### (autoloads (cider-selector) "cider-selector" "cider-selector.el"
-;;;;;;  (21191 22243 0 0))
+;;;;;;  (21225 49148 0 0))
 ;;; Generated autoloads from cider-selector.el
 
 (autoload 'cider-selector "cider-selector" "\
@@ -72,7 +72,7 @@ See `def-cider-selector-method' for defining new methods.
 
 ;;;### (autoloads nil nil ("cider-client.el" "cider-eldoc.el" "cider-interaction.el"
 ;;;;;;  "cider-pkg.el" "cider-repl.el" "cider-util.el" "cider-version.el"
-;;;;;;  "nrepl-client.el") (21191 22243 850737 0))
+;;;;;;  "nrepl-client.el") (21225 49148 547873 0))
 
 ;;;***
 
