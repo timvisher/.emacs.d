@@ -5,6 +5,8 @@
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector ["#2d3743" "#ff4242" "#74af68" "#dbdb95" "#34cae2" "#008b8b" "#00ede1" "#e1e1e0"])
  '(archive-extract-hook (quote (timvisher/make-read-only)))
+ '(auto-insert (quote not-modified))
+ '(auto-insert-mode t)
  '(backup-directory-alist (\` (("." \, (concat (getenv "HOME") "/.emacs-backups")))))
  '(c-mode-common-hook (quote (timvisher/turn-on-subword-mode)))
  '(column-number-mode t)
