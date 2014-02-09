@@ -33,3 +33,15 @@
    (er/mark-inside-pairs)
    (indent-region (region-beginning) (region-end))
    (align-regexp (region-beginning) (region-end) ":\\([[:space:]]*\\)" 1 1 t)))
+
+(defun replace-with-solved-equation (start-of-equation end-of-equation)
+  (interactive "r")
+  (if (not (region-active-p))
+      (error "Requires an active region"))
+
+  (let ((equation-string (buffer-substring start-of-equation end-of-equation)))
+    (calc-embedded nil)
+    (calc-embedded nil)
+    (save-excursion
+      (goto-char start-of-equation)
+      (insert equation-string " = "))))
