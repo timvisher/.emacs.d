@@ -8,6 +8,10 @@
              t)
 ;; (add-to-list 'package-archives
 ;;              '("melpa" . "http://melpa.milkbox.net/packages/") t)
+;; (delete '("melpa" . "http://melpa.milkbox.net/packages/") package-archives)
+(add-to-list 'package-archives
+             '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+;; (delete '("melpa-stable" . "http://stable.melpa.org/packages/") package-archives)
 (package-initialize)
 
 (when (not package-archive-contents)
