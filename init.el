@@ -86,6 +86,8 @@ Info-directory-list
 (eval-after-load 'winner
   '(global-set-key (kbd "C-c ]") 'winner-redo))
 
+(require 'bookmarklets)
+
 ;;; markdown
 ;;; Let's fix `C-j` in markdown mode.
 ;;; TODO alias eval-after-load to eal
