@@ -3,20 +3,24 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ansi-color-names-vector ["#2d3743" "#ff4242" "#74af68" "#dbdb95" "#34cae2" "#008b8b" "#00ede1" "#e1e1e0"])
+ '(ansi-color-names-vector
+   ["#2d3743" "#ff4242" "#74af68" "#dbdb95" "#34cae2" "#008b8b" "#00ede1" "#e1e1e0"])
  '(archive-extract-hook (quote (timvisher/make-read-only)))
  '(auto-insert (quote not-modified))
  '(auto-insert-mode t)
+ '(background-color "#ffffff")
+ '(background-mode dark)
  '(backup-directory-alist (\` (("." \, (concat (getenv "HOME") "/.emacs-backups")))))
  '(c-mode-common-hook (quote (timvisher/turn-on-subword-mode)))
  '(column-number-mode t)
  '(comment-column 0)
  '(css-indent-offset 3)
- '(cua-enable-cua-keys nil)
- '(cua-mode t nil (cua-base))
- '(custom-enabled-themes (quote (solarized-light)))
+ '(cursor-color "#ffff00")
+ '(custom-enabled-themes nil)
  '(custom-file "~/.emacs.d/timvisher/custom.el")
- '(custom-safe-themes (quote ("5debeb813b180bd1c3756306cd8c83ac60fda55f85fb27249a0f2d55817e3cab" "117284df029007a8012cae1f01c3156d54a0de4b9f2f381feab47809b8a1caef" default)))
+ '(custom-safe-themes
+   (quote
+    ("5debeb813b180bd1c3756306cd8c83ac60fda55f85fb27249a0f2d55817e3cab" "117284df029007a8012cae1f01c3156d54a0de4b9f2f381feab47809b8a1caef" default)))
  '(custom-theme-directory "~/.emacs.d/site-lisp/themes")
  '(deft-directory "")
  '(deft-extension "md")
@@ -25,9 +29,10 @@
  '(dired-recursive-copies (quote always))
  '(dired-recursive-deletes (quote always))
  '(dired-use-ls-dired (quote unspecified))
- '(elein-lein "lein")
  '(erc-autoaway-mode t)
- '(erc-autojoin-channels-alist (quote (("freenode.net" "#clojure" "#emacs"))))
+ '(erc-autojoin-channels-alist
+   (quote
+    (("freenode.net" "#clojure" "#emacs" "#nethack4" "#NetHack" "#ubuntu"))))
  '(erc-autojoin-delay 30)
  '(erc-autojoin-mode t)
  '(erc-autojoin-timing (quote ident))
@@ -40,7 +45,6 @@
  '(erc-nick "timvisher" t)
  '(erc-nick-notify-cmd "notify")
  '(erc-nick-uniquifier "t")
- '(erc-nickserv-passwords (quote ((freenode (("timvisher" . "rideon"))))))
  '(erc-notifications-mode t)
  '(erc-prompt-for-nickserv-password nil)
  '(erc-prompt-for-password nil)
@@ -49,15 +53,20 @@
  '(erc-text-matched-hook (quote (erc-log-matches)))
  '(erc-user-full-name "Tim Visher")
  '(find-ls-option (quote ("-print0 | xargs -0 ls -ld" . "-ld")))
+ '(foreground-color "#ffff00")
  '(gc-cons-threshold 52428800)
  '(git-commit-max-summary-line-length 80)
  '(global-hl-line-mode t)
  '(global-hl-line-sticky-flag t)
- '(grep-find-ignored-directories (quote ("SCCS" "RCS" "CVS" "MCVS" ".svn" ".git" ".hg" ".bzr" "_MTN" "_darcs" "{arch}" "target")))
+ '(grep-find-ignored-directories
+   (quote
+    ("SCCS" "RCS" "CVS" "MCVS" ".svn" ".git" ".hg" ".bzr" "_MTN" "_darcs" "{arch}" "target")))
  '(helm-M-x-always-save-history t)
  '(helm-c-use-adaptative-sorting t)
  '(helm-mode t)
- '(hippie-expand-try-functions-list (quote (try-complete-file-name-partially try-complete-file-name try-expand-all-abbrevs try-expand-dabbrev try-expand-dabbrev-all-buffers try-expand-dabbrev-from-kill try-complete-lisp-symbol-partially try-complete-lisp-symbol)))
+ '(hippie-expand-try-functions-list
+   (quote
+    (try-complete-file-name-partially try-complete-file-name try-expand-all-abbrevs try-expand-dabbrev try-expand-dabbrev-all-buffers try-expand-dabbrev-from-kill try-complete-lisp-symbol-partially try-complete-lisp-symbol)))
  '(history-length 1000)
  '(ido-everywhere t)
  '(ido-ubiquitous-command-exceptions (quote (unhighlight-regexp)))
@@ -72,7 +81,7 @@
  '(js-indent-level 2)
  '(markdown-css-paths (quote ("css/bootstrap.css" "css/custom.css")))
  '(mouse-avoidance-mode (quote banish) nil (avoid))
- '(org-agenda-files nil)
+ '(org-agenda-files (quote ("~/Dropbox/budget-review.org")))
  '(org-hide-leading-stars t)
  '(org-insert-heading-respect-content t)
  '(org-src-fontify-natively t)
@@ -92,7 +101,9 @@
  '(transient-mark-mode nil)
  '(user-mail-address "tim.visher@gmail.com")
  '(visual-line-fringe-indicators (quote (left-curly-arrow right-curly-arrow)))
- '(whitespace-style (quote (trailing space-before-tab face indentation space-after-tab)))
+ '(whitespace-style
+   (quote
+    (trailing space-before-tab face indentation space-after-tab)))
  '(winner-dont-bind-my-keys t)
  '(winner-mode t nil (winner)))
 (custom-set-faces
@@ -101,9 +112,5 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(cua-rectangle ((t (:inherit region))))
- '(esk-paren-face ((t (:foreground "grey55"))) t)
- '(hl-line ((t (:inherit highlight :background "color-255"))))
- '(magit-item-highlight ((t (:inherit hl-line))) t)
- '(match ((t (:inherit idle-highlight))))
- '(whitespace-indentation ((t (:inherit highlight :foreground "#e9e2cb"))))
- '(widget-field ((t (:inherit hl-line :box (:line-width 1 :color "#52676f"))))))
+ '(magit-item-highlight ((t (:inherit hl-line))))
+ '(match ((t (:inherit idle-highlight)))))
