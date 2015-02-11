@@ -1,8 +1,7 @@
 (defvar timvisher/clojure-packages '(clojure-mode
                                      cider
                                      align-cljlet
-                                     clojure-test-mode
-                                     elein))
+                                     clojure-test-mode))
 
 ;; (timvisher/install-package-list timvisher/clojure-packages)
 
@@ -27,13 +26,6 @@
 
 (eval-after-load 'clojure-mode
   '(define-key clojure-mode-map (kbd "C-c l") 'align-cljlet))
-
-(defun timvisher/turn-on-elein ()
-  (unless (featurep 'elein)
-    (require 'elein)))
-
-(eval-after-load 'clojure-mode
-  '(add-hook 'clojure-mode-hook 'timvisher/turn-on-elein))
 
 (defun timvisher/add-paredit-to-clojure-mode-hook ()
   (unless (featurep 'paredit)
