@@ -1,1 +1,1 @@
-("~/.emacs.d/" "~/Dropbox/bash_configuration/")
+("~/Dropbox/nhss.twonegatives.com/nhss/" "~/Dropbox/nhss.twonegatives.com/" "~/Downloads/om-toy/" "~/Dropbox/bible-plan/" "~/.emacs.d/" "~/Dropbox/bash_configuration/")
