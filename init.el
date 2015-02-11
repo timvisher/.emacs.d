@@ -51,7 +51,7 @@ Info-directory-list
 
 (global-set-key (kbd "C-c k") 'kill-whole-line)
 
-(defalias 'csr 'cua-set-rectangle-mark)
+;; (defalias 'csr 'cua-set-rectangle-mark)
 
 (load "timvisher_flush-lines")
 
