@@ -462,7 +462,7 @@ Info-directory-list
 
 (load-sensitive-files)
 
-(load-theme 'solarized-light)
+;;(load-theme 'solarized-light)
 
 ;;; We pay homage:
 ;;; [yegge]: https://sites.google.com/site/steveyegge2/effective-emacs
