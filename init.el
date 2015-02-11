@@ -450,7 +450,7 @@ Info-directory-list
 (when (display-graphic-p)
   (if (string-match "darwin" system-configuration) (ns-toggle-fullscreen) (maximize-frame)))
 
-(global-set-key (kbd "C-c r SPC") 'cua-set-rectangle-mark)
+;; (global-set-key (kbd "C-c r SPC") 'cua-set-rectangle-mark)
 
 ;;; Load system specific configuration
 
