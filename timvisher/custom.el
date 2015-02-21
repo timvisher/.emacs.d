@@ -92,6 +92,9 @@
  '(sentence-end-double-space nil)
  '(sh-basic-offset 2)
  '(sh-indentation 2)
+ '(shell-prompt-pattern
+   "^[^#$%>
+]*[#$%>🐀 🐁 🐂 🐃 🐄 🐅 🐆 🐇 🐈 🐉 🐊 🐋 🐌 🐍 🐎 🐏 🐐 🐑 🐒 🐓 🐔 🐕 🐖 🐗 🐘 🐙 🐚 🐛 🐜 🐝 🐞 🐟 🐠 🐡 🐢 🐣 🐤 🐥 🐦 🐧 🐨 🐩 🐪 🐫 🐬🐭 🐮 🐯 🐰 🐱 🐲 🐳 🐴 🐵 🐶 🐷 🐸 🐹 🐺 🐻 🐼 🐽 🐾 😸 😹 😺 😻 😼 😽 😾 😿 🙀 🙈 🙉 🙊] *")
  '(solarized-contrast (quote high))
  '(sql-ms-options (quote ("-w" "15000" "-n")))
  '(sql-ms-program "osql")
@@ -112,5 +115,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(cua-rectangle ((t (:inherit region))))
+ '(hl-line ((t nil)))
  '(magit-item-highlight ((t (:inherit hl-line))))
- '(match ((t (:inherit idle-highlight)))))
+ '(match ((t (:inherit idle-highlight))))
+ '(region ((t (:background "#eeeeee")))))

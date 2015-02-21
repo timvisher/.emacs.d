@@ -38,6 +38,10 @@ Info-directory-list
 
 (ido-vertical-mode 1)
 
+(projectile-global-mode 1)
+
+(setq projectile-enable-caching t)
+
 ;;; Supposedly I need to turn this on to get scroll wheel support (like gnome-terminal) in iTerm but it also captures the mouse for things like cursor selection which breaks iterm selection clipboard copying. Not sure if I like this.
 ;; (xterm-mouse-mode 1)
 ;; (global-set-key (kbd "<mouse-4>") 'next-line)
@@ -452,17 +456,15 @@ Info-directory-list
 
 ;; (global-set-key (kbd "C-c r SPC") 'cua-set-rectangle-mark)
 
-;;; Load system specific configuration
-
-(when (file-exists-p (format "~/.emacs.d/%s.el" system-name))
-  (load-file (format "~/.emacs.d/%s.el" system-name)))
-
 ;;; Custom's in it's own file because having it constantly editing your init.el file sucks
 (load "custom")
 
 (load-sensitive-files)
 
-;;(load-theme 'solarized-light)
+;;; Load system specific configuration
+
+(when (file-exists-p (format "~/.emacs.d/%s.el" system-name))
+  (load-file (format "~/.emacs.d/%s.el" system-name)))
 
 ;;; We pay homage:
 ;;; [yegge]: https://sites.google.com/site/steveyegge2/effective-emacs

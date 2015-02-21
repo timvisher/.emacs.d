@@ -27,13 +27,6 @@
 ;;   package-archives
 ;;   (package-list-packages))
 
-(defun align-css-block ()
-  (interactive)
-  (save-excursion
-   (er/mark-inside-pairs)
-   (indent-region (region-beginning) (region-end))
-   (align-regexp (region-beginning) (region-end) ":\\([[:space:]]*\\)" 1 1 t)))
-
 (defun replace-with-solved-equation (start-of-equation end-of-equation)
   (interactive "r")
   (if (not (region-active-p))

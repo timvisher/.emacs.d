@@ -1,1 +1,1 @@
-("~/Dropbox/nhss.twonegatives.com/nhss/" "~/Dropbox/nhss.twonegatives.com/" "~/Downloads/om-toy/" "~/Dropbox/bible-plan/" "~/.emacs.d/" "~/Dropbox/bash_configuration/")
+("~/.emacs.d/" "~/Dropbox/bash_configuration/" "/usr/local/Library/Taps/homebrew/homebrew-games/" "/usr/local/" "/scp:core_hadoop:/opt/code/rjm/" "~/Dropbox/nhss.twonegatives.com/nhss/" "~/Dropbox/nhss.twonegatives.com/" "~/Downloads/om-toy/" "~/Dropbox/bible-plan/")
