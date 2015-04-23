@@ -29,7 +29,7 @@
 
 (defun org-gh-links-issue-open (path)
   "Visit the GitHub link for PATH"
-  (let* ((matches      (s-match "\\(.+\\)/\\(.+\\)#\\([[:digit:]]\\)" path))
+  (let* ((matches      (s-match "\\(.+\\)/\\(.+\\)#\\([[:digit:]]+\\)" path))
          (organization (cadr matches))
          (repo         (caddr matches))
          (issue-number (cadddr matches))
