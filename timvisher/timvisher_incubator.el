@@ -38,3 +38,33 @@
     (save-excursion
       (goto-char start-of-equation)
       (insert equation-string " = "))))
+
+(defun github-source-link (open)
+  "Constructs a link to the current file's github repo.
+
+C-u will attempt to open it in your default browser."
+  (interactive "\P")
+  (let* ((org-and-repo (s-split "/" (cadr (s-split ":" (magit-get "remote" (magit-get-current-remote) "url")))))
+         (org          (car org-and-repo))
+         (repo         (s-replace ".git" "" (cadr org-and-repo)))
+         (branch       (magit-get-current-branch))
+         (path         (magit-filename buffer-file-name))
+         (url          (if (region-active-p)
+                           (let ((beg-line (line-number-at-pos (region-beginning)))
+                                 (end-line (line-number-at-pos (region-end))))
+                             (format "https://github.com/%s/%s/blob/%s/%s#L%d-L%d"
+                                     org
+                                     repo
+                                     branch
+                                     path
+                                     beg-line
+                                     end-line))
+                         (format "https://github.com/%s/%s/blob/%s/%s#L%d"
+                                 org
+                                 repo
+                                 branch
+                                 path
+                                 (line-number-at-pos)))))
+    (message url)
+    (if open
+        (browse-url url))))
