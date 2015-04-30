@@ -70,6 +70,7 @@
  '(git-commit-max-summary-line-length 80)
  '(global-hl-line-mode t)
  '(global-hl-line-sticky-flag t)
+ '(global-whitespace-mode t)
  '(grep-find-ignored-directories
    (quote
     ("SCCS" "RCS" "CVS" "MCVS" ".svn" ".git" ".hg" ".bzr" "_MTN" "_darcs" "{arch}" "target")))
