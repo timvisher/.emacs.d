@@ -165,6 +165,8 @@ Info-directory-list
 
 (load "timvisher_css")
 
+(load "timvisher_git")
+
 (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
 
 (add-hook 'emacs-lisp-mode-hook 'turn-on-elisp-slime-nav-mode)
