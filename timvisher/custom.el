@@ -36,6 +36,7 @@
  '(deft-directory "")
  '(deft-extension "md")
  '(deft-text-mode (quote markdown-mode))
+ '(delete-selection-mode t)
  '(dired-dwim-target t)
  '(dired-recursive-copies (quote always))
  '(dired-recursive-deletes (quote always))
