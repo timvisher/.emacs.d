@@ -163,6 +163,8 @@ Info-directory-list
 
 (load "timvisher_clojure")
 
+(load "timvisher_css")
+
 (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
 
 (add-hook 'emacs-lisp-mode-hook 'turn-on-elisp-slime-nav-mode)
