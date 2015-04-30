@@ -4,8 +4,13 @@
 (add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
 
 ;;;### (autoloads nil "find-file-in-project" "find-file-in-project.el"
-;;;;;;  (21623 12765 816088 490000))
+;;;;;;  (21826 9053 0 0))
 ;;; Generated autoloads from find-file-in-project.el
+
+(autoload 'ffip-current-full-filename-match-pattern-p "find-file-in-project" "\
+Is current full file name (including directory) match the REGEX?
+
+\(fn REGEX)" nil nil)
 
 (autoload 'find-file-in-project "find-file-in-project" "\
 Prompt with a completing list of all files in the project to find one.
@@ -20,13 +25,9 @@ setting the variable `ffip-project-root'.
 
 (put 'ffip-patterns 'safe-local-variable 'listp)
 
-(put 'ffip-find-options 'safe-local-variable 'stringp)
-
 (put 'ffip-project-file 'safe-local-variable 'stringp)
 
 (put 'ffip-project-root 'safe-local-variable 'stringp)
-
-(put 'ffip-project-root-function 'safe-local-variable 'functionp)
 
 (put 'ffip-limit 'safe-local-variable 'integerp)
 
