@@ -101,6 +101,9 @@
  '(org-hide-leading-stars t)
  '(org-insert-heading-respect-content t)
  '(org-src-fontify-natively t)
+ '(package-selected-packages
+   (quote
+    (yaml-mode anti-zenburn-theme zenburn-theme solarized-theme yasnippet wgrep web-mode vimgolf smex smartparens sensitive sass-mode rainbow-delimiters projectile php-mode pbcopy paredit marmalade markdown-mode magit ido-vertical-mode ido-ubiquitous idle-highlight-mode golden-ratio flx-ido find-file-in-project expand-region elisp-slime-nav deft dash-functional coffee-mode clojure-test-mode better-defaults align-cljlet ag)))
  '(save-interprogram-paste-before-kill t)
  '(save-place-file (concat (getenv "HOME") "/.emacs.places"))
  '(savehist-mode t)
