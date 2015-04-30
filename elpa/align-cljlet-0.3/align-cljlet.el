@@ -99,6 +99,7 @@
              (string-match " *condp" name)
              (string-match " *defroutes" name)
              (string-match " *defproject" name)
+             (string-match " *defresource" name)
              ())))
       (if (looking-at "{")
           t))))
@@ -286,10 +287,15 @@ positioned on the defroute form."
             (down-list 1)
             (forward-sexp 4)
             (backward-sexp))
-        (if (not (looking-at "{"))
-            ;; move to start of [
-            (down-list 2)
-          (down-list 1))))))
+        (if (looking-at "( *liberator/defresource\\b")
+            (progn
+              (down-list 1)
+              (forward-sexp 3)
+              (backward-sexp))
+          (if (not (looking-at "{"))
+              ;; move to start of [
+              (down-list 2)
+            (down-list 1)))))))
 
 (defun acl-align-form ()
   "Determine what type of form we are currently positioned at and align it"
