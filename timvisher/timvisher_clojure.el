@@ -5,7 +5,10 @@
 
 ;; (timvisher/install-package-list timvisher/clojure-packages)
 
-(autoload 'align-cljlet "align-cljlet")
+(defun timvisher/require-align-cljlet ()
+  (require 'align-cljlet))
+
+(add-hook 'clojure-mode-hook 'timvisher/require-align-cljlet)
 
 ;;; We use this to make it impossible to edit jar files by mistake.
 (defun timvisher/make-read-only () (read-only-mode 1))
