@@ -108,6 +108,7 @@
  '(projectile-known-projects-file "~/.emacs.-projectile-bookmarks.eld")
  '(save-interprogram-paste-before-kill t)
  '(save-place-file (concat (getenv "HOME") "/.emacs.places"))
+ '(savehist-file "~/.emacs-history")
  '(savehist-mode t)
  '(sensitive-root "~/Dropbox/sensitive")
  '(sentence-end-double-space nil)
