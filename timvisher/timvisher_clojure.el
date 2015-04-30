@@ -34,3 +34,33 @@
 
 (eval-after-load 'clojure-mode
   '(timvisher/add-paredit-to-clojure-mode-hook))
+
+(add-hook 'cider-repl-mode-hook 'enable-paredit-mode)
+
+(defun timvisher/add-midje-forms-to-clojure-dedenting ()
+  (put-clojure-indent 'fact-group 1)
+  (put-clojure-indent 'facts 1)
+  (put-clojure-indent 'fact 1)
+  (put-clojure-indent 'tabular nil)
+  (put-clojure-indent 'for-all 1))
+
+(eval-after-load 'clojure-mode
+  '(add-hook 'clojure-mode-hook 'timvisher/add-midje-forms-to-clojure-dedenting))
+
+(defun timvisher/add-compojure-forms-to-clojure-dedenting ()
+  (put-clojure-indent 'context 2)
+  (put-clojure-indent 'PUT 2)
+  (put-clojure-indent 'GET 2)
+  (put-clojure-indent 'POST 2)
+  (put-clojure-indent 'DELETE 2)
+  (put-clojure-indent 'PATCH 2))
+
+(eval-after-load 'clojure-mode
+  '(add-hook 'clojure-mode-hook 'timvisher/add-compojure-forms-to-clojure-dedenting))
+
+(defun timvisher/add-test-check-forms-to-clojure-dedenting ()
+  (put-clojure-indent 'quick-check 1))
+
+(eval-after-load 'clojure-mode
+  '(add-hook 'clojure-mode-hook 'timvisher/add-test-check-forms-to-clojure-dedenting))
+
