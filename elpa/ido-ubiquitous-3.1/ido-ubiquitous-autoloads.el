@@ -3,13 +3,13 @@
 ;;; Code:
 (add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
 
-;;;### (autoloads nil "ido-ubiquitous" "ido-ubiquitous.el" (21689
-;;;;;;  12279 870830 563000))
+;;;### (autoloads nil "ido-ubiquitous" "ido-ubiquitous.el" (21826
+;;;;;;  9053 0 0))
 ;;; Generated autoloads from ido-ubiquitous.el
 
-(define-obsolete-variable-alias 'ido-ubiquitous 'ido-ubiquitous-mode "0.8")
+(define-obsolete-variable-alias 'ido-ubiquitous 'ido-ubiquitous-mode "ido-ubiquitous 0.8")
 
-(define-obsolete-function-alias 'ido-ubiquitous 'ido-ubiquitous-mode "0.8")
+(define-obsolete-function-alias 'ido-ubiquitous 'ido-ubiquitous-mode "ido-ubiquitous 0.8")
 
 (defvar ido-ubiquitous-mode nil "\
 Non-nil if Ido-Ubiquitous mode is enabled.
@@ -23,12 +23,10 @@ or call the function `ido-ubiquitous-mode'.")
 (autoload 'ido-ubiquitous-mode "ido-ubiquitous" "\
 Use `ido-completing-read' instead of `completing-read' almost everywhere.
 
-  This mode has no effect unles `ido-mode' is also enabled.
-
-  If this mode causes problems for a function, you can customize
-  when ido completion is or is not used by customizing
-  `ido-ubiquitous-command-overrides' or
-  `ido-ubiquitous-function-overrides'.
+If this mode causes problems for a function, you can customize
+when ido completion is or is not used by customizing
+`ido-ubiquitous-command-overrides' or
+`ido-ubiquitous-function-overrides'.
 
 \(fn &optional ARG)" t nil)
 
