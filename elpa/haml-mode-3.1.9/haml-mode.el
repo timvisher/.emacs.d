@@ -4,9 +4,9 @@
 
 ;; Author: Nathan Weizenbaum
 ;; URL: http://github.com/nex3/haml/tree/master
+;; Package-Version: 3.1.9
 ;; Package-Requires: ((ruby-mode "1.0"))
-;; Version: 3.1.8
-;; X-Original-Version: DEV
+;; Version: DEV
 ;; Created: 2007-03-08
 ;; By: Nathan Weizenbaum
 ;; Keywords: markup, language, html
@@ -105,7 +105,7 @@ The line containing RE is matched, as well as all lines indented beneath it."
     ("^!!!.*"                             0 font-lock-constant-face)
     ("\\s| *$"                            0 font-lock-string-face)))
 
-(defconst haml-filter-re (haml-nested-regexp ":\\w+"))
+(defconst haml-filter-re (haml-nested-regexp ":[[:alnum:]_\\-]+"))
 (defconst haml-comment-re (haml-nested-regexp "\\(?:-\\#\\|/\\)[^\n]*"))
 
 (defun haml-highlight-comment (limit)
@@ -468,7 +468,6 @@ changes in the initial region."
 (defvar haml-mode-syntax-table
   (let ((table (make-syntax-table)))
     (modify-syntax-entry ?: "." table)
-    (modify-syntax-entry ?_ "w" table)
     (modify-syntax-entry ?' "\"" table)
     table)
   "Syntax table in use in `haml-mode' buffers.")
@@ -494,7 +493,6 @@ changes in the initial region."
   "Major mode for editing Haml files.
 
 \\{haml-mode-map}"
-  (set-syntax-table haml-mode-syntax-table)
   (setq font-lock-extend-region-functions '(haml-extend-region-contextual))
   (set (make-local-variable 'jit-lock-contextually) t)
   (set (make-local-variable 'font-lock-multiline) t)
@@ -503,6 +501,8 @@ changes in the initial region."
   (set (make-local-variable 'parse-sexp-lookup-properties) t)
   (set (make-local-variable 'comment-start) "-#")
   (setq font-lock-defaults '((haml-font-lock-keywords) t t))
+  (when (boundp 'electric-indent-inhibit)
+    (setq electric-indent-inhibit t))
   (setq indent-tabs-mode nil))
 
 ;; Useful functions
@@ -682,14 +682,14 @@ See http://www.w3.org/TR/html-markup/syntax.html.")
 (defun haml-indent-p ()
   "Return t if the current line can have lines nested beneath it."
   (let ((attr-props (haml-parse-multiline-attr-hash)))
-    (when attr-props
-      (return-from haml-indent-p
-        (if (haml-unclosed-attr-hash-p) (cdr (assq 'hash-indent attr-props))
-          (list (+ (cdr (assq 'indent attr-props)) haml-indent-offset) nil)))))
-  (unless (or (haml-unnestable-tag-p))
-    (loop for opener in haml-block-openers
-          if (looking-at opener) return t
-          finally return nil)))
+    (if attr-props
+        (if (haml-unclosed-attr-hash-p)
+            (cdr (assq 'hash-indent attr-props))
+          (+ (cdr (assq 'indent attr-props)) haml-indent-offset))
+      (unless (or (haml-unnestable-tag-p))
+        (loop for opener in haml-block-openers
+              if (looking-at opener) return t
+              finally return nil)))))
 
 (defun* haml-parse-multiline-attr-hash ()
   "Parses a multiline attribute hash, and returns
