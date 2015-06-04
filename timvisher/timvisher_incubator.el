@@ -48,7 +48,7 @@ C-u will attempt to open it in your default browser."
          (org          (car org-and-repo))
          (repo         (s-replace ".git" "" (cadr org-and-repo)))
          (branch       (magit-get-current-branch))
-         (path         (magit-filename buffer-file-name))
+         (path         (magit-file-relative-name buffer-file-name))
          (url          (if (region-active-p)
                            (let ((beg-line (line-number-at-pos (region-beginning)))
                                  (end-line (line-number-at-pos (region-end))))
@@ -106,3 +106,7 @@ vectors when called."
       (paredit-backward-up)
       (paredit-forward)
       (join-line))))
+
+;;; Write align-ns-form
+;;; look-at each :require and align-regexp ":"
+;;; join-line for whitespace with no leading ( or [
