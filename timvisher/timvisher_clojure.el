@@ -52,6 +52,7 @@
 
 (defun timvisher/add-compojure-forms-to-clojure-dedenting ()
   (put-clojure-indent 'context 2)
+  (put-clojure-indent 'ANY 2)
   (put-clojure-indent 'PUT 2)
   (put-clojure-indent 'GET 2)
   (put-clojure-indent 'POST 2)
@@ -66,4 +67,7 @@
 
 (eval-after-load 'clojure-mode
   '(add-hook 'clojure-mode-hook 'timvisher/add-test-check-forms-to-clojure-dedenting))
+
+(eval-after-load 'clojure-mode
+  '(add-hook 'clojure-mode-hook #'rainbow-delimiters-mode))
 
