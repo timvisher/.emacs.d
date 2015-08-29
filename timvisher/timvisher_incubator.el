@@ -39,44 +39,6 @@
       (goto-char start-of-equation)
       (insert equation-string " = "))))
 
-(defun align-vector-of-vectors-elements ()
-  "aligns the current vector of vector's elements
-
-Point must be in the parent vector but not in any of the child
-vectors when called."
-  (interactive)
-  (save-excursion
-    (paredit-backward-up)
-    (if (not (looking-at "\\["))
-        (error "Must be in a vector."))
-    (paredit-forward-down)
-    (if (not (looking-at "\\["))
-        (error "Must be in a vector."))
-    (er/mark-inside-pairs)
-    (let ((beg (region-beginning))
-          (end (region-end)))
-      (align-regexp (region-beginning) (region-end) "\\(\\s-*\\)\"" 1 1 nil)
-      (while (search-forward-regexp "^ +[^ []" (region-end) t)
-        (join-line)
-        (goto-char beg)
-        (er/mark-inside-pairs))
-      (newline)
-      (indent-region (region-beginning) (region-end))
-      (paredit-backward-up)
-      (paredit-forward)
-      (paredit-backward-down)
-      (newline)
-      (er/mark-inside-pairs)
-      (beginning-of-line)
-      (sort-lines nil (point) (region-end))
-      (paredit-backward-up)
-      (paredit-forward-down)
-      (paredit-forward)
-      (join-line)
-      (paredit-backward-up)
-      (paredit-forward)
-      (join-line))))
-
 ;;; Write align-ns-form
 ;;; look-at each :require and align-regexp ":"
 ;;; join-line for whitespace with no leading ( or [
