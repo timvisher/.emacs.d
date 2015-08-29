@@ -3,9 +3,10 @@
 ;;; ----------------------------------------------------------------------------
 
 (require 'package)
-(add-to-list 'package-archives
-             '("marmalade" . "http://marmalade-repo.org/packages/")
-             t)
+;; (add-to-list 'package-archives
+;;              '("marmalade" . "http://marmalade-repo.org/packages/")
+;;              t)
+;; (delete '("marmalade" . "http://marmalade-repo.org/packages/") package-archives)
 ;; (add-to-list 'package-archives
 ;;              '("melpa" . "http://melpa.milkbox.net/packages/") t)
 ;; (delete '("melpa" . "http://melpa.milkbox.net/packages/") package-archives)
