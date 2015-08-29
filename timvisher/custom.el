@@ -64,6 +64,7 @@
  '(erc-services-mode t)
  '(erc-text-matched-hook (quote (erc-log-matches)))
  '(erc-user-full-name "Tim Visher")
+ '(fci-rule-color "#eee8d5")
  '(find-ls-option (quote ("-print0 | xargs -0 ls -ld" . "-ld")))
  '(foreground-color "#ffff00")
  '(gc-cons-threshold 52428800)
@@ -77,10 +78,33 @@
  '(helm-M-x-always-save-history t)
  '(helm-c-use-adaptative-sorting t)
  '(helm-mode t)
+ '(highlight-changes-colors (quote ("#d33682" "#6c71c4")))
+ '(highlight-symbol-colors
+   (--map
+    (solarized-color-blend it "#fdf6e3" 0.25)
+    (quote
+     ("#b58900" "#2aa198" "#dc322f" "#6c71c4" "#859900" "#cb4b16" "#268bd2"))))
+ '(highlight-symbol-foreground-color "#586e75")
+ '(highlight-tail-colors
+   (quote
+    (("#eee8d5" . 0)
+     ("#B4C342" . 20)
+     ("#69CABF" . 30)
+     ("#69B7F0" . 50)
+     ("#DEB542" . 60)
+     ("#F2804F" . 70)
+     ("#F771AC" . 85)
+     ("#eee8d5" . 100))))
  '(hippie-expand-try-functions-list
    (quote
     (try-complete-file-name-partially try-complete-file-name try-expand-all-abbrevs try-expand-dabbrev try-expand-dabbrev-all-buffers try-expand-dabbrev-from-kill try-complete-lisp-symbol-partially try-complete-lisp-symbol)))
  '(history-length 1000)
+ '(hl-bg-colors
+   (quote
+    ("#DEB542" "#F2804F" "#FF6E64" "#F771AC" "#9EA0E5" "#69B7F0" "#69CABF" "#B4C342")))
+ '(hl-fg-colors
+   (quote
+    ("#fdf6e3" "#fdf6e3" "#fdf6e3" "#fdf6e3" "#fdf6e3" "#fdf6e3" "#fdf6e3" "#fdf6e3")))
  '(ido-everywhere t)
  '(ido-save-directory-list-file "~/.emacs-ido.last")
  '(ido-ubiquitous-command-exceptions (quote (unhighlight-regexp)))
@@ -97,13 +121,17 @@
  '(magit-use-overlays nil)
  '(markdown-css-paths (quote ("css/bootstrap.css" "css/custom.css")))
  '(mouse-avoidance-mode (quote banish) nil (avoid))
- '(org-agenda-files (quote ("~/Dropbox/budget-review.org")))
+ '(org-agenda-files
+   (quote
+    ("~/Dropbox/what-does-test-check-do-qmark/what-does-test-check-do-qmark.org" "~/Dropbox/lunchandlearn.org" "~/Dropbox/wiki/wiki.org" "~/Dropbox/rjmetrics-wiki.org" "~/Dropbox/budget-review.org")))
  '(org-hide-leading-stars t)
  '(org-insert-heading-respect-content t)
  '(org-src-fontify-natively t)
  '(package-selected-packages
    (quote
     (yaml-mode anti-zenburn-theme zenburn-theme solarized-theme yasnippet wgrep web-mode vimgolf smex smartparens sensitive sass-mode rainbow-delimiters projectile php-mode pbcopy paredit marmalade markdown-mode magit ido-vertical-mode ido-ubiquitous idle-highlight-mode golden-ratio flx-ido find-file-in-project expand-region elisp-slime-nav deft dash-functional coffee-mode clojure-test-mode better-defaults align-cljlet ag)))
+ '(pos-tip-background-color "#eee8d5")
+ '(pos-tip-foreground-color "#586e75")
  '(projectile-cache-file "~/.emacs-projectile.cache")
  '(projectile-known-projects-file "~/.emacs.-projectile-bookmarks.eld")
  '(save-interprogram-paste-before-kill t)
@@ -117,19 +145,48 @@
  '(shell-prompt-pattern
    "^[^#$%>
 ]*[#$%>🐀 🐁 🐂 🐃 🐄 🐅 🐆 🐇 🐈 🐉 🐊 🐋 🐌 🐍 🐎 🐏 🐐 🐑 🐒 🐓 🐔 🐕 🐖 🐗 🐘 🐙 🐚 🐛 🐜 🐝 🐞 🐟 🐠 🐡 🐢 🐣 🐤 🐥 🐦 🐧 🐨 🐩 🐪 🐫 🐬🐭 🐮 🐯 🐰 🐱 🐲 🐳 🐴 🐵 🐶 🐷 🐸 🐹 🐺 🐻 🐼 🐽 🐾 😸 😹 😺 😻 😼 😽 😾 😿 🙀 🙈 🙉 🙊] *")
+ '(smartrep-mode-line-active-bg (solarized-color-blend "#859900" "#eee8d5" 0.2))
  '(solarized-contrast (quote high))
  '(split-width-threshold 240)
  '(sql-ms-options (quote ("-w" "15000" "-n")))
  '(sql-ms-program "osql")
  '(standard-indent 2)
  '(tab-width 2)
+ '(term-default-bg-color "#fdf6e3")
+ '(term-default-fg-color "#657b83")
  '(text-mode-hook (quote (whitespace-mode text-mode-hook-identify)))
  '(transient-mark-mode nil)
  '(user-mail-address "tim.visher@gmail.com")
+ '(vc-annotate-background nil)
+ '(vc-annotate-color-map
+   (quote
+    ((20 . "#dc322f")
+     (40 . "#c37300")
+     (60 . "#b97d00")
+     (80 . "#b58900")
+     (100 . "#a18700")
+     (120 . "#9b8700")
+     (140 . "#948700")
+     (160 . "#8d8700")
+     (180 . "#859900")
+     (200 . "#5a942c")
+     (220 . "#439b43")
+     (240 . "#2da159")
+     (260 . "#16a870")
+     (280 . "#2aa198")
+     (300 . "#009fa7")
+     (320 . "#0097b7")
+     (340 . "#008fc7")
+     (360 . "#268bd2"))))
+ '(vc-annotate-very-old-color nil)
  '(visual-line-fringe-indicators (quote (left-curly-arrow right-curly-arrow)))
+ '(weechat-color-list
+   (quote
+    (unspecified "#fdf6e3" "#eee8d5" "#990A1B" "#dc322f" "#546E00" "#859900" "#7B6000" "#b58900" "#00629D" "#268bd2" "#93115C" "#d33682" "#00736F" "#2aa198" "#657b83" "#839496")))
+ '(whitespace-line-column 120)
  '(whitespace-style
    (quote
-    (trailing space-before-tab face indentation space-after-tab)))
+    (trailing space-before-tab face indentation space-after-tab tabs lines face tab-mark)))
  '(winner-dont-bind-my-keys t)
  '(winner-mode t nil (winner)))
 (custom-set-faces
@@ -137,8 +194,4 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(cua-rectangle ((t (:inherit region))))
- '(hl-line ((t nil)))
- '(magit-item-highlight ((t (:inherit hl-line))))
- '(match ((t (:inherit idle-highlight))))
- '(region ((t (:background "#eeeeee")))))
+ '(whitespace-tab ((t (:inherit hl-line :foreground "#e5e5e5")))))
