@@ -437,6 +437,8 @@ Info-directory-list
 
 (add-to-list 'auto-mode-alist '("\\.todo$" . org-mode))
 
+(add-to-list 'auto-mode-alist '("\\.tpl$" . handlebars-mode))
+
 (defun timvisher/turn-on-subword-mode ()
   (subword-mode 1))
 
