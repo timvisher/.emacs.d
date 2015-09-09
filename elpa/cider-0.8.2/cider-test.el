@@ -1,6 +1,6 @@
 ;;; cider-test.el --- Test result viewer -*- lexical-binding: t -*-
 
-;; Copyright © 2014-2015 Jeff Valk
+;; Copyright © 2014 Jeff Valk
 
 ;; Author: Jeff Valk <jv@jeffvalk.com>
 
@@ -46,12 +46,6 @@
   :type 'boolean
   :group 'cider-test
   :package-version '(cider . "0.8.0"))
-
-(defcustom cider-auto-select-test-report-buffer t
-  "Determines if the test-report buffer should be auto-selected."
-  :type 'boolean
-  :group 'cider-test
-  :package-version '(cider . "0.9.0"))
 
 (defvar cider-test-last-test-ns nil
   "The namespace for which tests were last run.")
@@ -103,18 +97,18 @@
 
 (defvar cider-test-report-mode-map
   (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "C-c ,") #'cider-test-run-tests)
-    (define-key map (kbd "C-c C-,") #'cider-test-rerun-tests)
-    (define-key map (kbd "C-c M-,") #'cider-test-run-test)
-    (define-key map (kbd "M-p") #'cider-test-previous-result)
-    (define-key map (kbd "M-n") #'cider-test-next-result)
-    (define-key map (kbd "M-.") #'cider-test-jump)
-    (define-key map (kbd "t") #'cider-test-jump)
-    (define-key map (kbd "d") #'cider-test-ediff)
-    (define-key map (kbd "e") #'cider-test-stacktrace)
-    (define-key map "q" #'cider-popup-buffer-quit-function)
-    (define-key map (kbd "<backtab>") #'backward-button)
-    (define-key map (kbd "TAB") #'forward-button)
+    (define-key map (kbd "C-c ,") 'cider-test-run-tests)
+    (define-key map (kbd "C-c C-,") 'cider-test-rerun-tests)
+    (define-key map (kbd "C-c M-,") 'cider-test-run-test)
+    (define-key map (kbd "M-p") 'cider-test-previous-result)
+    (define-key map (kbd "M-n") 'cider-test-next-result)
+    (define-key map (kbd "M-.") 'cider-test-jump)
+    (define-key map (kbd "t") 'cider-test-jump)
+    (define-key map (kbd "d") 'cider-test-ediff)
+    (define-key map (kbd "e") 'cider-test-stacktrace)
+    (define-key map "q" 'cider-popup-buffer-quit-function)
+    (define-key map (kbd "<backtab>") 'backward-button)
+    (define-key map (kbd "TAB") 'forward-button)
     (easy-menu-define cider-test-report-mode-menu map
       "Menu for CIDER's test result mode"
       '("Test-Report"
@@ -161,15 +155,16 @@
     (-when-let (pos (next-single-property-change (point) 'type))
       (goto-char pos))))
 
-(defun cider-test-jump (&optional arg)
-  "Like `cider-find-var', but uses the test at point's definition, if available."
-  (interactive "P")
+(defun cider-test-jump ()
+  "Like `cider-jump-to-var', but uses the test at point's definition, if available."
+  (interactive)
   (let ((ns   (get-text-property (point) 'ns))
         (var  (get-text-property (point) 'var))
         (line (get-text-property (point) 'line)))
     (if (and ns var)
-        (cider-find-var arg (concat ns "/" var) line)
-      (cider-find-var arg))))
+        (cider-jump-to-var (concat ns "/" var) line)
+      (call-interactively 'cider-jump-to-var))))
+
 
 ;;; Error stacktraces
 
@@ -180,8 +175,6 @@
      (append
       (list "op" "test-stacktrace" "session" (nrepl-current-session)
             "ns" ns "var" var "index" index)
-      (when cider-stacktrace-print-length
-        (list "print-length" cider-stacktrace-print-length))
       (when cider-stacktrace-print-level
         (list "print-level" cider-stacktrace-print-level)))
      (lambda (response)
@@ -193,8 +186,8 @@
                                               cider-auto-select-error-buffer)
                           (reverse causes))))))))))
 
-(defun cider-test-stacktrace ()
-  "Display stacktrace for the erring test at point."
+(defun cider-test-stacktrace (&optional button)
+  "Display stacktrace for the erring test at point, optionally from BUTTON."
   (interactive)
   (let ((ns    (get-text-property (point) 'ns))
         (var   (get-text-property (point) 'var))
@@ -246,7 +239,7 @@ With the actual value, the outermost '(not ...)' s-expression is removed."
   (mapc (lambda (b) (when (get-buffer b) (kill-buffer b)))
         cider-test-ediff-buffers))
 
-(add-hook 'ediff-cleanup-hook #'cider-test-ediff-cleanup)
+(add-hook 'ediff-cleanup-hook 'cider-test-ediff-cleanup)
 
 
 ;;; Report rendering
@@ -257,7 +250,7 @@ With the actual value, the outermost '(not ...)' s-expression is removed."
     ("pass"  'cider-test-success-face)
     ("fail"  'cider-test-failure-face)
     ("error" 'cider-test-error-face)
-    (_       'default)))
+    (t       'default)))
 
 (defun cider-test-render-summary (buffer summary)
   "Emit into BUFFER the report SUMMARY statistics."
@@ -289,7 +282,7 @@ With the actual value, the outermost '(not ...)' s-expression is removed."
                   (progn (insert-text-button
                           error
                           'follow-link t
-                          'action '(lambda (_button) (cider-test-stacktrace))
+                          'action 'cider-test-stacktrace
                           'help-echo "View causes and stacktrace")
                          (newline))
                 (insert (cider-font-lock-as-clojure actual)))))
@@ -307,7 +300,7 @@ With the actual value, the outermost '(not ...)' s-expression is removed."
         (unless (zerop (+ fail error))
           (cider-insert "Results" 'bold t "\n")
           (nrepl-dict-map
-           (lambda (_var tests)
+           (lambda (var tests)
              (dolist (test tests)
                (nrepl-dbind-response test (type)
                  (unless (equal "pass" type)
@@ -344,25 +337,21 @@ With the actual value, the outermost '(not ...)' s-expression is removed."
 (defun cider-test-highlight-problem (buffer test)
   "Highlight the BUFFER test definition for the non-passing TEST."
   (with-current-buffer buffer
-    (nrepl-dbind-response test (type file line message expected actual)
-      ;; we have to watch out for vars without proper location metadata
-      ;; right now everything evaluated interactively lacks this data
-      ;; TODO: Figure out what to do when the metadata is missing
-      (when (and file line (not (cider--tooling-file-p file)))
-        (save-excursion
-         (goto-char (point-min))
-         (forward-line (1- line))
-         (forward-whitespace 1)
-         (forward-char)
-         (let ((beg (point)))
-           (forward-sexp)
-           (let ((overlay (make-overlay beg (point))))
-             (overlay-put overlay 'font-lock-face (cider-test-type-face type))
-             (overlay-put overlay 'type type)
-             (overlay-put overlay 'help-echo message)
-             (overlay-put overlay 'message message)
-             (overlay-put overlay 'expected expected)
-             (overlay-put overlay 'actual actual))))))))
+    (nrepl-dbind-response test (type line message expected actual)
+      (save-excursion
+        (goto-char (point-min))
+        (forward-line (1- line))
+        (forward-whitespace 1)
+        (forward-char)
+        (let ((beg (point)))
+          (forward-sexp)
+          (let ((overlay (make-overlay beg (point))))
+            (overlay-put overlay 'font-lock-face (cider-test-type-face type))
+            (overlay-put overlay 'type type)
+            (overlay-put overlay 'help-echo message)
+            (overlay-put overlay 'message message)
+            (overlay-put overlay 'expected expected)
+            (overlay-put overlay 'actual actual)))))))
 
 (defun cider-test-highlight-problems (ns results)
   "Highlight all non-passing tests in the NS test RESULTS."
@@ -405,7 +394,7 @@ This uses the Leiningen convention of appending '-test' to the namespace name."
   (when ns
     (let ((suffix "-test"))
       ;; string-suffix-p is only available in Emacs 24.4+
-      (if (string-match-p (rx-to-string `(: ,suffix eos) t) ns)
+      (if (string-match (rx-to-string `(: ,suffix eos) t) ns)
           ns
         (concat ns suffix)))))
 
@@ -436,8 +425,7 @@ displayed. When test failures/errors occur, their sources are highlighted."
                 (when (or (not (zerop (+ error fail)))
                           cider-test-show-report-on-success)
                   (cider-test-render-report
-                   (cider-popup-buffer cider-test-report-buffer
-                                       cider-auto-select-test-report-buffer)
+                   (cider-popup-buffer cider-test-report-buffer t)
                    ns summary results)))))))))
 
 (defun cider-test-rerun-tests ()
@@ -457,7 +445,7 @@ current ns."
                    (clojure-find-ns)
                  (or (funcall cider-test-infer-test-ns (clojure-find-ns))
                      (when (eq major-mode 'cider-test-report-mode)
-                       cider-test-last-test-ns))))
+                      cider-test-last-test-ns))))
       (cider-test-execute ns nil)
     (message "No namespace to test in current context")))
 
@@ -473,7 +461,7 @@ is searched."
         (cider-test-execute ns nil (list var))
       (let ((ns  (clojure-find-ns))
             (def (clojure-find-def)))
-        (if (and ns (member (car def) '("deftest" "defspec")))
+        (if (and ns (member (first def) '("deftest" "defspec")))
             (cider-test-execute ns nil (rest def))
           (message "No test at point"))))))
 
