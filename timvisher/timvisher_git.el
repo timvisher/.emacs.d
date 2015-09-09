@@ -1,8 +1,8 @@
 (defun timvisher/add-my-public ()
   (interactive)
-  (let* ((project-name (file-name-nondirectory (directory-file-name (magit-get-top-dir default-directory))))
+  (let* ((project-name (file-name-nondirectory (directory-file-name (magit-toplevel default-directory))))
          (remote       (format "git@github.com:timvisher/%s.git" project-name)))
-    (magit-add-remote "public" remote)))
+    (magit-remote-add "public" remote)))
 
 (setq magit-last-seen-setup-instructions "1.4.0")
 
@@ -12,7 +12,7 @@
 C-u will copy the link to the killring.
 C-u C-u will attempt to open it in your default browser."
   (interactive "\p")
-  (let* ((org-and-repo (s-split "/" (cadr (s-split ":" (magit-get "remote" (magit-get-current-remote) "url")))))
+  (let* ((org-and-repo (s-split "/" (cadr (s-split ":" (magit-get "remote" (magit-get-remote) "url")))))
          (org          (car org-and-repo))
          (repo         (s-replace ".git" "" (cadr org-and-repo)))
          (branch       (magit-get-current-branch))
