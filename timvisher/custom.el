@@ -129,6 +129,27 @@
     ("~/Dropbox/what-does-test-check-do-qmark/what-does-test-check-do-qmark.org" "~/Dropbox/lunchandlearn.org" "~/Dropbox/wiki/wiki.org" "~/Dropbox/rjmetrics-wiki.org" "~/Dropbox/budget-review.org")))
  '(org-hide-leading-stars t)
  '(org-insert-heading-respect-content t)
+ '(org-latex-classes
+   (quote
+    (("article" "\\documentclass[11pt]{article}"
+      ("\\section{%s}" . "\\section*{%s}")
+      ("\\subsection{%s}" . "\\subsection*{%s}")
+      ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+      ("\\paragraph{%s}" . "\\paragraph*{%s}")
+      ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))
+     ("report" "\\documentclass[11pt]{report}"
+      ("\\part{%s}" . "\\part*{%s}")
+      ("\\chapter{%s}" . "\\chapter*{%s}")
+      ("\\section{%s}" . "\\section*{%s}")
+      ("\\subsection{%s}" . "\\subsection*{%s}")
+      ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))
+     ("book" "\\documentclass[11pt]{book}"
+      ("\\part{%s}" . "\\part*{%s}")
+      ("\\chapter{%s}" . "\\chapter*{%s}")
+      ("\\section{%s}" . "\\section*{%s}")
+      ("\\subsection{%s}" . "\\subsection*{%s}")
+      ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))
+     ("letter" "\\documentclass[11pt]{letter}"))))
  '(org-src-fontify-natively t)
  '(package-selected-packages
    (quote
