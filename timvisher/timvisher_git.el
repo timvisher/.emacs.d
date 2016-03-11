@@ -6,6 +6,9 @@
 
 (setq magit-last-seen-setup-instructions "1.4.0")
 
+(require 's)
+(require 'magit)
+
 (defun github-source-link (universal-arg)
   "Constructs a link to the current file's github repo.
 
