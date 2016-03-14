@@ -17,16 +17,6 @@
 
 (add-to-list 'auto-mode-alist '("\\.cljs$" . clojure-mode))
 
-(autoload 'cider-turn-on-eldoc-mode "cider")
-
-(eval-after-load 'clojure-mode
-  '(add-hook 'clojure-mode-hook 'cider-turn-on-eldoc-mode))
-
-(autoload 'clojure-enable-cider "cider")
-
-(eval-after-load 'clojure-mode
-  '(add-hook 'clojure-mode-hook 'clojure-enable-cider))
-
 (eval-after-load 'clojure-mode
   '(define-key clojure-mode-map (kbd "C-c l") 'align-cljlet))
 
@@ -37,8 +27,6 @@
 
 (eval-after-load 'clojure-mode
   '(timvisher/add-paredit-to-clojure-mode-hook))
-
-(add-hook 'cider-repl-mode-hook 'enable-paredit-mode)
 
 (defun timvisher/add-midje-forms-to-clojure-dedenting ()
   (put-clojure-indent 'fact-group 1)

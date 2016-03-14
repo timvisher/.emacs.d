@@ -1,6 +1,6 @@
 ;;; cider-scratch.el --- *scratch* buffer for Clojure -*- lexical-binding: t -*-
 
-;; Copyright © 2014 Bozhidar Batsov
+;; Copyright © 2014-2016 Bozhidar Batsov
 ;;
 ;; Author: Tim King <kingtim@gmail.com>
 ;;         Phil Hagelberg <technomancy@gmail.com>
@@ -35,14 +35,15 @@
 (defvar cider-clojure-interaction-mode-map
   (let ((map (make-sparse-keymap)))
     (set-keymap-parent map clojure-mode-map)
-    (define-key map (kbd "C-j") 'cider-eval-print-last-sexp)
+    (define-key map (kbd "C-j") #'cider-eval-print-last-sexp)
+    (define-key map [remap paredit-newline] #'cider-eval-print-last-sexp)
     map))
 
 (defconst cider-scratch-buffer-name "*cider-scratch*")
 
 ;;;###autoload
 (defun cider-scratch ()
-  "Create a scratch buffer."
+  "Go to the scratch buffer named `cider-scratch-buffer-name'."
   (interactive)
   (pop-to-buffer (cider-find-or-create-scratch-buffer)))
 
@@ -53,7 +54,7 @@
 
 (define-derived-mode cider-clojure-interaction-mode clojure-mode "Clojure Interaction"
   "Major mode for typing and evaluating Clojure forms.
-Like Lisp mode except that \\[cider-eval-print-last-sexp] evals the Lisp expression
+Like clojure-mode except that \\[cider-eval-print-last-sexp] evals the Lisp expression
 before point, and prints its value into the buffer, advancing point.
 
 \\{cider-clojure-interaction-mode-map}")
