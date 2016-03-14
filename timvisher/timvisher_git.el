@@ -6,8 +6,12 @@
 
 (setq magit-last-seen-setup-instructions "1.4.0")
 
-(require 's)
-(require 'magit)
+(autoload 's-split "s")
+(autoload 's-replace "s")
+(autoload 'magit-get "magit")
+(autoload 'magit-get-remote "magit")
+(autoload 'magit-get-current-branch "magit")
+(autoload 'magit-file-relative-name "magit")
 
 (defun github-source-link (universal-arg)
   "Constructs a link to the current file's github repo.
