@@ -16,7 +16,7 @@
 (defun github-source-link (universal-arg)
   "Constructs a link to the current file's github repo.
 
-C-u will copy the link to the killring.
+C-u will copy the link to the killring (and clipboard if available).
 C-u C-u will attempt to open it in your default browser."
   (interactive "\p")
   (let* ((org-and-repo (s-split "/" (cadr (s-split ":" (magit-get "remote" (magit-get-remote) "url")))))
@@ -39,9 +39,12 @@ C-u C-u will attempt to open it in your default browser."
                                  repo
                                  branch
                                  path
-                                 (line-number-at-pos)))))
+                                 (line-number-at-pos))))
+         (kill-command  (if (functionp 'timvisher/pbcopy-string)
+                            #'timvisher/pbcopy-string
+                          #'kill-new)))
     (message url)
     (if (= 4 universal-arg)
-        (kill-new url))
+        (funcall kill-command url))
     (if (= 16 universal-arg)
         (browse-url url))))

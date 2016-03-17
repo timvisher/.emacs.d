@@ -252,9 +252,15 @@ Info-directory-list
   (defun timvisher/pbcopy ()
     (interactive)
     (timvisher/pbcopy-region)
-    (copy-region-as-kill (region-beginning) (region-end)))
+    (kill-ring-save (region-beginning) (region-end)))
 
   (global-set-key (kbd "C-c P w") 'timvisher/pbcopy)
+
+  (defun timvisher/pbcopy-string (string)
+    (with-temp-buffer
+      (insert string)
+      (shell-command-on-region (point-min) (point-max) "pbcopy")
+      (kill-new string)))
 
   (defun timvisher/pbkill ()
     (interactive)
