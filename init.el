@@ -234,6 +234,35 @@ Info-directory-list
   (interactive)
   (find-file (timvisher/host-init-file)))
 
+(when (executable-find "pbcopy")
+  (defun timvisher/pbpaste ()
+    (interactive)
+    (let ((default-directory "~"))
+      (with-temp-buffer
+        (shell-command "pbpaste" 't)
+        (kill-region (point-min) (point-max)))
+      (yank)))
+
+  (global-set-key (kbd "C-c P y") 'timvisher/pbpaste)
+
+  (defun timvisher/pbcopy-region ()
+    (let ((default-directory "~"))
+      (shell-command-on-region (region-beginning) (region-end) "pbcopy")))
+
+  (defun timvisher/pbcopy ()
+    (interactive)
+    (timvisher/pbcopy-region)
+    (copy-region-as-kill (region-beginning) (region-end)))
+
+  (global-set-key (kbd "C-c P w") 'timvisher/pbcopy)
+
+  (defun timvisher/pbkill ()
+    (interactive)
+    (timvisher/pbcopy-region)
+    (kill-region (region-beginning) (region-end)))
+
+  (global-set-key (kbd "C-c P k") 'timvisher/pbkill))
+
 (defun timvisher/clojure-test-comment ()
   (interactive)
   (beginning-of-defun)
@@ -479,5 +508,3 @@ Info-directory-list
 ;;; We pay homage:
 ;;; [yegge]: https://sites.google.com/site/steveyegge2/effective-emacs
 ;;; [redisplay-dont-pause]: http://www.masteringemacs.org/articles/2011/10/02/improving-performance-emacs-display-engine/
-
-(message "you're loaded, Charnock!")
