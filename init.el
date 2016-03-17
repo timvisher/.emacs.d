@@ -232,6 +232,13 @@ Info-directory-list
 
 (global-set-key (kbd "C-c i") 'timvisher/edit-init-file)
 
+(defun timvisher/host-init-file ()
+  (format "~/.emacs.d/%s.el" system-name))
+
+(defun timvisher/edit-host-init-file ()
+  (interactive)
+  (find-file (timvisher/host-init-file)))
+
 (defun timvisher/clojure-test-comment ()
   (interactive)
   (beginning-of-defun)
@@ -471,8 +478,8 @@ Info-directory-list
 
 ;;; Load system specific configuration
 
-(when (file-exists-p (format "~/.emacs.d/%s.el" system-name))
-  (load-file (format "~/.emacs.d/%s.el" system-name)))
+(when (file-exists-p (timvisher/host-init-file))
+  (load-file (timvisher/host-init-file)))
 
 ;;; We pay homage:
 ;;; [yegge]: https://sites.google.com/site/steveyegge2/effective-emacs
