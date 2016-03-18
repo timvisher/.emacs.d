@@ -269,6 +269,20 @@ Info-directory-list
 
   (global-set-key (kbd "C-c P k") 'timvisher/pbkill))
 
+(autoload 'projectile-project-p "projectile")
+(autoload 'projectile-project-root "projectile")
+
+(defun timvisher/project-notes ()
+  (interactive)
+  (if (projectile-project-p)
+      (let ((notes-file (format "%snotes.org" (projectile-project-root))))
+        (if (string= notes-file (buffer-file-name))
+            (bury-buffer)
+          (find-file notes-file)))
+    (error "%s is not in a project" (buffer-file-name))))
+
+(global-set-key (kbd "C-c N") 'timvisher/project-notes)
+
 (defun timvisher/clojure-test-comment ()
   (interactive)
   (beginning-of-defun)
